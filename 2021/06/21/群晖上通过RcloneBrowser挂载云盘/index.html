@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/latte_social_su_32px.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/latte_social_su_16px.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="NBzRmGkIEf2N-KtEpgbtZyLYN1upTKpKC-lGzMsR9Q0">
+  <meta name="msvalidate.01" content="57B6B7FD8CF2E061F464E9FF87D7EEF4">
+  <meta name="baidu-site-verification" content="code-CJomTbekyI">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"laosu.ml","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"changyan","storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="在群晖上像使用本地硬盘一样操作云盘，支持同步、备份等操作，并且能通过挂载实现硬盘扩容。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="群晖上通过RcloneBrowser挂载云盘">
+<meta property="og:url" content="https://laosu.ml/2021/06/21/%E7%BE%A4%E6%99%96%E4%B8%8A%E9%80%9A%E8%BF%87RcloneBrowser%E6%8C%82%E8%BD%BD%E4%BA%91%E7%9B%98/index.html">
+<meta property="og:site_name" content="老苏的blog">
+<meta property="og:description" content="在群晖上像使用本地硬盘一样操作云盘，支持同步、备份等操作，并且能通过挂载实现硬盘扩容。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210610115657.png">
+<meta property="article:published_time" content="2021-06-21T11:00:00.000Z">
+<meta property="article:modified_time" content="2021-06-21T11:36:56.810Z">
+<meta property="article:author" content="杨浦老苏">
+<meta property="article:tag" content="群晖">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="挂载">
+<meta property="article:tag" content="Rclone">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210610115657.png">
+
+
+<link rel="canonical" href="https://laosu.ml/2021/06/21/%E7%BE%A4%E6%99%96%E4%B8%8A%E9%80%9A%E8%BF%87RcloneBrowser%E6%8C%82%E8%BD%BD%E4%BA%91%E7%9B%98/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://laosu.ml/2021/06/21/%E7%BE%A4%E6%99%96%E4%B8%8A%E9%80%9A%E8%BF%87RcloneBrowser%E6%8C%82%E8%BD%BD%E4%BA%91%E7%9B%98/","path":"2021/06/21/群晖上通过RcloneBrowser挂载云盘/","title":"群晖上通过RcloneBrowser挂载云盘"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>群晖上通过RcloneBrowser挂载云盘 | 老苏的blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-165372529-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-165372529-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?0d167cc966795fca90236e7478677373"></script>
+
+
+<link rel="dns-prefetch" href="https://0x404.ml"><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.css"><style>
+#needsharebutton-postbottom {
+  cursor: pointer;
+  height: 26px;
+  margin-top: 10px;
+  position: relative;
+}
+#needsharebutton-postbottom .btn {
+  border: 1px solid $btn-default-border-color;
+  border-radius: 3px;
+  display: initial;
+  padding: 1px 4px;
+}
+</style><script data-ad-client="ca-pub-2307783158392222" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="老苏的blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">老苏的blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">聚沙成塔，集腋成裘</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-top"><a href="/top/" rel="section"><i class="fa fa-signal fa-fw"></i>阅读排行</a></li>
+        <li class="menu-item menu-item-waline"><span class="exturl" data-url="aHR0cHM6Ly8weDQwNC5tbC91aQ=="><i class="fa fa-comment fa-fw"></i>评论管理</span></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%84%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">常规安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%B7"><span class="nav-number">1.1.</span> <span class="nav-text">卷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.2.</span> <span class="nav-text">端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">1.3.</span> <span class="nav-text">环境</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">命令行安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%E3%80%81%E5%BB%BA%E7%9B%AE%E5%BD%95"><span class="nav-number">2.1.</span> <span class="nav-text">第一步、建目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%E3%80%81%E5%85%B1%E4%BA%AB%E6%8C%82%E8%BD%BD"><span class="nav-number">2.2.</span> <span class="nav-text">第二步、共享挂载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%E3%80%81%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8"><span class="nav-number">2.3.</span> <span class="nav-text">第三步、启动容器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C"><span class="nav-number">3.</span> <span class="nav-text">运行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">设置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%91%E7%9B%98%E6%8C%82%E8%BD%BD"><span class="nav-number">4.1.</span> <span class="nav-text">云盘挂载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">4.2.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98"><span class="nav-number">4.3.</span> <span class="nav-text">其他问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">5.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="杨浦老苏"
+      src="/images/laosu_wx.jpg">
+  <p class="site-author-name" itemprop="name">杨浦老苏</p>
+  <div class="site-description" itemprop="description">折腾各种好玩的东西</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">173</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">247</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3dic3UyMDAz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wbsu2003"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOndic3UyMDAzQGdtYWlsLmNvbQ==" title="E-Mail → mailto:wbsu2003@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vMjg4NTI2NjU1NA==" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;2885266554"><i class="fab fa-weibo fa-fw"></i>Weibo</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dic3UyMDA0" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;wbsu2004"><i class="fab fa-cuttlefish fa-fw"></i>CSDN</span>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      本站其他站点
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://laosu.ml/" title="https:&#x2F;&#x2F;laosu.ml">主站（Vercel）</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93YnN1MjAwMy5naXRlZS5pbw==" title="https:&#x2F;&#x2F;wbsu2003.gitee.io">国内推荐（Gitee）</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9sYW9zdS5nYQ==" title="https:&#x2F;&#x2F;laosu.ga">备站（Github）</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9sYW9zdS50aw==" title="https:&#x2F;&#x2F;laosu.tk">备站（Netlify）</span>
+        </li>
+    </ul>
+  </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+    
+    <div class="post-gallery-image">
+      <img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210610115657.png" itemprop="contentUrl">
+    </div>
+    </div>
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laosu.ml/2021/06/21/%E7%BE%A4%E6%99%96%E4%B8%8A%E9%80%9A%E8%BF%87RcloneBrowser%E6%8C%82%E8%BD%BD%E4%BA%91%E7%9B%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/laosu_wx.jpg">
+      <meta itemprop="name" content="杨浦老苏">
+      <meta itemprop="description" content="折腾各种好玩的东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="老苏的blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          群晖上通过RcloneBrowser挂载云盘
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-06-21 19:00:00 / 修改时间：19:36:56" itemprop="dateCreated datePublished" datetime="2021-06-21T19:00:00+08:00">2021-06-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/" itemprop="url" rel="index"><span itemprop="name">各种折腾</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2021/06/21/%E7%BE%A4%E6%99%96%E4%B8%8A%E9%80%9A%E8%BF%87RcloneBrowser%E6%8C%82%E8%BD%BD%E4%BA%91%E7%9B%98/#waline-comments" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" id="/2021/06/21/%E7%BE%A4%E6%99%96%E4%B8%8A%E9%80%9A%E8%BF%87RcloneBrowser%E6%8C%82%E8%BD%BD%E4%BA%91%E7%9B%98/" data-xid="/2021/06/21/%E7%BE%A4%E6%99%96%E4%B8%8A%E9%80%9A%E8%BF%87RcloneBrowser%E6%8C%82%E8%BD%BD%E4%BA%91%E7%9B%98/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span id="/2021/06/21/%E7%BE%A4%E6%99%96%E4%B8%8A%E9%80%9A%E8%BF%87RcloneBrowser%E6%8C%82%E8%BD%BD%E4%BA%91%E7%9B%98/" class="post-meta-item leancloud_visitors" data-flag-title="群晖上通过RcloneBrowser挂载云盘" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+<!--2021.08.21新增置顶标志-->
+<!--来自：https://www.itfanr.cc/2019/09/05/hexo-top-optimize/ -->
+
+ 
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">在群晖上像使用本地硬盘一样操作云盘，支持同步、备份等操作，并且能通过挂载实现硬盘扩容。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><strong>什么是 Rclone ？</strong></p>
+<blockquote>
+<p>Rclone 是一个命令行程序，用于管理云存储上的文件。它是云供应商 Web 存储界面的功能丰富的替代品。支持超过 40 种云存储产品 ，包括 S3 对象存储、企业和消费者文件存储服务以及标准传输协议。支持常见的 Amazon Drive 、Google Drive 、OneDrive 、Dropbox 等云存储。</p>
+</blockquote>
+<p><strong>什么是 Rclone Browser ？</strong></p>
+<blockquote>
+<p>用于 Rclone 命令行工具的简单跨平台 GUI。支持 Windows、macOS 、GNU/Linux 和  BSD 家族。</p>
+</blockquote>
+<p><code>Rclone</code> 是一款的命令行工具，支持在不同对象存储、网盘间同步、上传、下载数据。所以如果你需要在不同的网盘之间迁移数据，<code>Rclone</code> 绝对是不二之选。</p>
+<p>之前老苏是在 <code>Windows</code> 上使用，但是命令总是比较难记的，所以写了很多批处理文件来实现不同的功能，后来用了 <code>Rclone Browser</code> 就把命令忘到了脑后，反正常用的几个功能  <code>Rclone Browser</code> 都已经具备了。</p>
+<p>自从老苏上回把监控从 <code>iSpy</code> 换成 <code>ZoneMinder</code> 之后，已经不再有 7*24 小时开机的 <code>Windows</code> 主机了，所以自然而然的想到是否可以在群晖上继续使用   <code>Rclone Browser</code> ，从而实现：</p>
+<ul>
+<li>目标1：WEB 方式对多个云盘进行统一管理，包括上传、下载、同步、备份等操作；</li>
+<li>目标2：Jellyfin、Emby、Plex、Airsonic等多媒体软件直接播放云盘中的电影和音乐；</li>
+</ul>
+<p>如果你只想实现目标1，可以参考第一部分的 <code>常规安装</code> 方式，比较简单少折腾，如果要同时实现目标1和2，建议直接跳到第二部分的 <code>命令行安装</code> 方式。</p>
+<blockquote>
+<ul>
+<li>这篇文章不是 <code>Rclone</code> 或者 <code>Rclone Browser</code> 的教程，所以如果您还不会使用这两者之一，建议您先百度一下。</li>
+<li>白嫖的网盘不要放重要数据，不要放重要数据，不要放重要数据。</li>
+</ul>
+</blockquote>
+<h1 id="常规安装"><a href="#常规安装" class="headerlink" title="常规安装"></a>常规安装</h1><p>在群晖上以 Docker 方式安装。</p>
+<p>在注册表中搜索 <code>rclonebrowser</code> ，选择第一个 <code>romancin/rclonebrowser </code>，版本选择 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210603231328.png"></p>
+<h2 id="卷"><a href="#卷" class="headerlink" title="卷"></a>卷</h2><p>在 <code>docker</code> 文件夹中，创建一个新文件夹，并将其命名为 <code>rclone</code>，然后在 <code>rclone</code> 文件夹中再创建两个新的子文件夹，分别命名为 <code>config</code> 和 <code>media</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210605190916.png"></p>
+<table>
+<thead>
+<tr>
+<th align="center">文件夹</th>
+<th align="center">装载路径</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>docker/rclone/config</code></td>
+<td align="center"><code>/config</code></td>
+<td align="center">配置文件及日志存放目录</td>
+</tr>
+<tr>
+<td align="center"><code>docker/rclone/media</code></td>
+<td align="center"><code>/media</code></td>
+<td align="center">数据存放目录</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210605191334.png"></p>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>默认的端口被 <code>firefox</code> 占用了，所以要修改，其中前者为 Web 访问端口，后者为 VNC 端口（可选）。</p>
+<blockquote>
+<p>关于 firefox 可以看看老苏写的 『 <a href="https://laosu.ml/2020/11/01/%E7%BB%99%E7%BE%A4%E6%99%96%E5%AE%89%E8%A3%85firefox%E6%B5%8F%E8%A7%88%E5%99%A8">给群晖安装firefox浏览器</a> 』</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">5801</td>
+<td align="center">5800</td>
+</tr>
+<tr>
+<td align="center">5901</td>
+<td align="center">5900</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210605193057.png"></p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><table>
+<thead>
+<tr>
+<th align="center">可变</th>
+<th align="center">值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>TZ</code></td>
+<td align="center">改为 <code>Asia/Shanghai</code></td>
+</tr>
+<tr>
+<td align="center"><code>VNC_PASSWORD</code></td>
+<td align="center">按需要设置</td>
+</tr>
+<tr>
+<td align="center"><code>ENABLE_CJK_FONT</code></td>
+<td align="center">设置为1，支持支持中、日、韩文</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210605192620.png"></p>
+<blockquote>
+<p>如果不设置 <code>ENABLE_CJK_FONT = 1</code>，中文字会变成方框</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210605210605.png"></p>
+<h1 id="命令行安装"><a href="#命令行安装" class="headerlink" title="命令行安装"></a>命令行安装</h1><p>根据网友反馈的 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JvbWFuY2luL3JjbG9uZWJyb3dzZXItZG9ja2VyL2lzc3Vlcy8z"># Synology cant Mount Drives #3 （https://github.com/romancin/rclonebrowser-docker/issues/3）<i class="fa fa-external-link-alt"></i></span> 整理的安装命令</p>
+<h2 id="第一步、建目录"><a href="#第一步、建目录" class="headerlink" title="第一步、建目录"></a>第一步、建目录</h2><p>参考常规方式的卷设置，同样也是建 <code>config</code> 和 <code>media</code> 目录</p>
+<h2 id="第二步、共享挂载"><a href="#第二步、共享挂载" class="headerlink" title="第二步、共享挂载"></a>第二步、共享挂载</h2><p>因为老苏映射的目录在 <code>volume1</code> 上，如果你的目录是其他的卷上，记得修改</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 共享挂载</span></span><br><span class="line">mount --make-shared /volume1</span><br></pre></td></tr></table></figure>
+
+<p>不然后面 <code>mount</code> 的时候可能会遇到下面👇这样的错误</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker: Error response from daemon: linux mounts: path /volume1/docker/rclone/media is mounted on /volume1 but it is not a shared mount.</span><br></pre></td></tr></table></figure>
+
+<p>这条命令在群晖重启后需要重新执行，所以我们可以把这句命令，通过 <code>任务计划</code> 加到开机脚本中</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210617233810.png"></p>
+<p>这是一个触发任务，事件是开机</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210617233845.png"></p>
+<p>邮件发不发看个人需要，主要是运行脚本</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210617233951.png"></p>
+<h2 id="第三步、启动容器"><a href="#第三步、启动容器" class="headerlink" title="第三步、启动容器"></a>第三步、启动容器</h2><p>在 <code>ssh</code> 客户端中执行下面👇的命令即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name=rclonebrowser \</span><br><span class="line">--cap-add SYS_ADMIN \</span><br><span class="line">--device /dev/fuse \</span><br><span class="line">--security-opt apparmor=unconfined \</span><br><span class="line">-p 5801:5800 \</span><br><span class="line">-p 5901:5900 \</span><br><span class="line">-v /volume1/docker/rclone/config:/config \</span><br><span class="line">-v /volume1/docker/rclone/media:/media:shared \</span><br><span class="line">-e GROUP_ID=0 \</span><br><span class="line">-e USER_ID=0 \</span><br><span class="line">-e TZ=Asia/Shanghai \</span><br><span class="line">-e VNC_PASSWORD=123456 \</span><br><span class="line">-e ENABLE_CJK_FONT=1 \</span><br><span class="line">romancin/rclonebrowser:latest</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果你已经图形化安装过，请先删除再执行，否则会有冲突；</p>
+</blockquote>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>不管你用上面哪种安装方式，在浏览器中输入 <code>http://群晖IP:5801</code> 应该就可以看到主界面，不过如果设置了 <code>ENABLE_CJK_FONT = 1</code>，因为要安装字体</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210609135803.png"></p>
+<p>所以要等一会儿才行，这个取决于网速，有时候真的要很久很久，如果你发现容器并没有停止，但是又刷不出来主界面，十之八九就是卡在下载字体了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210605193355.png"></p>
+<p>填入我们前面设置的 <code>VNC_PASSWORD</code></p>
+<h1 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h1><p>不要直接点 <code>Config</code> 设置，因为后面需要在浏览器中验证并获取 <code>access_token</code>，这在容器里是实现不了的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210605194241.png"></p>
+<p>老苏用了个取巧的办法，直接将 <code>windows</code> 上的设置文件拷贝到了群晖里，然后直接刷新页面就可以了：</p>
+<ol>
+<li>下载 Rclone : <span class="exturl" data-url="aHR0cHM6Ly9yY2xvbmUub3JnL2Rvd25sb2Fkcy8=">https://rclone.org/downloads/<i class="fa fa-external-link-alt"></i></span>；</li>
+<li>下载 Rclone Browser：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2thcGl0YWluc2t5L1JjbG9uZUJyb3dzZXIvcmVsZWFzZXMvdGFnLzEuOC4w">https://github.com/kapitainsky/RcloneBrowser/releases/tag/1.8.0<i class="fa fa-external-link-alt"></i></span>；</li>
+<li>在 <code>Windows</code> 上安装并设置好，使之能正常使用；</li>
+<li>在 <code>C:\Users\你的用户名\.config\rclone</code>文件夹下就可以找到配置文件 <code>rclone.conf</code> ；</li>
+<li>将配置文件 <code>rclone.conf</code> 上传到 <code>/docker/rclone/config/xdg/config/rclone</code> 中；</li>
+<li>刷新页面；</li>
+</ol>
+<p>其他平台理论上也是可以的，但是老苏没试过，所以没研究 <code>rclone.conf</code> 在不同平台的存放位置。</p>
+<h2 id="云盘挂载"><a href="#云盘挂载" class="headerlink" title="云盘挂载"></a>云盘挂载</h2><p>常规方式安装的不要去尝试 <code>mount</code>， 会返回下面👇这样的错误：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2021/06/09 14:19:18 NOTICE: One drive root <span class="string">&#x27;&#x27;</span>: --vfs-cache-mode writes or full is recommended <span class="keyword">for</span> this remote as it can<span class="string">&#x27;t stream</span></span><br><span class="line"><span class="string">2021/06/09 14:19:18 mount helper error: fusermount: fuse device not found, try &#x27;</span>modprobe fuse<span class="string">&#x27; first</span></span><br><span class="line"><span class="string">2021/06/09 14:19:18 Fatal error: failed to mount FUSE fs: fusermount: exit status 1</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210609141959.png"></p>
+<p>只有命令行安装的才能正常 <code>mount</code>，下图成功挂载了 5T 的 OD（One Drive）盘</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210610153125.png"></p>
+<p>在 <code>ssh</code> 中用 <code>df-h</code> 命令能看到挂载信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210617223705.png"></p>
+<p>在使用上跟本地盘是一样的，看起来似乎非常不错，但是也不是那么完美，因为每次开机之后，老苏要一个盘一个盘去 <code>mount</code>，另外也遇到过挂载成功后看不到内容的情况，没找到原因。老苏懒得折腾（主要是因为不懂），一般都是直接删容器，再用第三步的启动容器命令，一般都会OK的。</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>下图中分别是同步和拷贝操作</p>
+<ul>
+<li>云盘A –&gt; sync –&gt; 云盘B</li>
+<li>云盘A –&gt; copy –&gt; 云盘C</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210609194208.png"></p>
+<p>群晖主机的资源监控</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210609194242.png"></p>
+<p><code>docker</code> 本身资源消耗</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210610154220.png"></p>
+<p>看得出来资源占用还是很低的，接下来的玩法大家可以自由发挥了，但是不管怎么说，云盘还是有各种限制的，比如每天上传下载配额、单个文件大小、操作频次等等，要注意避免被禁止访问的风险。</p>
+<h2 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h2><ol>
+<li>如果下载显示 <code>permission denied</code> ，需要修改 <code>media</code> 目录的权限<br>比如使用 <code>chmod 777 media</code></li>
+<li>当你在做数据拷贝或者同步时，可能会在目录中留下残留文件，导致再次 <code>mount</code> 时，返回下面👇这样的错误</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2021/06/18 14:13:54 Fatal error: Directory is not empty: /media/5tb If you want to mount it anyway use: --allow-non-empty option</span><br></pre></td></tr></table></figure>
+
+<p>可以修改参数，或者删除群晖目录中的残留文件(夹)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210618142212.png"></p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>kapitainsky/RcloneBrowser: Simple cross platform GUI for rclone. Supports macOS, GNU/Linux, BSD family and Windows.<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2thcGl0YWluc2t5L1JjbG9uZUJyb3dzZXI=">https://github.com/kapitainsky/RcloneBrowser<i class="fa fa-external-link-alt"></i></span></p>
+<p>romancin/rclonebrowser-docker: A repository for creating a docker container including RClone Browser with GUI interface.<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JvbWFuY2luL3JjbG9uZWJyb3dzZXItZG9ja2Vy">https://github.com/romancin/rclonebrowser-docker<i class="fa fa-external-link-alt"></i></span></p>
+<p>romancin/rclonebrowser Dockerfile<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9odWIuZG9ja2VyLmNvbS9yL3JvbWFuY2luL3JjbG9uZWJyb3dzZXIvZG9ja2VyZmlsZQ==">https://hub.docker.com/r/romancin/rclonebrowser/dockerfile<i class="fa fa-external-link-alt"></i></span></p>
+<p>群晖 NAS 挂载 Google Drive 共享云端硬盘（团队盘） | 搁浅被注册了<br>地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cuc2hleWlsaW4uY29tLzIwMjAvMDQvZG9ja2VyLXJjbG9uZS1wcm94eQ==">https://www.sheyilin.com/2020/04/docker-rclone-proxy<i class="fa fa-external-link-alt"></i></span></p>
+<p>[Nas] 如何在 Synology Nas 中使用 docker 並建立 rclone 來掛載資料夾 ? | 從入門到放棄<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9leGZhc3QubWUvMjAyMC8wNy9uYXMtaG93LXRvLXVzZS1ydW5uaW5nLXRoZS1yY2xvbmUtb24tdGhlLWRvY2tlci1vbi10aGUtc3lub2xvZ3ktbmFzLXRvLW1vdW50LWZvbGRlci8=">https://exfast.me/2020/07/nas-how-to-use-running-the-rclone-on-the-docker-on-the-synology-nas-to-mount-folder/<i class="fa fa-external-link-alt"></i></span></p>
+<p>Windows平台下使用 Rclone 挂载 OneDrive 为本地硬盘 - 热夏 - 博客园<br>地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vbXlzdW1tZXJkYXkvcC8xMjY2MTI2My5odG1s">https://www.cnblogs.com/mysummerday/p/12661263.html<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer"><div class="post-widgets">
+      <div id="needsharebutton-postbottom">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    </div><div>
+    
+        <br>
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------扫一扫，关注本站的微信公众号-------------</div>
+        <br>
+        <img src="/uploads/wechat-qcode.jpg">
+        <br>
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+<!--2021.08.13新增广告单元-->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2307783158392222"
+      crossorigin="anonymous"></script>
+    <ins class="adsbygoogle"
+      style="display:block; text-align:center;"
+      data-ad-layout="in-article"
+      data-ad-format="fluid"
+      data-ad-client="ca-pub-2307783158392222"
+      data-ad-slot="3142196442"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+  
+          <div class="reward-container">
+  <div>万水千山总是情，打赏一下行不行？</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/uploads/wechatpay.jpg" alt="杨浦老苏 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/uploads/alipay.jpg" alt="杨浦老苏 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>杨浦老苏
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://laosu.ml/2021/06/21/%E7%BE%A4%E6%99%96%E4%B8%8A%E9%80%9A%E8%BF%87RcloneBrowser%E6%8C%82%E8%BD%BD%E4%BA%91%E7%9B%98/" title="群晖上通过RcloneBrowser挂载云盘">https://laosu.ml/2021/06/21/群晖上通过RcloneBrowser挂载云盘/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/uploads/wechat-qcode_430.jpg">
+          <span class="icon">
+            <i class="fab fa-weixin"></i>
+          </span>
+
+          <span class="label">微信</span>
+        </a>
+      </div>
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/atom.xml">
+          <span class="icon">
+            <i class="fa fa-rss"></i>
+          </span>
+
+          <span class="label">RSS</span>
+        </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%BE%A4%E6%99%96/" rel="tag"><i class="fa fa-tag"></i> 群晖</a>
+              <a href="/tags/docker/" rel="tag"><i class="fa fa-tag"></i> docker</a>
+              <a href="/tags/%E6%8C%82%E8%BD%BD/" rel="tag"><i class="fa fa-tag"></i> 挂载</a>
+              <a href="/tags/Rclone/" rel="tag"><i class="fa fa-tag"></i> Rclone</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/18/%E9%80%9A%E8%BF%87WxPusher%E5%9C%A8%E7%BE%A4%E6%99%96%E4%B8%8A%E5%AE%9E%E7%8E%B0%E5%BE%AE%E4%BF%A1%E6%8E%A8%E9%80%81/" rel="prev" title="通过WxPusher在群晖上实现微信推送">
+                  <i class="fa fa-chevron-left"></i> 通过WxPusher在群晖上实现微信推送
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/06/25/%E5%9C%A8%E7%BE%A4%E6%99%96%E4%B8%8A%E4%BD%BF%E7%94%A8%E5%A4%A9%E7%BF%BC%E4%BA%91%E7%9B%98/" rel="next" title="在群晖上使用天翼云盘">
+                  在群晖上使用天翼云盘 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨浦老苏</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">341k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:10</span>
+  </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  </div><!--2020.05.03新增flagconuter计数-->
+<div>
+  <a target="_blank" rel="noopener" href="https://info.flagcounter.com/BEXu"><img src="https://s11.flagcounter.com/count2/BEXu/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0"></a>
+</div>
+
+<br>
+
+<!--2021.02.22新增网站运行时间-->
+<div>
+  <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+  <script>
+      var now = new Date();
+      function createtime() {
+          var grt= new Date("04/28/2020 00:00:00");
+          now.setTime(now.getTime()+250);
+          days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+          hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+          if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+          mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+          seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+          snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+          document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+          document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+      }
+  setInterval("createtime()",250);
+  </script>
+</div>
+
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://0x404.ml","placeholder":"有什么想法和需求，可以留个言","avatar":"monsterid","meta":["nick","mail","link"],"pageSize":10,"visitor":true,"comment_count":true,"requiredFields":[],"path":"/2021/06/21/%E7%BE%A4%E6%99%96%E4%B8%8A%E9%80%9A%E8%BF%87RcloneBrowser%E6%8C%82%E8%BD%BD%E4%BA%91%E7%9B%98/","requiredMeta":["nick","mail"],"emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili"],"libUrl":"https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js","dark":"auto","el":"#waline-comments"}</script>
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() => 
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => {
+    new Waline(CONFIG.waline);
+  });
+});
+</script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.js"></script>
+  <script>
+      pbOptions = {};
+        pbOptions.iconStyle = "box";
+        pbOptions.boxForm = "horizontal";
+        pbOptions.position = "bottomCenter";
+        pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+  </script>
+</body>
+</html>

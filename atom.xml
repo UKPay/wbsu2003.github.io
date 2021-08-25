@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>老苏的blog</title>
+  
+  <subtitle>聚沙成塔，集腋成裘</subtitle>
+  <link href="https://laosu.ml/atom.xml" rel="self"/>
+  
+  <link href="https://laosu.ml/"/>
+  <updated>2021-08-25T05:52:32.829Z</updated>
+  <id>https://laosu.ml/</id>
+  
+  <author>
+    <name>杨浦老苏</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>数据可视化平台Superset（踩坑篇）</title>
+    <link href="https://laosu.ml/2021/08/25/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B9%B3%E5%8F%B0Superset%EF%BC%88%E8%B8%A9%E5%9D%91%E7%AF%87%EF%BC%89/"/>
+    <id>https://laosu.ml/2021/08/25/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B9%B3%E5%8F%B0Superset%EF%BC%88%E8%B8%A9%E5%9D%91%E7%AF%87%EF%BC%89/</id>
+    <published>2021-08-25T11:00:00.000Z</published>
+    <updated>2021-08-25T05:52:32.829Z</updated>
+    
+    
+    <summary type="html">superset 是由 Airbnb （知名在线短租赁公司）开源的数据分析与可视化平台（曾用名 Caravel 、 Panoramix ）。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="BI" scheme="https://laosu.ml/tags/BI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>数据可视化平台Superset（安装篇）</title>
+    <link href="https://laosu.ml/2021/08/23/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B9%B3%E5%8F%B0Superset%EF%BC%88%E5%AE%89%E8%A3%85%E7%AF%87%EF%BC%89/"/>
+    <id>https://laosu.ml/2021/08/23/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B9%B3%E5%8F%B0Superset%EF%BC%88%E5%AE%89%E8%A3%85%E7%AF%87%EF%BC%89/</id>
+    <published>2021-08-23T10:30:00.000Z</published>
+    <updated>2021-08-24T07:47:12.360Z</updated>
+    
+    
+    <summary type="html">Superset 是由 Airbnb （知名在线短租赁公司）开源的数据分析与可视化平台（曾用名 Caravel 、 Panoramix ）。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="BI" scheme="https://laosu.ml/tags/BI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>适合国内网盘的免费挂载工具CloudDrive</title>
+    <link href="https://laosu.ml/2021/08/20/%E9%80%82%E5%90%88%E5%9B%BD%E5%86%85%E7%BD%91%E7%9B%98%E7%9A%84%E5%85%8D%E8%B4%B9%E6%8C%82%E8%BD%BD%E5%B7%A5%E5%85%B7CloudDrive/"/>
+    <id>https://laosu.ml/2021/08/20/%E9%80%82%E5%90%88%E5%9B%BD%E5%86%85%E7%BD%91%E7%9B%98%E7%9A%84%E5%85%8D%E8%B4%B9%E6%8C%82%E8%BD%BD%E5%B7%A5%E5%85%B7CloudDrive/</id>
+    <published>2021-08-20T11:00:00.000Z</published>
+    <updated>2021-08-20T11:40:58.075Z</updated>
+    
+    
+    <summary type="html">CloudDrive 是一款网盘挂载工具，主要支持挂载国产网盘。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="网盘" scheme="https://laosu.ml/tags/%E7%BD%91%E7%9B%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>阿里云盘的目录文件列表程序Alist</title>
+    <link href="https://laosu.ml/2021/08/18/%E9%98%BF%E9%87%8C%E4%BA%91%E7%9B%98%E7%9A%84%E7%9B%AE%E5%BD%95%E6%96%87%E4%BB%B6%E5%88%97%E8%A1%A8%E7%A8%8B%E5%BA%8FAlist/"/>
+    <id>https://laosu.ml/2021/08/18/%E9%98%BF%E9%87%8C%E4%BA%91%E7%9B%98%E7%9A%84%E7%9B%AE%E5%BD%95%E6%96%87%E4%BB%B6%E5%88%97%E8%A1%A8%E7%A8%8B%E5%BA%8FAlist/</id>
+    <published>2021-08-18T11:00:00.000Z</published>
+    <updated>2021-08-18T11:09:54.430Z</updated>
+    
+    
+    <summary type="html">Alist 是一款阿里云盘的目录文件列表程序。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="网盘" scheme="https://laosu.ml/tags/%E7%BD%91%E7%9B%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>一个简单的web云盘go-drive</title>
+    <link href="https://laosu.ml/2021/08/16/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84web%E4%BA%91%E7%9B%98go-drive/"/>
+    <id>https://laosu.ml/2021/08/16/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84web%E4%BA%91%E7%9B%98go-drive/</id>
+    <published>2021-08-16T11:00:00.000Z</published>
+    <updated>2021-08-16T11:45:36.846Z</updated>
+    
+    
+    <summary type="html">go-drive 是一个简单的 web 云盘应用程序，支持第三方存储。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="网盘" scheme="https://laosu.ml/tags/%E7%BD%91%E7%9B%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在浏览器中运行Windows11网页版</title>
+    <link href="https://laosu.ml/2021/08/13/%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E8%BF%90%E8%A1%8CWindows11%E7%BD%91%E9%A1%B5%E7%89%88/"/>
+    <id>https://laosu.ml/2021/08/13/%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E8%BF%90%E8%A1%8CWindows11%E7%BD%91%E9%A1%B5%E7%89%88/</id>
+    <published>2021-08-13T11:00:00.000Z</published>
+    <updated>2021-08-13T11:04:48.220Z</updated>
+    
+    
+    <summary type="html">开源项目 Windows 11 in React 旨在使用 React、CSS (SCSS) 和 JS 等标准 Web 技术在 Web 上复刻 Windows 11 桌面体验。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="windows" scheme="https://laosu.ml/tags/windows/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>开源的看板管理工具Wekan</title>
+    <link href="https://laosu.ml/2021/08/11/%E5%BC%80%E6%BA%90%E7%9A%84%E7%9C%8B%E6%9D%BF%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7Wekan/"/>
+    <id>https://laosu.ml/2021/08/11/%E5%BC%80%E6%BA%90%E7%9A%84%E7%9C%8B%E6%9D%BF%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7Wekan/</id>
+    <published>2021-08-11T10:40:00.000Z</published>
+    <updated>2021-08-11T10:46:45.051Z</updated>
+    
+    
+    <summary type="html">Wekan 是一款开源的卡片看板软件。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="看板" scheme="https://laosu.ml/tags/%E7%9C%8B%E6%9D%BF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>TrWebOCR开源的离线OCR</title>
+    <link href="https://laosu.ml/2021/08/09/TrWebOCR%E5%BC%80%E6%BA%90%E7%9A%84%E7%A6%BB%E7%BA%BFOCR/"/>
+    <id>https://laosu.ml/2021/08/09/TrWebOCR%E5%BC%80%E6%BA%90%E7%9A%84%E7%A6%BB%E7%BA%BFOCR/</id>
+    <published>2021-08-09T10:30:00.000Z</published>
+    <updated>2021-08-09T10:38:33.524Z</updated>
+    
+    
+    <summary type="html">TrWebOCR 是开源、易用的中文离线 OCR 。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="OCR" scheme="https://laosu.ml/tags/OCR/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>网页监控提醒工具WebMonitor</title>
+    <link href="https://laosu.ml/2021/08/06/%E7%BD%91%E9%A1%B5%E7%9B%91%E6%8E%A7%E6%8F%90%E9%86%92%E5%B7%A5%E5%85%B7WebMonitor/"/>
+    <id>https://laosu.ml/2021/08/06/%E7%BD%91%E9%A1%B5%E7%9B%91%E6%8E%A7%E6%8F%90%E9%86%92%E5%B7%A5%E5%85%B7WebMonitor/</id>
+    <published>2021-08-06T11:00:00.000Z</published>
+    <updated>2021-08-06T11:25:57.206Z</updated>
+    
+    
+    <summary type="html">WebMonitor 能实时监控网页变化，并通过邮件、微信等多种方式发送通知。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="RSS" scheme="https://laosu.ml/tags/RSS/"/>
+    
+    <category term="网页监控" scheme="https://laosu.ml/tags/%E7%BD%91%E9%A1%B5%E7%9B%91%E6%8E%A7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>《在群晖上使用天翼云盘》的更新说明</title>
+    <link href="https://laosu.ml/2021/08/05/%E3%80%8E%E5%9C%A8%E7%BE%A4%E6%99%96%E4%B8%8A%E4%BD%BF%E7%94%A8%E5%A4%A9%E7%BF%BC%E4%BA%91%E7%9B%98%E3%80%8F%E7%9A%84%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E/"/>
+    <id>https://laosu.ml/2021/08/05/%E3%80%8E%E5%9C%A8%E7%BE%A4%E6%99%96%E4%B8%8A%E4%BD%BF%E7%94%A8%E5%A4%A9%E7%BF%BC%E4%BA%91%E7%9B%98%E3%80%8F%E7%9A%84%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E/</id>
+    <published>2021-08-05T11:00:00.000Z</published>
+    <updated>2021-08-05T04:43:11.256Z</updated>
+    
+    
+    <summary type="html">镜像 wbsu2003/cloud189-cli 已经更新，解决了登录报错。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="网盘" scheme="https://laosu.ml/tags/%E7%BD%91%E7%9B%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>能将阿里云盘挂载为webdav的webdav-aliyundriver</title>
+    <link href="https://laosu.ml/2021/08/04/%E8%83%BD%E5%B0%86%E9%98%BF%E9%87%8C%E4%BA%91%E7%9B%98%E6%8C%82%E8%BD%BD%E4%B8%BAwebdav%E7%9A%84webdav-aliyundriver/"/>
+    <id>https://laosu.ml/2021/08/04/%E8%83%BD%E5%B0%86%E9%98%BF%E9%87%8C%E4%BA%91%E7%9B%98%E6%8C%82%E8%BD%BD%E4%B8%BAwebdav%E7%9A%84webdav-aliyundriver/</id>
+    <published>2021-08-04T11:00:00.000Z</published>
+    <updated>2021-08-04T11:01:52.497Z</updated>
+    
+    
+    <summary type="html">webdav-aliyundriver 实现了阿里云盘的 webdav 协议。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="网盘" scheme="https://laosu.ml/tags/%E7%BD%91%E7%9B%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>简约但绝不简单的Komga</title>
+    <link href="https://laosu.ml/2021/08/02/%E7%AE%80%E7%BA%A6%E4%BD%86%E7%BB%9D%E4%B8%8D%E7%AE%80%E5%8D%95%E7%9A%84Komga/"/>
+    <id>https://laosu.ml/2021/08/02/%E7%AE%80%E7%BA%A6%E4%BD%86%E7%BB%9D%E4%B8%8D%E7%AE%80%E5%8D%95%E7%9A%84Komga/</id>
+    <published>2021-08-02T10:30:00.000Z</published>
+    <updated>2021-08-02T10:29:00.379Z</updated>
+    
+    
+    <summary type="html">Komga 是一个免费、开源的漫画服务器，支持 REST API 和 OPDS 。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="calibre" scheme="https://laosu.ml/tags/calibre/"/>
+    
+    <category term="小人书" scheme="https://laosu.ml/tags/%E5%B0%8F%E4%BA%BA%E4%B9%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HTML5实现的经典播放器Winamp</title>
+    <link href="https://laosu.ml/2021/07/30/HTML5%E5%AE%9E%E7%8E%B0%E7%9A%84%E7%BB%8F%E5%85%B8%E6%92%AD%E6%94%BE%E5%99%A8Winamp/"/>
+    <id>https://laosu.ml/2021/07/30/HTML5%E5%AE%9E%E7%8E%B0%E7%9A%84%E7%BB%8F%E5%85%B8%E6%92%AD%E6%94%BE%E5%99%A8Winamp/</id>
+    <published>2021-07-30T10:30:00.000Z</published>
+    <updated>2021-07-30T10:53:12.538Z</updated>
+    
+    
+    <summary type="html">用 HTML5 和 JavaScript 重新实现的 Winamp 2.9，具有完整的皮肤支持。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="音乐" scheme="https://laosu.ml/tags/%E9%9F%B3%E4%B9%90/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>一个非常强大的静态导航网站nav</title>
+    <link href="https://laosu.ml/2021/07/26/%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E5%BC%BA%E5%A4%A7%E7%9A%84%E9%9D%99%E6%80%81%E5%AF%BC%E8%88%AA%E7%BD%91%E7%AB%99nav/"/>
+    <id>https://laosu.ml/2021/07/26/%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E5%BC%BA%E5%A4%A7%E7%9A%84%E9%9D%99%E6%80%81%E5%AF%BC%E8%88%AA%E7%BD%91%E7%AB%99nav/</id>
+    <published>2021-07-26T11:00:00.000Z</published>
+    <updated>2021-07-26T01:47:59.454Z</updated>
+    
+    
+    <summary type="html">发现导航 , 一个非常强大的静态导航网站(支持SEO)。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="导航" scheme="https://laosu.ml/tags/%E5%AF%BC%E8%88%AA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>一款支持加密的笔记StandardNotes</title>
+    <link href="https://laosu.ml/2021/07/23/%E4%B8%80%E6%AC%BE%E6%94%AF%E6%8C%81%E5%8A%A0%E5%AF%86%E7%9A%84%E7%AC%94%E8%AE%B0StandardNotes/"/>
+    <id>https://laosu.ml/2021/07/23/%E4%B8%80%E6%AC%BE%E6%94%AF%E6%8C%81%E5%8A%A0%E5%AF%86%E7%9A%84%E7%AC%94%E8%AE%B0StandardNotes/</id>
+    <published>2021-07-23T11:00:00.000Z</published>
+    <updated>2021-07-23T10:57:19.741Z</updated>
+    
+    
+    <summary type="html">Standard Notes 是一款免费、开源且完全加密的笔记应用程序。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="笔记" scheme="https://laosu.ml/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Chevereto配合PicGo打造个人图床</title>
+    <link href="https://laosu.ml/2021/07/19/Chevereto%E9%85%8D%E5%90%88PicGo%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E5%9B%BE%E5%BA%8A/"/>
+    <id>https://laosu.ml/2021/07/19/Chevereto%E9%85%8D%E5%90%88PicGo%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E5%9B%BE%E5%BA%8A/</id>
+    <published>2021-07-19T11:00:00.000Z</published>
+    <updated>2021-07-19T11:22:51.405Z</updated>
+    
+    
+    <summary type="html">Chevereto 是一款自建图床程序，PicGo 则是免费开源的图片上传与管理工具。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="图床" scheme="https://laosu.ml/tags/%E5%9B%BE%E5%BA%8A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>FTP客户端FileZilla的安装</title>
+    <link href="https://laosu.ml/2021/07/16/FTP%E5%AE%A2%E6%88%B7%E7%AB%AFFileZilla%E7%9A%84%E5%AE%89%E8%A3%85/"/>
+    <id>https://laosu.ml/2021/07/16/FTP%E5%AE%A2%E6%88%B7%E7%AB%AFFileZilla%E7%9A%84%E5%AE%89%E8%A3%85/</id>
+    <published>2021-07-16T11:00:00.000Z</published>
+    <updated>2021-07-16T10:38:04.364Z</updated>
+    
+    
+    <summary type="html">FileZilla 是一个免费开源的 FTP 软件，分为客户端版本和服务器版本，并具备所有的 FTP 软件功能。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="ftp" scheme="https://laosu.ml/tags/ftp/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>简单好用的书签管理器OneNav</title>
+    <link href="https://laosu.ml/2021/07/12/%E7%AE%80%E5%8D%95%E5%A5%BD%E7%94%A8%E7%9A%84%E4%B9%A6%E7%AD%BE%E7%AE%A1%E7%90%86%E5%99%A8OneNav/"/>
+    <id>https://laosu.ml/2021/07/12/%E7%AE%80%E5%8D%95%E5%A5%BD%E7%94%A8%E7%9A%84%E4%B9%A6%E7%AD%BE%E7%AE%A1%E7%90%86%E5%99%A8OneNav/</id>
+    <published>2021-07-12T11:00:00.000Z</published>
+    <updated>2021-07-12T10:40:51.800Z</updated>
+    
+    
+    <summary type="html">使用 PHP 开发的简约导航/书签管理系统。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="导航" scheme="https://laosu.ml/tags/%E5%AF%BC%E8%88%AA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>非docker方式搭建wallabag</title>
+    <link href="https://laosu.ml/2021/07/09/%E9%9D%9Edocker%E6%96%B9%E5%BC%8F%E6%90%AD%E5%BB%BAwallabag/"/>
+    <id>https://laosu.ml/2021/07/09/%E9%9D%9Edocker%E6%96%B9%E5%BC%8F%E6%90%AD%E5%BB%BAwallabag/</id>
+    <published>2021-07-09T11:00:00.000Z</published>
+    <updated>2021-07-09T11:09:02.007Z</updated>
+    
+    
+    <summary type="html">采用源代码方式安装的 wallabag 。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="稍后阅读" scheme="https://laosu.ml/tags/%E7%A8%8D%E5%90%8E%E9%98%85%E8%AF%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>115网盘资源下载到群晖</title>
+    <link href="https://laosu.ml/2021/07/05/115%E7%BD%91%E7%9B%98%E8%B5%84%E6%BA%90%E4%B8%8B%E8%BD%BD%E5%88%B0%E7%BE%A4%E6%99%96/"/>
+    <id>https://laosu.ml/2021/07/05/115%E7%BD%91%E7%9B%98%E8%B5%84%E6%BA%90%E4%B8%8B%E8%BD%BD%E5%88%B0%E7%BE%A4%E6%99%96/</id>
+    <published>2021-07-05T11:00:00.000Z</published>
+    <updated>2021-07-05T11:11:44.426Z</updated>
+    
+    
+    <summary type="html">aria2 是一个轻量级的多协议和多源命令行下载实用程序。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="网盘" scheme="https://laosu.ml/tags/%E7%BD%91%E7%9B%98/"/>
+    
+  </entry>
+  
+</feed>

@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/latte_social_su_32px.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/latte_social_su_16px.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="NBzRmGkIEf2N-KtEpgbtZyLYN1upTKpKC-lGzMsR9Q0">
+  <meta name="msvalidate.01" content="57B6B7FD8CF2E061F464E9FF87D7EEF4">
+  <meta name="baidu-site-verification" content="code-CJomTbekyI">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"laosu.ml","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"changyan","storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="像电子表格一样简单，像数据库一样强大的 SeaTable 。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在线协同表格SeaTable（安装篇）">
+<meta property="og:url" content="https://laosu.ml/2021/03/29/%E5%9C%A8%E7%BA%BF%E5%8D%8F%E5%90%8C%E8%A1%A8%E6%A0%BCSeaTable%EF%BC%88%E5%AE%89%E8%A3%85%E7%AF%87%EF%BC%89/index.html">
+<meta property="og:site_name" content="老苏的blog">
+<meta property="og:description" content="像电子表格一样简单，像数据库一样强大的 SeaTable 。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210322115503.png">
+<meta property="article:published_time" content="2021-03-29T11:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-29T11:50:16.818Z">
+<meta property="article:author" content="杨浦老苏">
+<meta property="article:tag" content="群晖">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="表格">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210322115503.png">
+
+
+<link rel="canonical" href="https://laosu.ml/2021/03/29/%E5%9C%A8%E7%BA%BF%E5%8D%8F%E5%90%8C%E8%A1%A8%E6%A0%BCSeaTable%EF%BC%88%E5%AE%89%E8%A3%85%E7%AF%87%EF%BC%89/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://laosu.ml/2021/03/29/%E5%9C%A8%E7%BA%BF%E5%8D%8F%E5%90%8C%E8%A1%A8%E6%A0%BCSeaTable%EF%BC%88%E5%AE%89%E8%A3%85%E7%AF%87%EF%BC%89/","path":"2021/03/29/在线协同表格SeaTable（安装篇）/","title":"在线协同表格SeaTable（安装篇）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>在线协同表格SeaTable（安装篇） | 老苏的blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-165372529-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-165372529-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?0d167cc966795fca90236e7478677373"></script>
+
+
+<link rel="dns-prefetch" href="https://0x404.ml"><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.css"><style>
+#needsharebutton-postbottom {
+  cursor: pointer;
+  height: 26px;
+  margin-top: 10px;
+  position: relative;
+}
+#needsharebutton-postbottom .btn {
+  border: 1px solid $btn-default-border-color;
+  border-radius: 3px;
+  display: initial;
+  padding: 1px 4px;
+}
+</style><script data-ad-client="ca-pub-2307783158392222" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="老苏的blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">老苏的blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">聚沙成塔，集腋成裘</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-top"><a href="/top/" rel="section"><i class="fa fa-signal fa-fw"></i>阅读排行</a></li>
+        <li class="menu-item menu-item-waline"><span class="exturl" data-url="aHR0cHM6Ly8weDQwNC5tbC91aQ=="><i class="fa fa-comment fa-fw"></i>评论管理</span></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E6%9C%9F%E5%87%86%E5%A4%87"><span class="nav-number">1.1.</span> <span class="nav-text">前期准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%92%8C%E4%BF%AE%E6%94%B9-docker-compose-yml"><span class="nav-number">1.2.</span> <span class="nav-text">下载和修改 docker-compose.yml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.3.</span> <span class="nav-text">初始化数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8-Docker-%E5%AE%B9%E5%99%A8"><span class="nav-number">1.4.</span> <span class="nav-text">启动 Docker 容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8-SeaTable-%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.5.</span> <span class="nav-text">启动 SeaTable 服务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C"><span class="nav-number">2.</span> <span class="nav-text">运行</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E4%B8%AD%E6%96%87"><span class="nav-number">2.1.</span> <span class="nav-text">设置中文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86"><span class="nav-number">2.2.</span> <span class="nav-text">系统管理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A1%A8%E5%8D%95%E7%BC%96%E8%BE%91%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">表单编辑问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">4.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="杨浦老苏"
+      src="/images/laosu_wx.jpg">
+  <p class="site-author-name" itemprop="name">杨浦老苏</p>
+  <div class="site-description" itemprop="description">折腾各种好玩的东西</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">173</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">247</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3dic3UyMDAz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wbsu2003"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOndic3UyMDAzQGdtYWlsLmNvbQ==" title="E-Mail → mailto:wbsu2003@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vMjg4NTI2NjU1NA==" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;2885266554"><i class="fab fa-weibo fa-fw"></i>Weibo</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dic3UyMDA0" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;wbsu2004"><i class="fab fa-cuttlefish fa-fw"></i>CSDN</span>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      本站其他站点
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://laosu.ml/" title="https:&#x2F;&#x2F;laosu.ml">主站（Vercel）</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93YnN1MjAwMy5naXRlZS5pbw==" title="https:&#x2F;&#x2F;wbsu2003.gitee.io">国内推荐（Gitee）</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9sYW9zdS5nYQ==" title="https:&#x2F;&#x2F;laosu.ga">备站（Github）</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9sYW9zdS50aw==" title="https:&#x2F;&#x2F;laosu.tk">备站（Netlify）</span>
+        </li>
+    </ul>
+  </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+    
+    <div class="post-gallery-image">
+      <img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210322115503.png" itemprop="contentUrl">
+    </div>
+    </div>
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laosu.ml/2021/03/29/%E5%9C%A8%E7%BA%BF%E5%8D%8F%E5%90%8C%E8%A1%A8%E6%A0%BCSeaTable%EF%BC%88%E5%AE%89%E8%A3%85%E7%AF%87%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/laosu_wx.jpg">
+      <meta itemprop="name" content="杨浦老苏">
+      <meta itemprop="description" content="折腾各种好玩的东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="老苏的blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在线协同表格SeaTable（安装篇）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-03-29 19:00:00 / 修改时间：19:50:16" itemprop="dateCreated datePublished" datetime="2021-03-29T19:00:00+08:00">2021-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/" itemprop="url" rel="index"><span itemprop="name">各种折腾</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2021/03/29/%E5%9C%A8%E7%BA%BF%E5%8D%8F%E5%90%8C%E8%A1%A8%E6%A0%BCSeaTable%EF%BC%88%E5%AE%89%E8%A3%85%E7%AF%87%EF%BC%89/#waline-comments" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" id="/2021/03/29/%E5%9C%A8%E7%BA%BF%E5%8D%8F%E5%90%8C%E8%A1%A8%E6%A0%BCSeaTable%EF%BC%88%E5%AE%89%E8%A3%85%E7%AF%87%EF%BC%89/" data-xid="/2021/03/29/%E5%9C%A8%E7%BA%BF%E5%8D%8F%E5%90%8C%E8%A1%A8%E6%A0%BCSeaTable%EF%BC%88%E5%AE%89%E8%A3%85%E7%AF%87%EF%BC%89/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span id="/2021/03/29/%E5%9C%A8%E7%BA%BF%E5%8D%8F%E5%90%8C%E8%A1%A8%E6%A0%BCSeaTable%EF%BC%88%E5%AE%89%E8%A3%85%E7%AF%87%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="在线协同表格SeaTable（安装篇）" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+<!--2021.08.21新增置顶标志-->
+<!--来自：https://www.itfanr.cc/2019/09/05/hexo-top-optimize/ -->
+
+ 
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">像电子表格一样简单，像数据库一样强大的 SeaTable 。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><strong>什么是 SeaTable ？</strong></p>
+<blockquote>
+<p>SeaTable 是一款新一代的在线协同表格。它支持“文件”、“图片”、“单选项”、“多选项”、“协作人”等丰富的数据类型。它帮助你方便的记录和管理各种零散的信息，并按照你的所需进行扩展，实现数据处理的自动化和业务流程的自动化。</p>
+</blockquote>
+<p>SeaTable 最初由 Seafile 团队 （<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hhaXdlbi9zZWFmaWxl">https://github.com/haiwen/seafile<i class="fa fa-external-link-alt"></i></span>） 构建，准备将在线协作表格功能添加到 Seafile ，后来成为了一个单独的项目，暂时尚未开源，但是按官方说法，源代码将在以后上传到 GitHub。</p>
+<p>SeaTable 由以下组件组成</p>
+<ul>
+<li>  dtable-web：用于管理表的网站。</li>
+<li>  dtable-server：存储表并提供协作功能。</li>
+<li>  dtable-events：后台任务，例如电子邮件发送等。</li>
+<li>  seaf-server：存储附件（文件和图像）</li>
+</ul>
+<p>下图显示了不同组件如何协同工作：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210322093908.png"></p>
+<ul>
+<li>  MariaDB，Memcache 和 Redis 在各自的 Docker 容器中运行。</li>
+<li>  Redis 用于将消息从 dtable-web / dtable-server 发送到 dtable-events</li>
+<li>  所有组件都使用 Memcache 来存储缓存，并使用 MariaDB 来存储永久信息。</li>
+<li>  基础数据保存在 dtable-server 中，并定期保存到文件/对象存储中以进行持久存储。</li>
+<li>  附件保存在文件/对象存储中</li>
+</ul>
+<p>SeaTable 有三个版本</p>
+<ul>
+<li>  开发人员版：适用于希望将 SeaTable 用作数据库并大量使用 API 和脚本的用户。开发人员版对存储，行号和 API 调用没有限制，但最多可以支持 dtable-server 的 200 个并发连接。</li>
+<li>  云版本：适用于希望将 SeaTable 用作协作工具的用户。它对存储，行数和 API 调用有限制。</li>
+<li>  企业版：对存储，行数和 API 调用几乎没有限制，并具有高级权限和用户管理功能。它适用于大型团队以两种方式使用 SeaTable 。用户可以在云中使用它，也可以自行托管。</li>
+</ul>
+<p>SeaTable 官方文档要求 4 核和 8GB RAM，这个要求对我的小 NUC 来说有点挑战，但是还是值得一试的。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><p>在 <code>docker</code> 文件夹中，创建一个新文件夹，并将其命名为 <code>seatable</code>，然后在 <code>seatable</code> 文件夹中再创建一个新的子文件夹命名为 <code>mysql</code> 。</p>
+<p>在 <code>mysql</code>文件夹上右键–&gt;<code>属性</code>，获取文件的 <code>所在位置</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210323093214.png"></p>
+<blockquote>
+<p>MySQL 数据的卷目录将用到这个路径</p>
+</blockquote>
+<p>在 <code>seatable</code>文件夹上右键–&gt;<code>属性</code>，获取文件的 <code>所在位置</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210323093558.png"></p>
+<blockquote>
+<p>SeaTable 数据的卷目录将用到这个路径</p>
+</blockquote>
+<h2 id="下载和修改-docker-compose-yml"><a href="#下载和修改-docker-compose-yml" class="headerlink" title="下载和修改 docker-compose.yml"></a>下载和修改 docker-compose.yml</h2><p>下载 <span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnNlYXRhYmxlLmNuL2QvMmFmNWM0YmNiOGUxNGYxYjg1ZjcvZmlsZXMvP3A9L2RvY2tlci9zZWF0YWJsZS1jZS9kb2NrZXItY29tcG9zZS55bWwmZGw9MQ==">docker-compose.yml <i class="fa fa-external-link-alt"></i></span> 文件到 <code>seatable</code> 目录，下载地址：<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnNlYXRhYmxlLmNuL2QvMmFmNWM0YmNiOGUxNGYxYjg1ZjcvZmlsZXMvP3A9L2RvY2tlci9zZWF0YWJsZS1jZS9kb2NrZXItY29tcG9zZS55bWwmZGw9MQ==">https://docs.seatable.cn/d/2af5c4bcb8e14f1b85f7/files/?p=/docker/seatable-ce/docker-compose.yml&amp;dl=1<i class="fa fa-external-link-alt"></i></span></p>
+<p>然后根据您的环境修改文件， 需要修改以下字段:</p>
+<ul>
+<li>  MySQL 的 root 的密码（MYSQL_ROOT_PASSWORD 和 DB_ROOT_PASSWD）【示例中设为了 <code>aW53Tza</code>，请根据您的需要设置，但是注意密码中不要有 <code>%</code> 号】</li>
+<li>  MySQL 数据的卷目录 (volume）【示例中设为了 <code>/volume1/docker/seatable/mysql</code>，这是前面建好的目录】</li>
+<li>  SeaTable 的镜像标签【示例中设为了 <code>latest</code>，目前最新的版本是 <code>1.8.0</code>】</li>
+<li>  SeaTable 数据的卷目录（volume)【示例中设为了 <code>volume1/docker/seatable</code>，这是前面建好的目录】</li>
+<li>  主机名（SEATABLE_SERVER_HOSTNAME），域名或者你的服务器的外部 IP【示例中设为了 <code>192.168.0.199</code>，这是我群晖的局域网 IP，请根据您的 IP 进行修改】</li>
+<li>  时区（可选）【示例中设为了 <code>Asia/Shanghai</code>】</li>
+</ul>
+<p>下面是我修改过的样例：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;2.0&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mariadb:10.5</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">seatable-mysql</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_ROOT_PASSWORD=aW53Tza</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_LOG_CONSOLE=true</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/volume1/docker/seatable/mysql:/var/lib/mysql</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">seatable-net</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">memcached:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">memcached:1.5.6</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">seatable-memcached</span></span><br><span class="line">    <span class="attr">entrypoint:</span> <span class="string">memcached</span> <span class="string">-m</span> <span class="number">256</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">seatable-net</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis:5.0.7</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">seatable-redis</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">seatable-net</span></span><br><span class="line">          </span><br><span class="line">  <span class="attr">seatable:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">seatable/seatable:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">seatable</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;16080:80&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;16443:443&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/volume1/docker/seatable:/shared</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DB_HOST=db</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DB_ROOT_PASSWD=aW53Tza</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SEATABLE_SERVER_LETSENCRYPT=False</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SEATABLE_SERVER_HOSTNAME=192.168.0.199</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">TIME_ZONE=Asia/Shanghai</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">memcached</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">redis</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">seatable-net</span></span><br><span class="line"></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">seatable-net:</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="初始化数据库"><a href="#初始化数据库" class="headerlink" title="初始化数据库"></a>初始化数据库</h2><p>用 SSH 客户端连到群晖。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入 seatable 目录</span></span><br><span class="line"><span class="built_in">cd</span> /volume1/docker/seatable</span><br></pre></td></tr></table></figure>
+
+<p>然后使用以下命令初始化数据库</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：您应该在 <code>docker-compose.yml</code> 文件所在的目录中运行上述命令。</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210323102429.png"></p>
+<p>稍等片刻，下载镜像的时间取决于您的网络，我的网络不太好，过程中总是出现</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR: net/http: TLS handshake timeout</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210323113236.png"></p>
+<p>如果报错，您可以再继续执行</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure>
+
+<p>对于已经下载完成的镜像，并不会重复下载，所以您可以当成是支持断点续传的。</p>
+<p>当您在输出日志中看到 <code>This is a idle script (infinite loop) to keep container running</code> 时，数据库已初始化成功。</p>
+<blockquote>
+<p>日志在 <code>Docker</code> –&gt; <code>容器</code> –&gt; <code>SeaTable</code> –&gt; <code>详情</code> –&gt; <code>日志</code></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210323114953.png"></p>
+<p>然后按键盘的 <code>Ctrl + C</code> 来结束初始化命令。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210323115039.png"></p>
+<h2 id="启动-Docker-容器"><a href="#启动-Docker-容器" class="headerlink" title="启动 Docker 容器"></a>启动 Docker 容器</h2><p>使用以下命令启动 SeaTable 容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210323115337.png"></p>
+<p>在 Docker 中你能看到 4 个相关的容器已经启动了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210323121031.png"></p>
+<h2 id="启动-SeaTable-服务"><a href="#启动-SeaTable-服务" class="headerlink" title="启动 SeaTable 服务"></a>启动 SeaTable 服务</h2><p>现在，您可以启动 SeaTable 服务并创建管理员账号</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动 SeaTable 服务</span></span><br><span class="line">docker <span class="built_in">exec</span> -d seatable /shared/seatable/scripts/seatable.sh start</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个管理员帐户</span></span><br><span class="line">docker <span class="built_in">exec</span> -it seatable /shared/seatable/scripts/seatable.sh superuser</span><br></pre></td></tr></table></figure>
+
+<p>注意:</p>
+<blockquote>
+<p>第一个命令使用 -d 参数表示要在后台运行的服务;<br>第二个命令使用 -it 参数表示它是一个交互式命令;</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210323152041.png" alt="涂抹邮箱"></p>
+<p>接下来，您可以通过浏览器访问 <code>SeaTable</code> 网页了。</p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>在浏览器中输入 <code>http://群晖IP:16080</code>，就可以看到登录界面了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210323152224.png"></p>
+<p>用上一步创建的 <code>superuser</code> 的邮箱和密码登录，登录成功就可以看到主界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210323152354.png"></p>
+<h2 id="设置中文"><a href="#设置中文" class="headerlink" title="设置中文"></a>设置中文</h2><p>右上角 <code>Avatar</code> –&gt; <code>Setting</code> –&gt; <code>Language Setting</code>  从下拉框中选择 <code>简体中文</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210323152924.png"></p>
+<p>会自动刷新为中文界面</p>
+<h2 id="系统管理"><a href="#系统管理" class="headerlink" title="系统管理"></a>系统管理</h2><p>右上角 <code>Avatar</code> –&gt; <code>进入系统管理</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210323153345.png"></p>
+<p>在这里可以对用户进行管理，添加插件等操作</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210323153657.png"></p>
+<h1 id="表单编辑问题"><a href="#表单编辑问题" class="headerlink" title="表单编辑问题"></a>表单编辑问题</h1><p>什么都正常，包括导入excel</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210324090707.png"></p>
+<p>虽然在导入时有时候会显示服务器忙</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210324085335.png"></p>
+<p>但是只要编辑就开始转圈，开始还我以为是我机器不行呢，直到朋友 <code>Eduna</code> 告诉我，他也一直在转圈，而我知道他的机器应该是没有性能瓶颈的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210324085156.png"></p>
+<p>打开浏览器的调试模式，发现 <code>dtable-server</code> 的链接没有带端口</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/picgo/20210327000831.png"></p>
+<blockquote>
+<p>后来发现论坛里有人反馈了同样的问题： <span class="exturl" data-url="aHR0cHM6Ly9iYnMuc2VhdGFibGUuY24vdC90b3BpYy80MTY=">https://bbs.seatable.cn/t/topic/416<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>这需要修改 <code>dtable_web_settings.py</code> 文件中的 <code>DTABLE_SERVER_URL</code>、<code>DTABLE_SOCKET_URL</code>、<code>DTABLE_WEB_SERVICE_URL</code>、<code>FILE_SERVER_ROOT</code>，加上端口 <code>16080</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/picgo/20210327112915.png"></p>
+<p><code>ccnet.conf</code> 文件中的 <code>SERVICE_URL</code> 也需要加上端口 <code>16080</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/picgo/20210328133519.png"></p>
+<blockquote>
+<p>这两个文件在 <code>/docker/seatable/seatable/conf</code> 目录中</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/picgo/20210328133717.png"></p>
+<p>保存后需要重启 <code>SeaTable</code> 服务</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -d seatable /shared/seatable/scripts/seatable.sh restart</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以编辑了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/picgo/20210327113555.png"></p>
+<p>周五将发布『在线协同表格SeaTable（设置篇）』，讲讲怎么导入和使用模板，敬请期待~</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>seatable/seatable: SeaTable: easy like a spreadsheet, powerful like a database<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NlYXRhYmxlL3NlYXRhYmxl">https://github.com/seatable/seatable<i class="fa fa-external-link-alt"></i></span></p>
+<p>jimzucker/upwork-seatable: Seatable Docker Deployment<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2ppbXp1Y2tlci91cHdvcmstc2VhdGFibGU=">https://github.com/jimzucker/upwork-seatable<i class="fa fa-external-link-alt"></i></span></p>
+<p>SeaTable - 新一代在线协同表格和信息管理系统<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9zZWF0YWJsZS5jbi8=">https://seatable.cn/<i class="fa fa-external-link-alt"></i></span></p>
+<p> SeaTable 使用手册<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnNlYXRhYmxlLmNuL3B1Ymxpc2hlZC9zZWF0YWJsZS11c2VyLW1hbnVhbC9ob21lLm1k">https://docs.seatable.cn/published/seatable-user-manual/home.md<i class="fa fa-external-link-alt"></i></span></p>
+<p>使用 Docker 部署 SeaTable 开发者版<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnNlYXRhYmxlLmNuL3B1Ymxpc2hlZC9zZWF0YWJsZS1tYW51YWwvZG9ja2VyL3NlYXRhYmxlLWNlL0RlcGxveSUyMFNlYVRhYmxlJTIwd2l0aCUyMERvY2tlci5tZA==">https://docs.seatable.cn/published/seatable-manual/docker/seatable-ce/Deploy%20SeaTable%20with%20Docker.md<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer"><div class="post-widgets">
+      <div id="needsharebutton-postbottom">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    </div><div>
+    
+        <br>
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------扫一扫，关注本站的微信公众号-------------</div>
+        <br>
+        <img src="/uploads/wechat-qcode.jpg">
+        <br>
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+<!--2021.08.13新增广告单元-->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2307783158392222"
+      crossorigin="anonymous"></script>
+    <ins class="adsbygoogle"
+      style="display:block; text-align:center;"
+      data-ad-layout="in-article"
+      data-ad-format="fluid"
+      data-ad-client="ca-pub-2307783158392222"
+      data-ad-slot="3142196442"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+  
+          <div class="reward-container">
+  <div>万水千山总是情，打赏一下行不行？</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/uploads/wechatpay.jpg" alt="杨浦老苏 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/uploads/alipay.jpg" alt="杨浦老苏 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>杨浦老苏
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://laosu.ml/2021/03/29/%E5%9C%A8%E7%BA%BF%E5%8D%8F%E5%90%8C%E8%A1%A8%E6%A0%BCSeaTable%EF%BC%88%E5%AE%89%E8%A3%85%E7%AF%87%EF%BC%89/" title="在线协同表格SeaTable（安装篇）">https://laosu.ml/2021/03/29/在线协同表格SeaTable（安装篇）/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/uploads/wechat-qcode_430.jpg">
+          <span class="icon">
+            <i class="fab fa-weixin"></i>
+          </span>
+
+          <span class="label">微信</span>
+        </a>
+      </div>
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/atom.xml">
+          <span class="icon">
+            <i class="fa fa-rss"></i>
+          </span>
+
+          <span class="label">RSS</span>
+        </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%BE%A4%E6%99%96/" rel="tag"><i class="fa fa-tag"></i> 群晖</a>
+              <a href="/tags/docker/" rel="tag"><i class="fa fa-tag"></i> docker</a>
+              <a href="/tags/%E8%A1%A8%E6%A0%BC/" rel="tag"><i class="fa fa-tag"></i> 表格</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/03/26/%E7%94%A8Comics-Reader%E6%94%B6%E8%97%8F%E9%98%85%E8%AF%BB%E5%B0%8F%E4%BA%BA%E4%B9%A6/" rel="prev" title="用Comics-Reader收藏阅读小人书">
+                  <i class="fa fa-chevron-left"></i> 用Comics-Reader收藏阅读小人书
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/04/02/%E5%9C%A8%E7%BA%BF%E5%8D%8F%E5%90%8C%E8%A1%A8%E6%A0%BCSeaTable%EF%BC%88%E8%AE%BE%E7%BD%AE%E7%AF%87%EF%BC%89/" rel="next" title="在线协同表格SeaTable（设置篇）">
+                  在线协同表格SeaTable（设置篇） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨浦老苏</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">341k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:10</span>
+  </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  </div><!--2020.05.03新增flagconuter计数-->
+<div>
+  <a target="_blank" rel="noopener" href="https://info.flagcounter.com/BEXu"><img src="https://s11.flagcounter.com/count2/BEXu/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0"></a>
+</div>
+
+<br>
+
+<!--2021.02.22新增网站运行时间-->
+<div>
+  <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+  <script>
+      var now = new Date();
+      function createtime() {
+          var grt= new Date("04/28/2020 00:00:00");
+          now.setTime(now.getTime()+250);
+          days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+          hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+          if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+          mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+          seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+          snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+          document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+          document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+      }
+  setInterval("createtime()",250);
+  </script>
+</div>
+
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://0x404.ml","placeholder":"有什么想法和需求，可以留个言","avatar":"monsterid","meta":["nick","mail","link"],"pageSize":10,"visitor":true,"comment_count":true,"requiredFields":[],"path":"/2021/03/29/%E5%9C%A8%E7%BA%BF%E5%8D%8F%E5%90%8C%E8%A1%A8%E6%A0%BCSeaTable%EF%BC%88%E5%AE%89%E8%A3%85%E7%AF%87%EF%BC%89/","requiredMeta":["nick","mail"],"emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili"],"libUrl":"https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js","dark":"auto","el":"#waline-comments"}</script>
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() => 
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => {
+    new Waline(CONFIG.waline);
+  });
+});
+</script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.js"></script>
+  <script>
+      pbOptions = {};
+        pbOptions.iconStyle = "box";
+        pbOptions.boxForm = "horizontal";
+        pbOptions.position = "bottomCenter";
+        pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+  </script>
+</body>
+</html>

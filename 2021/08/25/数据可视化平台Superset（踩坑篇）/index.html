@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/latte_social_su_32px.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/latte_social_su_16px.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="NBzRmGkIEf2N-KtEpgbtZyLYN1upTKpKC-lGzMsR9Q0">
+  <meta name="msvalidate.01" content="57B6B7FD8CF2E061F464E9FF87D7EEF4">
+  <meta name="baidu-site-verification" content="code-CJomTbekyI">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"laosu.ml","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"changyan","storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="superset 是由 Airbnb （知名在线短租赁公司）开源的数据分析与可视化平台（曾用名 Caravel 、 Panoramix ）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据可视化平台Superset（踩坑篇）">
+<meta property="og:url" content="https://laosu.ml/2021/08/25/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B9%B3%E5%8F%B0Superset%EF%BC%88%E8%B8%A9%E5%9D%91%E7%AF%87%EF%BC%89/index.html">
+<meta property="og:site_name" content="老苏的blog">
+<meta property="og:description" content="superset 是由 Airbnb （知名在线短租赁公司）开源的数据分析与可视化平台（曾用名 Caravel 、 Panoramix ）。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210815224527.png">
+<meta property="article:published_time" content="2021-08-25T11:00:00.000Z">
+<meta property="article:modified_time" content="2021-08-25T05:52:32.829Z">
+<meta property="article:author" content="杨浦老苏">
+<meta property="article:tag" content="群晖">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="BI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210815224527.png">
+
+
+<link rel="canonical" href="https://laosu.ml/2021/08/25/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B9%B3%E5%8F%B0Superset%EF%BC%88%E8%B8%A9%E5%9D%91%E7%AF%87%EF%BC%89/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://laosu.ml/2021/08/25/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B9%B3%E5%8F%B0Superset%EF%BC%88%E8%B8%A9%E5%9D%91%E7%AF%87%EF%BC%89/","path":"2021/08/25/数据可视化平台Superset（踩坑篇）/","title":"数据可视化平台Superset（踩坑篇）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>数据可视化平台Superset（踩坑篇） | 老苏的blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-165372529-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-165372529-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?0d167cc966795fca90236e7478677373"></script>
+
+
+<link rel="dns-prefetch" href="https://0x404.ml"><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.css"><style>
+#needsharebutton-postbottom {
+  cursor: pointer;
+  height: 26px;
+  margin-top: 10px;
+  position: relative;
+}
+#needsharebutton-postbottom .btn {
+  border: 1px solid $btn-default-border-color;
+  border-radius: 3px;
+  display: initial;
+  padding: 1px 4px;
+}
+</style><script data-ad-client="ca-pub-2307783158392222" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="老苏的blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">老苏的blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">聚沙成塔，集腋成裘</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-top"><a href="/top/" rel="section"><i class="fa fa-signal fa-fw"></i>阅读排行</a></li>
+        <li class="menu-item menu-item-waline"><span class="exturl" data-url="aHR0cHM6Ly8weDQwNC5tbC91aQ=="><i class="fa fa-comment fa-fw"></i>评论管理</span></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%90%86%E8%A7%A3%E6%95%B0%E6%8D%AE"><span class="nav-number">1.</span> <span class="nav-text">理解数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.</span> <span class="nav-text">新建数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E6%95%B0%E6%8D%AE"><span class="nav-number">3.</span> <span class="nav-text">上传数据</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E5%88%B0%E6%96%B0%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">3.1.</span> <span class="nav-text">连接到新数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C%E6%96%B0%E8%A1%A8-%E5%A4%B1%E8%B4%A5"><span class="nav-number">3.2.</span> <span class="nav-text">注册新表(失败)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0-CSV%EF%BC%88%E5%A4%B1%E8%B4%A5%EF%BC%89"><span class="nav-number">3.3.</span> <span class="nav-text">上传 CSV（失败）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E6%80%9D%E8%B7%AF1%EF%BC%9A%E7%9B%B4%E6%8E%A5%E5%B0%86csv%E4%BD%9C%E4%B8%BA%E6%95%B0%E6%8D%AE%E6%BA%90%EF%BC%88%E5%A4%B1%E8%B4%A5%EF%BC%89"><span class="nav-number">3.4.</span> <span class="nav-text">新思路1：直接将csv作为数据源（失败）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E6%80%9D%E8%B7%AF2%EF%BC%9A%E5%B0%86csv%E5%AF%BC%E5%85%A5MySQL"><span class="nav-number">3.5.</span> <span class="nav-text">新思路2：将csv导入MySQL</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">数据分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88Databases%EF%BC%89"><span class="nav-number">4.1.</span> <span class="nav-text">设置数据库（Databases）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E8%A1%A8%EF%BC%88Datasets%EF%BC%89"><span class="nav-number">4.2.</span> <span class="nav-text">设置表（Datasets）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%9B%BE%E8%A1%A8%EF%BC%88Charts%EF%BC%89"><span class="nav-number">4.3.</span> <span class="nav-text">设置图表（Charts）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">5.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="杨浦老苏"
+      src="/images/laosu_wx.jpg">
+  <p class="site-author-name" itemprop="name">杨浦老苏</p>
+  <div class="site-description" itemprop="description">折腾各种好玩的东西</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">173</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">247</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3dic3UyMDAz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wbsu2003"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOndic3UyMDAzQGdtYWlsLmNvbQ==" title="E-Mail → mailto:wbsu2003@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vMjg4NTI2NjU1NA==" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;2885266554"><i class="fab fa-weibo fa-fw"></i>Weibo</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dic3UyMDA0" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;wbsu2004"><i class="fab fa-cuttlefish fa-fw"></i>CSDN</span>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      本站其他站点
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://laosu.ml/" title="https:&#x2F;&#x2F;laosu.ml">主站（Vercel）</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93YnN1MjAwMy5naXRlZS5pbw==" title="https:&#x2F;&#x2F;wbsu2003.gitee.io">国内推荐（Gitee）</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9sYW9zdS5nYQ==" title="https:&#x2F;&#x2F;laosu.ga">备站（Github）</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9sYW9zdS50aw==" title="https:&#x2F;&#x2F;laosu.tk">备站（Netlify）</span>
+        </li>
+    </ul>
+  </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+    
+    <div class="post-gallery-image">
+      <img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210815224527.png" itemprop="contentUrl">
+    </div>
+    </div>
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laosu.ml/2021/08/25/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B9%B3%E5%8F%B0Superset%EF%BC%88%E8%B8%A9%E5%9D%91%E7%AF%87%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/laosu_wx.jpg">
+      <meta itemprop="name" content="杨浦老苏">
+      <meta itemprop="description" content="折腾各种好玩的东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="老苏的blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据可视化平台Superset（踩坑篇）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-08-25 19:00:00 / 修改时间：13:52:32" itemprop="dateCreated datePublished" datetime="2021-08-25T19:00:00+08:00">2021-08-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/" itemprop="url" rel="index"><span itemprop="name">各种折腾</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2021/08/25/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B9%B3%E5%8F%B0Superset%EF%BC%88%E8%B8%A9%E5%9D%91%E7%AF%87%EF%BC%89/#waline-comments" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" id="/2021/08/25/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B9%B3%E5%8F%B0Superset%EF%BC%88%E8%B8%A9%E5%9D%91%E7%AF%87%EF%BC%89/" data-xid="/2021/08/25/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B9%B3%E5%8F%B0Superset%EF%BC%88%E8%B8%A9%E5%9D%91%E7%AF%87%EF%BC%89/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span id="/2021/08/25/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B9%B3%E5%8F%B0Superset%EF%BC%88%E8%B8%A9%E5%9D%91%E7%AF%87%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="数据可视化平台Superset（踩坑篇）" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+<!--2021.08.21新增置顶标志-->
+<!--来自：https://www.itfanr.cc/2019/09/05/hexo-top-optimize/ -->
+
+ 
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">superset 是由 Airbnb （知名在线短租赁公司）开源的数据分析与可视化平台（曾用名 Caravel 、 Panoramix ）。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>从主菜单可以看出来，第一层是数据（Data)，第二层是图表（Charts），第三层是看板（Dashboards）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210331163946.png"></p>
+<p>数据形成了图表，而图表又构成了看板</p>
+<h1 id="理解数据"><a href="#理解数据" class="headerlink" title="理解数据"></a>理解数据</h1><p>为了能展示数据，我找到了一篇文章 <span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC80NTg3NzQ4OA==">Excel数据分析实例—牛油果销售分析（https://zhuanlan.zhihu.com/p/45877488）<i class="fa fa-external-link-alt"></i></span>，看能否用 <code>Superset</code> 来练习数据展示。</p>
+<blockquote>
+<p>数据来源： <span class="exturl" data-url="aHR0cHM6Ly93d3cua2FnZ2xlLmNvbS9uZXVyb211c2ljL2F2b2NhZG8tcHJpY2Vz">Avocado Prices（https://www.kaggle.com/neuromusic/avocado-prices）<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>首先用 <code>Excel</code> 打开 <code>avocado.csv</code> 文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401111929.png"></p>
+<p>对数据的标题稍作调整</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401111637.png"></p>
+<table>
+<thead>
+<tr>
+<th align="center">列</th>
+<th align="center">含义</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Week</td>
+<td align="center">第几周</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">Data</td>
+<td align="center">日期</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">AveragePrice</td>
+<td align="center">单个牛油果的平均价格</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">Total Volume</td>
+<td align="center">牛油果销售总量</td>
+<td align="center">包含了3种牛油果 PLU-4046,PLU-4225, PLU-4770 单个出售量 和 按袋出售的牛油果个数 Total Bags</td>
+</tr>
+<tr>
+<td align="center">PLU-4046</td>
+<td align="center">PLU-4046的销售个数</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">PLU-4225</td>
+<td align="center">PLU-4225的销售个数</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">PLU-4770</td>
+<td align="center">PLU-4770的销售个数</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">Total Bags</td>
+<td align="center">袋装牛油果的销售总量</td>
+<td align="center">为以袋为单位出售的牛油果的总个数，包含小袋Small Bags，大袋Large Bags和超大袋XLarge Bags三种不同规格</td>
+</tr>
+<tr>
+<td align="center">Small Bags</td>
+<td align="center">小袋牛油果销售个数</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">Large Bags</td>
+<td align="center">大袋牛油果销售个数</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">XLarge Bags</td>
+<td align="center">超大袋牛油果销售个数</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">type</td>
+<td align="center">牛油果类型</td>
+<td align="center">标明牛油果是普通的还是有机的</td>
+</tr>
+<tr>
+<td align="center">year</td>
+<td align="center">年份</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">region</td>
+<td align="center">地区</td>
+<td align="center">表示美国不同地区的牛油果销售量，包含部分城市、西部、东北部等地区和全美总体数据</td>
+</tr>
+</tbody></table>
+<h1 id="新建数据库"><a href="#新建数据库" class="headerlink" title="新建数据库"></a>新建数据库</h1><p>通过 <code>phpMyAdmin</code> 新建一个库 <code>demo</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401130949.png"></p>
+<h1 id="上传数据"><a href="#上传数据" class="headerlink" title="上传数据"></a>上传数据</h1><h2 id="连接到新数据库"><a href="#连接到新数据库" class="headerlink" title="连接到新数据库"></a>连接到新数据库</h2><p>在主界面 <code>数据库（Data）</code> –&gt; <code>数据库（Databases）</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401114957.png"></p>
+<p>点右上侧的 <code>+ 数据库（DATABASE）</code>，在弹出界面填写 <code>数据库名称（DATAASE NAME）</code> 和<code>SQLAlchemy URI</code></p>
+<blockquote>
+<p><code>SQLAlchemy URI</code> 和之前 <code>config.py</code> 中的 <code>SQLALCHEMY_DATABASE_URI</code> 格式是一致的，也是 <code>mysql://用户:密码@xx.xx.xx.xx:3306/数据库名称?charset=utf8</code> </p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401131510.png"></p>
+<p>点 <code>测试连接（TEST CONNECTION）</code>，如果测试不通过，下方会有提示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401115902.png"></p>
+<p>通过之后</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401115803.png"></p>
+<p><code>SQL LAB SETTINGS</code> 页中勾选 <code>允许 CREATE TABLE AS</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401133019.png"></p>
+<p><code>扩展</code> 页中勾选 <code>Allow Data Upload</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401131723.png"></p>
+<p>点 <code>ADD</code> 保存</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401132014.png"></p>
+<h2 id="注册新表-失败"><a href="#注册新表-失败" class="headerlink" title="注册新表(失败)"></a>注册新表(失败)</h2><p>在主界面 <code>数据库（Data）</code> –&gt; <code>数据库（Datasets）</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401120502.png"></p>
+<p>点右上侧的 <code>+ 数据库（DATASET）</code>，在弹出界面，模式选 <code>demo</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401132147.png"></p>
+<p>因为 <code>demo</code> 是空库，所以 <code>表</code>也是空的，需要自己填 <code>avocado</code>，然后点 <code>Create avocado</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401132449.png"></p>
+<p>点 <code>ADD</code>，居然出错了，没权限？</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401132706.png"></p>
+<h2 id="上传-CSV（失败）"><a href="#上传-CSV（失败）" class="headerlink" title="上传 CSV（失败）"></a>上传 CSV（失败）</h2><p>在主界面 <code>数据库</code> –&gt; <code>上传CSV文件</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401113152.png"></p>
+<p>填写表名</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401134838.png"></p>
+<p>点 <code>保存</code> ，居然又出错了，显示 <code>No such file or directory</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401135106.png"></p>
+<p>显示不存在目录，进入容器后发现确实 <code>/usr/local/lib/python3.8/site-packages/superset/</code> 确实不存在 <code>app</code>，依次创建 <code>/app/static/uploads/</code> 三级目录，再上传</p>
+<p>这次显示的是 <code>Permission denied</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401142602.png"></p>
+<h2 id="新思路1：直接将csv作为数据源（失败）"><a href="#新思路1：直接将csv作为数据源（失败）" class="headerlink" title="新思路1：直接将csv作为数据源（失败）"></a>新思路1：直接将csv作为数据源（失败）</h2><p>将 <code>avocado.csv</code> 丢到 <code>/docker/superset</code>目录，右键 –&gt; <code>属性</code> 获取 <code>所在位置</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401153110.png"></p>
+<p>SSH 登录到群晖</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 从 avocado.csv 群晖拷贝到容器 amancevice-superset1 内</span></span><br><span class="line">docker cp /volume1/docker/superset/avocado.csv amancevice-superset1:/usr/<span class="built_in">local</span>/lib/python3.8/site-packages/superset/</span><br></pre></td></tr></table></figure>
+
+<p>尝试将 SQLite 作为数据源</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlite:////usr/<span class="built_in">local</span>/lib/python3.8/site-packages/superset/avocado.csv</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401155057.png"></p>
+<p><code>测试连接</code> 失败</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401155143.png"></p>
+<h2 id="新思路2：将csv导入MySQL"><a href="#新思路2：将csv导入MySQL" class="headerlink" title="新思路2：将csv导入MySQL"></a>新思路2：将csv导入MySQL</h2><p><code>phpMyAdmin</code> 存在文件大小的限制，所以用了 <code>Navicat</code> 导数据</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401160035.png"></p>
+<p>选中<code>表</code>，右键选择 <code>导入向导</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401160543.png"></p>
+<p>格式选择 <code>csv</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401160708.png"></p>
+<p>添加文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210825134035.png" alt="已模糊"></p>
+<p>这里不动，继续</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401160849.png"></p>
+<p>时间的格式默认是 <code>DMY</code>，改为 <code>YMD</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401161050.png"></p>
+<p>表名不变，默认的就可以</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401161136.png"></p>
+<p>字段也不用改，因为前面已经处理过了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401161216.png"></p>
+<p>第一次导入，默认还没有数据，所以选什么都一样</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401161302.png"></p>
+<p>开始导入</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210825134349.png" alt="已模糊"></p>
+<p>导入成功后有提示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210825134510.png" alt="已模糊"></p>
+<p>看一下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401161534.png"></p>
+<h1 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h1><p>在开始分析之前，重新整理下思路：</p>
+<ol>
+<li> <code>csv</code> 因为安全原因，不能直接作为数据源；</li>
+<li> 数据不能直接导入 <code>Superset</code>;</li>
+<li> 需要一个 <code>MySQL</code> 或者其他类型的数据库作为存储；</li>
+</ol>
+<h2 id="设置数据库（Databases）"><a href="#设置数据库（Databases）" class="headerlink" title="设置数据库（Databases）"></a>设置数据库（Databases）</h2><p>这一步，已经在 <a href="#%E8%BF%9E%E6%8E%A5%E5%88%B0%E6%96%B0%E6%95%B0%E6%8D%AE%E5%BA%93">连接到新数据库</a> 中完成了，所以可以跳过；</p>
+<h2 id="设置表（Datasets）"><a href="#设置表（Datasets）" class="headerlink" title="设置表（Datasets）"></a>设置表（Datasets）</h2><p>在主界面 <code>数据库（Data）</code> –&gt; <code>数据库（Datasets）</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401120502.png"></p>
+<p>点右上侧的 <code>+ 数据库（DATASET）</code>，在弹出界面，模式选 <code>demo</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401162735.png"></p>
+<p>直接点 <code>ADD</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401162808.png"></p>
+<h2 id="设置图表（Charts）"><a href="#设置图表（Charts）" class="headerlink" title="设置图表（Charts）"></a>设置图表（Charts）</h2><p>在主界面 <code>Chart</code> –&gt; <code>+ 图表</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401163159.png"></p>
+<p>下拉框中选表</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401163449.png"></p>
+<p><code>创建新图表</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401163550.png"></p>
+<p>终于看到图表了，但接下来就不知道怎么玩了，这个得先学 <code>数据分析</code> 了吧？</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210401165833.png"></p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>AWS 教您手把手玩转 Apache Superset 可视化 Amazon S3 里的数据 | 亚马逊AWS官方博客<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9hd3MuYW1hem9uLmNvbS9jbi9ibG9ncy9jaGluYS9hd3MtdGVhY2hlcy15b3UtdG8tcGxheS13aXRoLWFwYWNoZS1zdXBlcnNldC10by12aXN1YWxpemUtdGhlLWRhdGEtaW4tYW1hem9uLXMzLw==">https://aws.amazon.com/cn/blogs/china/aws-teaches-you-to-play-with-apache-superset-to-visualize-the-data-in-amazon-s3/<i class="fa fa-external-link-alt"></i></span></p>
+<p>#mac# 篇三：自建Superset数据可视化平台并创建疫情地图网站（上）_服务器_什么值得买<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9wb3N0LnNtemRtLmNvbS9wL2E2bHI2ejZlLw==">https://post.smzdm.com/p/a6lr6z6e/<i class="fa fa-external-link-alt"></i></span></p>
+<p>#mac# 篇四：自建Superset数据可视化平台并创建疫情地图网站（下）_服务器_什么值得买<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9wb3N0LnNtemRtLmNvbS9wL2EyNTkycG9xLw==">https://post.smzdm.com/p/a2592poq/<i class="fa fa-external-link-alt"></i></span></p>
+<p>canghailan/Wuhan-2019-nCoV: 2019-nCoV 新冠状病毒 2019-12-01至今国家、省、市三级每日统计数据（支持接口读取）<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NhbmdoYWlsYW4vV3VoYW4tMjAxOS1uQ29W">https://github.com/canghailan/Wuhan-2019-nCoV<i class="fa fa-external-link-alt"></i></span></p>
+<p>如何让Superset的地图显示中文<br>地址：<span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vdHRhcnRpY2xlL3Avc2hvdz9pZD0yMzEzNTAxMDAwMDE0MTc5NzQwODM4Nzg1NDI5JnN1ZGFyZWY9d3d3Lmdvb2dsZS5jb20=">https://weibo.com/ttarticle/p/show?id=2313501000014179740838785429&amp;sudaref=www.google.com<i class="fa fa-external-link-alt"></i></span></p>
+<p>superset导出csv中文乱码问题_Python - UCloud云社区<br>地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cudWNsb3VkLmNuL3l1bi80Mzg2OS5odG1s">https://www.ucloud.cn/yun/43869.html<i class="fa fa-external-link-alt"></i></span></p>
+<p>Excel数据分析实例—牛油果销售分析 - 知乎<br>地址：<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC80NTg3NzQ4OA==">https://zhuanlan.zhihu.com/p/45877488<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer"><div class="post-widgets">
+      <div id="needsharebutton-postbottom">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    </div><div>
+    
+        <br>
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------扫一扫，关注本站的微信公众号-------------</div>
+        <br>
+        <img src="/uploads/wechat-qcode.jpg">
+        <br>
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+<!--2021.08.13新增广告单元-->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2307783158392222"
+      crossorigin="anonymous"></script>
+    <ins class="adsbygoogle"
+      style="display:block; text-align:center;"
+      data-ad-layout="in-article"
+      data-ad-format="fluid"
+      data-ad-client="ca-pub-2307783158392222"
+      data-ad-slot="3142196442"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+  
+          <div class="reward-container">
+  <div>万水千山总是情，打赏一下行不行？</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/uploads/wechatpay.jpg" alt="杨浦老苏 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/uploads/alipay.jpg" alt="杨浦老苏 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>杨浦老苏
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://laosu.ml/2021/08/25/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B9%B3%E5%8F%B0Superset%EF%BC%88%E8%B8%A9%E5%9D%91%E7%AF%87%EF%BC%89/" title="数据可视化平台Superset（踩坑篇）">https://laosu.ml/2021/08/25/数据可视化平台Superset（踩坑篇）/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/uploads/wechat-qcode_430.jpg">
+          <span class="icon">
+            <i class="fab fa-weixin"></i>
+          </span>
+
+          <span class="label">微信</span>
+        </a>
+      </div>
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/atom.xml">
+          <span class="icon">
+            <i class="fa fa-rss"></i>
+          </span>
+
+          <span class="label">RSS</span>
+        </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%BE%A4%E6%99%96/" rel="tag"><i class="fa fa-tag"></i> 群晖</a>
+              <a href="/tags/docker/" rel="tag"><i class="fa fa-tag"></i> docker</a>
+              <a href="/tags/BI/" rel="tag"><i class="fa fa-tag"></i> BI</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/08/23/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B9%B3%E5%8F%B0Superset%EF%BC%88%E5%AE%89%E8%A3%85%E7%AF%87%EF%BC%89/" rel="prev" title="数据可视化平台Superset（安装篇）">
+                  <i class="fa fa-chevron-left"></i> 数据可视化平台Superset（安装篇）
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨浦老苏</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">341k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:10</span>
+  </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  </div><!--2020.05.03新增flagconuter计数-->
+<div>
+  <a target="_blank" rel="noopener" href="https://info.flagcounter.com/BEXu"><img src="https://s11.flagcounter.com/count2/BEXu/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0"></a>
+</div>
+
+<br>
+
+<!--2021.02.22新增网站运行时间-->
+<div>
+  <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+  <script>
+      var now = new Date();
+      function createtime() {
+          var grt= new Date("04/28/2020 00:00:00");
+          now.setTime(now.getTime()+250);
+          days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+          hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+          if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+          mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+          seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+          snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+          document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+          document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+      }
+  setInterval("createtime()",250);
+  </script>
+</div>
+
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://0x404.ml","placeholder":"有什么想法和需求，可以留个言","avatar":"monsterid","meta":["nick","mail","link"],"pageSize":10,"visitor":true,"comment_count":true,"requiredFields":[],"path":"/2021/08/25/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B9%B3%E5%8F%B0Superset%EF%BC%88%E8%B8%A9%E5%9D%91%E7%AF%87%EF%BC%89/","requiredMeta":["nick","mail"],"emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili"],"libUrl":"https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js","dark":"auto","el":"#waline-comments"}</script>
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() => 
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => {
+    new Waline(CONFIG.waline);
+  });
+});
+</script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.js"></script>
+  <script>
+      pbOptions = {};
+        pbOptions.iconStyle = "box";
+        pbOptions.boxForm = "horizontal";
+        pbOptions.position = "bottomCenter";
+        pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+  </script>
+</body>
+</html>
