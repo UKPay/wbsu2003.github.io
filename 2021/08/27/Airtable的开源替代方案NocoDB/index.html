@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/latte_social_su_32px.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/latte_social_su_16px.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="NBzRmGkIEf2N-KtEpgbtZyLYN1upTKpKC-lGzMsR9Q0">
+  <meta name="msvalidate.01" content="57B6B7FD8CF2E061F464E9FF87D7EEF4">
+  <meta name="baidu-site-verification" content="code-CJomTbekyI">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"laosu.ml","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"changyan","storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="NocoDB 是一个开源 NoCode 平台，可将任何 MySQL、PostgreSQL、SQL Server、SQLite 和 MariaDB 转换为智能电子表格。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Airtable的开源替代方案NocoDB">
+<meta property="og:url" content="https://laosu.ml/2021/08/27/Airtable%E7%9A%84%E5%BC%80%E6%BA%90%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88NocoDB/index.html">
+<meta property="og:site_name" content="老苏的blog">
+<meta property="og:description" content="NocoDB 是一个开源 NoCode 平台，可将任何 MySQL、PostgreSQL、SQL Server、SQLite 和 MariaDB 转换为智能电子表格。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210827092652.png">
+<meta property="article:published_time" content="2021-08-27T04:00:00.000Z">
+<meta property="article:modified_time" content="2021-08-27T04:37:05.968Z">
+<meta property="article:author" content="杨浦老苏">
+<meta property="article:tag" content="群晖">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="表格">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210827092652.png">
+
+
+<link rel="canonical" href="https://laosu.ml/2021/08/27/Airtable%E7%9A%84%E5%BC%80%E6%BA%90%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88NocoDB/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://laosu.ml/2021/08/27/Airtable%E7%9A%84%E5%BC%80%E6%BA%90%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88NocoDB/","path":"2021/08/27/Airtable的开源替代方案NocoDB/","title":"Airtable的开源替代方案NocoDB"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Airtable的开源替代方案NocoDB | 老苏的blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-165372529-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-165372529-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?0d167cc966795fca90236e7478677373"></script>
+
+
+<link rel="dns-prefetch" href="https://0x404.ml"><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.css"><style>
+#needsharebutton-postbottom {
+  cursor: pointer;
+  height: 26px;
+  margin-top: 10px;
+  position: relative;
+}
+#needsharebutton-postbottom .btn {
+  border: 1px solid $btn-default-border-color;
+  border-radius: 3px;
+  display: initial;
+  padding: 1px 4px;
+}
+</style><script data-ad-client="ca-pub-2307783158392222" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="老苏的blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">老苏的blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">聚沙成塔，集腋成裘</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-top"><a href="/top/" rel="section"><i class="fa fa-signal fa-fw"></i>阅读排行</a></li>
+        <li class="menu-item menu-item-waline"><span class="exturl" data-url="aHR0cHM6Ly8weDQwNC5tbC91aQ=="><i class="fa fa-comment fa-fw"></i>评论管理</span></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.1.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E9%95%9C%E5%83%8F"><span class="nav-number">1.2.</span> <span class="nav-text">安装镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%B7"><span class="nav-number">1.3.</span> <span class="nav-text">卷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.4.</span> <span class="nav-text">端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">1.5.</span> <span class="nav-text">环境</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C"><span class="nav-number">2.</span> <span class="nav-text">运行</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%96%B0%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.1.</span> <span class="nav-text">创建新项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E8%A1%A8"><span class="nav-number">2.2.</span> <span class="nav-text">建表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%97"><span class="nav-number">2.2.1.</span> <span class="nav-text">列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%8C"><span class="nav-number">2.2.2.</span> <span class="nav-text">行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#REST-API-%E8%AE%BF%E9%97%AE"><span class="nav-number">2.3.</span> <span class="nav-text">REST API 访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%BC%E5%85%A5%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.4.</span> <span class="nav-text">从数据库导入项目</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">4.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="杨浦老苏"
+      src="/images/laosu_wx.jpg">
+  <p class="site-author-name" itemprop="name">杨浦老苏</p>
+  <div class="site-description" itemprop="description">折腾各种好玩的东西</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">174</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">247</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3dic3UyMDAz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wbsu2003"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOndic3UyMDAzQGdtYWlsLmNvbQ==" title="E-Mail → mailto:wbsu2003@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vMjg4NTI2NjU1NA==" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;2885266554"><i class="fab fa-weibo fa-fw"></i>Weibo</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dic3UyMDA0" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;wbsu2004"><i class="fab fa-cuttlefish fa-fw"></i>CSDN</span>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      本站其他站点
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://laosu.ml/" title="https:&#x2F;&#x2F;laosu.ml">主站（Vercel）</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93YnN1MjAwMy5naXRlZS5pbw==" title="https:&#x2F;&#x2F;wbsu2003.gitee.io">国内推荐（Gitee）</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9sYW9zdS5nYQ==" title="https:&#x2F;&#x2F;laosu.ga">备站（Github）</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9sYW9zdS50aw==" title="https:&#x2F;&#x2F;laosu.tk">备站（Netlify）</span>
+        </li>
+    </ul>
+  </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+    
+    <div class="post-gallery-image">
+      <img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210827092652.png" itemprop="contentUrl">
+    </div>
+    </div>
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laosu.ml/2021/08/27/Airtable%E7%9A%84%E5%BC%80%E6%BA%90%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88NocoDB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/laosu_wx.jpg">
+      <meta itemprop="name" content="杨浦老苏">
+      <meta itemprop="description" content="折腾各种好玩的东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="老苏的blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Airtable的开源替代方案NocoDB
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-08-27 12:00:00 / 修改时间：12:37:05" itemprop="dateCreated datePublished" datetime="2021-08-27T12:00:00+08:00">2021-08-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/" itemprop="url" rel="index"><span itemprop="name">各种折腾</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2021/08/27/Airtable%E7%9A%84%E5%BC%80%E6%BA%90%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88NocoDB/#waline-comments" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" id="/2021/08/27/Airtable%E7%9A%84%E5%BC%80%E6%BA%90%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88NocoDB/" data-xid="/2021/08/27/Airtable%E7%9A%84%E5%BC%80%E6%BA%90%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88NocoDB/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span id="/2021/08/27/Airtable%E7%9A%84%E5%BC%80%E6%BA%90%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88NocoDB/" class="post-meta-item leancloud_visitors" data-flag-title="Airtable的开源替代方案NocoDB" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+<!--2021.08.21新增置顶标志-->
+<!--来自：https://www.itfanr.cc/2019/09/05/hexo-top-optimize/ -->
+
+ 
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">NocoDB 是一个开源 NoCode 平台，可将任何 MySQL、PostgreSQL、SQL Server、SQLite 和 MariaDB 转换为智能电子表格。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><strong>什么是 Airtable ？</strong></p>
+<blockquote>
+<p><code>Airtable</code> 是新型的在线表格制作工具，不仅局限于表格，它还可以把文字、图片、链接、文档等各种资料整合在一起。是电子表格-数据库混合体，具有数据库的功能，但实际上还是电子表格。</p>
+</blockquote>
+<p><strong>什么是 REST API ？</strong></p>
+<blockquote>
+<p><code>REST API</code> 也称为 <code>RESTful API</code>，是遵循 <code>REST</code> 架构规范的应用编程接口（<code>API</code> 或 <code>Web API</code>），支持与 <code>RESTful Web</code> 服务进行交互。<code>REST</code> 是表述性状态传递的英文缩写（<code>Representational State Transfer</code>），由计算机科学家 <code>Roy Fielding</code> 在 2000 年提出。它的简单易用性，可扩展性，伸缩性受到广大 <code>Web</code> 开发者的喜爱。</p>
+</blockquote>
+<p><strong>什么是 GraphQL ?</strong></p>
+<blockquote>
+<p><code>GraphQL</code> 是一种新的 <code>API</code> 标准，它提供了一种比 <code>REST</code> 更有效、更强大和更灵活的替代方案。作为 <code>REST</code> 的替代方案，<code>GraphQL</code> 允许开发人员构建相应的请求，从而通过单个 <code>API</code> 调用从多个数据源中提取数据。<code>GraphQL</code> 由 <code>Facebook</code> 开发，并于 2012 年首次应用于移动应用，于 2015 年实现开源。</p>
+</blockquote>
+<p><code>REST API</code> 在之前的『 <a href="https://laosu.ml/2021/08/02/%E7%AE%80%E7%BA%A6%E4%BD%86%E7%BB%9D%E4%B8%8D%E7%AE%80%E5%8D%95%E7%9A%84Komga/">简约但绝不简单的Komga</a> 』一文中已经遇到了，而 <code>NocoDB</code> 同时支持 <code>REST API</code>和 <code>GraphQL API</code></p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><p>通过 <code>phpMyAdmin</code> 在 <code>MariaDB 10</code> 中新建用户 <code>nocodb</code>，创建同名的库 <code>nocodb</code> 并授予所有权限。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804141251.png" alt="10"></p>
+<p>如果使用 <code>MariaDB 5</code>，在创建 <code>table</code> 时会遇到下面👇这样的错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CODE:</span><br><span class="line">ER_TOO_MUCH_AUTO_TIMESTAMP_COLS</span><br></pre></td></tr></table></figure>
+
+<p>从而导致创建失败</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804135833.png"></p>
+<h2 id="安装镜像"><a href="#安装镜像" class="headerlink" title="安装镜像"></a>安装镜像</h2><p>在群晖上以 Docker 方式安装。</p>
+<p>在注册表中搜索 <code>nocodb</code> ，选择第一个 <code>nocodb/nocodb</code>，版本选择 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804110617.png"></p>
+<h2 id="卷"><a href="#卷" class="headerlink" title="卷"></a>卷</h2><p>在 <code>docker</code> 文件夹中，创建一个新文件夹，并将其命名为 <code>nocodb</code></p>
+<table>
+<thead>
+<tr>
+<th align="center">文件夹</th>
+<th align="center">装载路径</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>docker/nocodb</code></td>
+<td align="center"><code>/usr/app/data</code></td>
+<td align="center">存放数据</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210805151127.png"></p>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>端口不冲突就行，这里用了 <code>2380</code> </p>
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">2380</td>
+<td align="center">8080</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804111443.png"></p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><table>
+<thead>
+<tr>
+<th align="center">可变</th>
+<th align="center">值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>NC_DB</code></td>
+<td align="center">数据库连接参数，<code>mysql2://群晖IP:3307?u=用户&amp;p=密码&amp;d=表</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>MariaDB 5 默认的端口是 3306，MariaDB 10 默认的端口是 3307</p>
+</blockquote>
+<p>所以根据前面的设置，连接参数应该是 <code>mysql2://192.168.0.197:3307?u=nocodb&amp;p=TWYQDFsgq9Ng&amp;d=nocodb</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210805151355.png"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>在浏览器中输入 <code>http://群晖IP:2380</code>，就看到欢迎界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210805151524.png"></p>
+<p>跳过欢迎界面之后</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210805152056.png"></p>
+<p>第一次需要注册，这个账号将成为管理员账号</p>
+<blockquote>
+<p>密码至少有 8 个字母，其中包括 1 个大写字母、1 个数字和 1 个特殊字母</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804113329.png"></p>
+<h2 id="创建新项目"><a href="#创建新项目" class="headerlink" title="创建新项目"></a>创建新项目</h2><p>注册成功之后可以开始新建项目</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210805155318.png"></p>
+<p>输入项目名称，可以选择生成的 <code>API</code> 类型</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210805155523.png"></p>
+<h2 id="建表"><a href="#建表" class="headerlink" title="建表"></a>建表</h2><p>可以通过 <code>+</code> 号创建 <code>table</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804151634.png"></p>
+<p>输入表名，然后点 <code>Submit</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210805155702.png"></p>
+<blockquote>
+<p>id 列是不能禁用的，</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804152216.png"></p>
+<p>成功提交后，表格将创建并作为新选项卡打开。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804143303.png"></p>
+<h3 id="列"><a href="#列" class="headerlink" title="列"></a>列</h3><p>单击表格右上角的 <code>+</code> 图标</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804152447.png"></p>
+<p>弹出表单中可以填写列名、类型、长度等，其中类型非常丰富</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804152623.png"></p>
+<p>修改后保存</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804152808.png"></p>
+<h3 id="行"><a href="#行" class="headerlink" title="行"></a>行</h3><p>点下图中的 <code>+</code> 号可以创建新的行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804153324.png"></p>
+<p>输入 <code>title</code> 和 <code>url</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804153514.png"></p>
+<p>点右上角的 <code>Save Row</code>，就有数据了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804153613.png"></p>
+<p>又加了一行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804155600.png"></p>
+<h2 id="REST-API-访问"><a href="#REST-API-访问" class="headerlink" title="REST API 访问"></a>REST API 访问</h2><p>在主界面点最右上角的图标，单击 <code>Copy auth token</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804154033.png"></p>
+<p>单击同样的按钮，这次选择 <code>Swagger APIs Doc</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804154530.png"></p>
+<p>选择 <code>Schemes</code> 并单击<code>Authorize</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804154705.png"></p>
+<p>粘贴复制的令牌，然后单击 <code>Authorize</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804154751.png"></p>
+<p>验证成功</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804154823.png"></p>
+<p>用 <code>Get list</code> 接口</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804155759.png"></p>
+<p>可以查询到我们刚才建的两条数据</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804155909.png"></p>
+<h2 id="从数据库导入项目"><a href="#从数据库导入项目" class="headerlink" title="从数据库导入项目"></a>从数据库导入项目</h2><p>通过连接外部数据库创建项目</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804113551.png"></p>
+<p>需要进行数据库配置</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804141802.png"></p>
+<p>老苏用了之前 <code>兰空图床</code> 的数据库</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210805160209.png"></p>
+<p>点 <code>Test Database Connection</code> 测试数据库连接 </p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804114209.png"></p>
+<p>没问题的话就点 <code>OK &amp; Save Project</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210805160411.png"></p>
+<p>可以看到数据都已经过来了，接下来就可以通过 <code>REST API</code> 访问了</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p><code>NocoDB</code> 和我们之前介绍的 <code>SeaTable</code> 非常类似，区别在于 <code>SeaTable</code> 偏向于提供应用模板，而 <code>NocoDB</code> 偏向于提供接口，是一个从数据库到 <code>REST-GraphQL API</code> 的生成器，更方便做二次开发</p>
+<p>按官方的规划，未来可实现拖拽设计页面，这又有点像 <code>Tduck</code>了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/202108262332490.png"></p>
+<hr>
+<p>【小彩蛋】：一段时间不操作，界面会变得像黑客帝国</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210804133309.png"></p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>nocodb/nocodb: 🔥 🔥 The Open Source Airtable alternative - Powered by Vue.js 🚀 🚀<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25vY29kYi9ub2NvZGI=">https://github.com/nocodb/nocodb<i class="fa fa-external-link-alt"></i></span></p>
+<p>NocoDB Documentation - NocoDB<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLm5vY29kYi5jb20v">https://docs.nocodb.com/<i class="fa fa-external-link-alt"></i></span></p>
+<p>How to Install NocoDB on Your Synology NAS – Marius Hosting<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9tYXJpdXNob3N0aW5nLmNvbS9ob3ctdG8taW5zdGFsbC1ub2NvZGItb24teW91ci1zeW5vbG9neS1uYXMv">https://mariushosting.com/how-to-install-nocodb-on-your-synology-nas/<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer"><div class="post-widgets">
+      <div id="needsharebutton-postbottom">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    </div><div>
+    
+        <br>
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------扫一扫，关注本站的微信公众号-------------</div>
+        <br>
+        <img src="/uploads/wechat-qcode.jpg">
+        <br>
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+<!--2021.08.13新增广告单元-->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2307783158392222"
+      crossorigin="anonymous"></script>
+    <ins class="adsbygoogle"
+      style="display:block; text-align:center;"
+      data-ad-layout="in-article"
+      data-ad-format="fluid"
+      data-ad-client="ca-pub-2307783158392222"
+      data-ad-slot="3142196442"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+  
+          <div class="reward-container">
+  <div>万水千山总是情，打赏一下行不行？</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/uploads/wechatpay.jpg" alt="杨浦老苏 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/uploads/alipay.jpg" alt="杨浦老苏 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>杨浦老苏
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://laosu.ml/2021/08/27/Airtable%E7%9A%84%E5%BC%80%E6%BA%90%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88NocoDB/" title="Airtable的开源替代方案NocoDB">https://laosu.ml/2021/08/27/Airtable的开源替代方案NocoDB/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/uploads/wechat-qcode_430.jpg">
+          <span class="icon">
+            <i class="fab fa-weixin"></i>
+          </span>
+
+          <span class="label">微信</span>
+        </a>
+      </div>
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/atom.xml">
+          <span class="icon">
+            <i class="fa fa-rss"></i>
+          </span>
+
+          <span class="label">RSS</span>
+        </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%BE%A4%E6%99%96/" rel="tag"><i class="fa fa-tag"></i> 群晖</a>
+              <a href="/tags/docker/" rel="tag"><i class="fa fa-tag"></i> docker</a>
+              <a href="/tags/%E8%A1%A8%E6%A0%BC/" rel="tag"><i class="fa fa-tag"></i> 表格</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/08/25/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B9%B3%E5%8F%B0Superset%EF%BC%88%E8%B8%A9%E5%9D%91%E7%AF%87%EF%BC%89/" rel="prev" title="数据可视化平台Superset（踩坑篇）">
+                  <i class="fa fa-chevron-left"></i> 数据可视化平台Superset（踩坑篇）
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨浦老苏</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">343k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:12</span>
+  </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  </div><!--2020.05.03新增flagconuter计数-->
+<div>
+  <a target="_blank" rel="noopener" href="https://info.flagcounter.com/BEXu"><img src="https://s11.flagcounter.com/count2/BEXu/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0"></a>
+</div>
+
+<br>
+
+<!--2021.02.22新增网站运行时间-->
+<div>
+  <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+  <script>
+      var now = new Date();
+      function createtime() {
+          var grt= new Date("04/28/2020 00:00:00");
+          now.setTime(now.getTime()+250);
+          days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+          hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+          if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+          mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+          seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+          snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+          document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+          document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+      }
+  setInterval("createtime()",250);
+  </script>
+</div>
+
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://0x404.ml","placeholder":"有什么想法和需求，可以留个言","avatar":"monsterid","meta":["nick","mail","link"],"pageSize":10,"visitor":true,"comment_count":true,"requiredFields":[],"path":"/2021/08/27/Airtable%E7%9A%84%E5%BC%80%E6%BA%90%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88NocoDB/","requiredMeta":["nick","mail"],"emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili"],"libUrl":"https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js","dark":"auto","el":"#waline-comments"}</script>
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() => 
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => {
+    new Waline(CONFIG.waline);
+  });
+});
+</script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.js"></script>
+  <script>
+      pbOptions = {};
+        pbOptions.iconStyle = "box";
+        pbOptions.boxForm = "horizontal";
+        pbOptions.position = "bottomCenter";
+        pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+  </script>
+</body>
+</html>
