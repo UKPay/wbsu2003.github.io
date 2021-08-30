@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-08-27T04:37:05.968Z</updated>
+  <updated>2021-08-30T10:48:57.614Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>告别excel，用phpIPAM来管理家庭网络</title>
+    <link href="https://laosu.ml/2021/08/30/%E5%91%8A%E5%88%ABexcel%EF%BC%8C%E7%94%A8phpIPAM%E6%9D%A5%E7%AE%A1%E7%90%86%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C/"/>
+    <id>https://laosu.ml/2021/08/30/%E5%91%8A%E5%88%ABexcel%EF%BC%8C%E7%94%A8phpIPAM%E6%9D%A5%E7%AE%A1%E7%90%86%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C/</id>
+    <published>2021-08-30T11:00:00.000Z</published>
+    <updated>2021-08-30T10:48:57.614Z</updated>
+    
+    
+    <summary type="html">phpIPAM 是一个开源、高效的 IP 地址管理应用软件。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="网络" scheme="https://laosu.ml/tags/%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
   
   <entry>
     <title>Airtable的开源替代方案NocoDB</title>
@@ -454,27 +477,6 @@
     <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
     
     <category term="导航" scheme="https://laosu.ml/tags/%E5%AF%BC%E8%88%AA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>非docker方式搭建wallabag</title>
-    <link href="https://laosu.ml/2021/07/09/%E9%9D%9Edocker%E6%96%B9%E5%BC%8F%E6%90%AD%E5%BB%BAwallabag/"/>
-    <id>https://laosu.ml/2021/07/09/%E9%9D%9Edocker%E6%96%B9%E5%BC%8F%E6%90%AD%E5%BB%BAwallabag/</id>
-    <published>2021-07-09T11:00:00.000Z</published>
-    <updated>2021-07-09T11:09:02.007Z</updated>
-    
-    
-    <summary type="html">采用源代码方式安装的 wallabag 。</summary>
-    
-    
-    
-    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
-    
-    <category term="稍后阅读" scheme="https://laosu.ml/tags/%E7%A8%8D%E5%90%8E%E9%98%85%E8%AF%BB/"/>
     
   </entry>
   
