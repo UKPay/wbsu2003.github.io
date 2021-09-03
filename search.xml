@@ -1,6 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>用Changedetection监控网页的变化</title>
+    <url>/2021/09/03/%E7%94%A8Changedetection%E7%9B%91%E6%8E%A7%E7%BD%91%E9%A1%B5%E7%9A%84%E5%8F%98%E5%8C%96/</url>
+    <content><![CDATA[<p><strong>什么是 ChangeDetect ？</strong></p>
+<blockquote>
+<p>ChangeDetect 能提供网页监控服务。每当您关注的网页上的内容发生变化时，都会收到自动电子邮件通知。</p>
+</blockquote>
+<p>老苏之前写过的类似应用：『 <a href="https://laosu.ml/2021/08/06/%E7%BD%91%E9%A1%B5%E7%9B%91%E6%8E%A7%E6%8F%90%E9%86%92%E5%B7%A5%E5%85%B7WebMonitor/">网页监控提醒工具WebMonitor</a> 』</p>
+<p>个人感觉两者各有特点，在网页监控方面 <code>ChangeDetect</code> 的设置更简单，但是通知方面 <code>WebMonitor</code> 符合国人的习惯，至于安装哪个看您的需求</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>在群晖上以 Docker 方式安装。</p>
+<p>在注册表中搜索 <code>changedetection</code> ，选择第一个 <code>dgtlmoon/changedetection.io</code>，版本选择 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210808124413.png"></p>
+<h2 id="卷"><a href="#卷" class="headerlink" title="卷"></a>卷</h2><p>在 <code>docker</code> 文件夹中，创建一个新文件夹，并将其命名为 <code>changedetection</code></p>
+<table>
+<thead>
+<tr>
+<th align="center">文件夹</th>
+<th align="center">装载路径</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>docker/changedetection</code></td>
+<td align="center"><code>/datastore</code></td>
+<td align="center">存放设置</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210808125445.png"></p>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>需要新增端口， 容器端口为 <code>5000</code>，需要映射一个不冲突的本地端口</p>
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">5321</td>
+<td align="center">5000</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210808125742.png"></p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><table>
+<thead>
+<tr>
+<th align="center">可变</th>
+<th align="center">值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>HTTPS_PROXY</code></td>
+<td align="center">代理设置，一般不用设置，只有在你要监测的网站需要科学上网访问时才需要</td>
+</tr>
+<tr>
+<td align="center"><code>NO_PROXY</code></td>
+<td align="center">不需要走代理的网站，例如：<code>localhost,192.168.0.0/24</code></td>
+</tr>
+</tbody></table>
+<p>老苏没设置代理，更多的环境变量示例可以看官方的 <code>docker-compose.yml</code> 文件：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RndGxtb29uL2NoYW5nZWRldGVjdGlvbi5pby9ibG9iL21hc3Rlci9kb2NrZXItY29tcG9zZS55bWw=">https://github.com/dgtlmoon/changedetection.io/blob/master/docker-compose.yml<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>在浏览器中输入 <code>http://群晖IP:5321</code>，就能看到主界面了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210808131205.png"></p>
+<h2 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h2><p>点右上角的 <code>SETTINGS</code> 是 <code>default global settings</code>，只需要在 <code>Notification URL List</code> 中设置通知方式</p>
+<p><code>Changedetection</code> 采用了 <code>apprise</code> 项目来实现 <code>通知</code> 功能，可惜除了 <code>邮件</code> ，老苏没找到手机上已经安装的应用</p>
+<blockquote>
+<p>所有支持的通知方式都在这里：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nhcm9uYy9hcHByaXNl">https://github.com/caronc/apprise<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>邮件发送的 <code>URL</code> 地址是👇这样的</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mailto:&#x2F;&#x2F;&#123;userid&#125;:&#123;password&#125;@&#123;domain&#125;:&#123;port&#125;?smtp&#x3D;&#123;smtp_server&#125;&amp;from&#x3D;&#123;from_email&#125;&amp;to&#x3D;&#123;to_email&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参数说明</p>
+<ul>
+<li><code>userid</code>：登录 <code>SMTP</code> 的用户</li>
+<li><code>password</code>：登录 <code>SMTP</code> 的用户的密码</li>
+<li><code>domain</code>：邮件的域地址</li>
+<li><code>port</code>：邮件服务器端口</li>
+<li><code>smtp</code>：<code>SMTP</code> 服务器</li>
+<li><code>from</code>：如果您希望电子邮件地址 <code>ReplyTo</code> 地址不是您自己的电子邮件地址，那么您可以在此处指定它。</li>
+<li><code>to</code>：收件地址</li>
+</ul>
+<blockquote>
+<p>邮件设置的详细说明可以参考：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nhcm9uYy9hcHByaXNlL3dpa2kvTm90aWZ5X2VtYWls">https://github.com/caronc/apprise/wiki/Notify_email<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>只是其内置支持的邮箱服务都是国外的，如果要使用国内的邮件，需要自定义功能</p>
+<h3 id="自定义邮箱"><a href="#自定义邮箱" class="headerlink" title="自定义邮箱"></a>自定义邮箱</h3><p>老苏用 <code>88</code> 邮箱做测试，<code>88</code> 邮箱相关参数可以在 <code>设置</code> 中找到</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210806105358.png"></p>
+<p>自用不需要设置回复邮箱，所以省略了 <code>from</code> 参数，但 88 邮箱不能省略 <code>smtp</code> 参数，否则会发送不成功</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mailto:&#x2F;&#x2F;wbsu2003:password@88.com?smtp&#x3D;smtp.88.com&amp;to&#x3D;wbsu2003@gmail.com</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>gmail 有可能屏蔽了 88 邮箱，收件邮箱换成 hotmail 的就没问题了</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210808152257.png"></p>
+<p>点 <code>Save</code> 保存，因为勾选了 <code>Send test notification on save</code>，所以会收到测试邮件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210808212239.png"></p>
+<h2 id="网页监控"><a href="#网页监控" class="headerlink" title="网页监控"></a>网页监控</h2><p>还是以之前的电影网站为例，分别填入下面的内容，点 <code>Watch</code></p>
+<ul>
+<li>网址：<code>https://www.bd2020.com/movies/index.htm</code></li>
+<li>tag：<code>电影</code></li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210808132603.png"></p>
+<p>添加成功</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210808132645.png"></p>
+<p>点 <code>Edit</code>，进行进一步的设置</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210808143217.png"></p>
+<p>老苏什么都没改，所以默认使用了缺省的全局设置 <code>default global settings</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210810112846.png"></p>
+<p>等网页有变化之后就会有通知邮件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210809140244.png"></p>
+<p>有变化之后，最后的 <code>Preview</code> 会变成 <code>Diff</code>，点击就可以看到页面的具体变化和差异</p>
+<blockquote>
+<p>绿色为 <code>Inserted Text</code>也就是新增内容，红色为 <code>Removed text</code>也就是消失的内容</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210809145448.png"></p>
+<h2 id="JSON-API-监控"><a href="#JSON-API-监控" class="headerlink" title="JSON API 监控"></a>JSON API 监控</h2><p>老苏找了个天气预报的 <code>JSON API</code>，请求是<code>restfull</code> 风格，city_code 为 <code>9</code> 位数字。只要拼接在地址 “<code>http://t.weather.itboy.net/api/weather/city/+</code>city_code” 后面即可。</p>
+<p><code>city_code</code> 可以在这里查询： <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2JhaWNoZW5nemhvdS93ZWF0aGVyLmFwaS9ibG9iL21hc3Rlci9zcmMvbWFpbi9yZXNvdXJjZXMvY2l0eWNvZGUtMjAxOS0wOC0yMy5qc29u">https://github.com/baichengzhou/weather.api/blob/master/src/main/resources/citycode-2019-08-23.json<i class="fa fa-external-link-alt"></i></span></p>
+<p>比如上海的 <code>city_code</code> 为 <code>101020100</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210810115835.png"></p>
+<p>所以在浏览器中输入 <code>http://t.weather.itboy.net/api/weather/city/101020100</code> 就能看到上海的天气信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210810120118.png"></p>
+<p>将网页上的文本全部复制（<code>Ctrl+A</code> 然后 <code>Ctrl+C</code>）,接着打开网页：<span class="exturl" data-url="aHR0cHM6Ly9qc29ucGF0aC5jb20v">https://jsonpath.com<i class="fa fa-external-link-alt"></i></span></p>
+<blockquote>
+<p>这个网址可用于 <code>JSON</code> 的语法测试</p>
+</blockquote>
+<p>将前面复制的内容粘贴到左侧的 <code>Inputs</code>，因为老苏希望返回所有的数据，所以在 <code>JSONPath Syntax</code> 中输入了 <code>$</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210810133259.png"></p>
+<p>右侧的 <code>Evaluation Results</code> 不仅返回了所有的数据，并且对 <code>JSON</code> 数据进行了格式化处理，更易于阅读</p>
+<p>如果只是需要获取温度，可以在 <code>JSONPath Syntax</code> 中输入 <code>$.data.wendu</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210810134401.png"></p>
+<p>准备工作到这里就差不多了，返回到 <code>Changedetection</code> 新增一个监控，分别填入下面的内容后，点 <code>Watch</code></p>
+<ul>
+<li>网址：<code>http://t.weather.itboy.net/api/weather/city/101020100</code></li>
+<li>tag：<code>天气</code></li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210810134937.png"></p>
+<p>添加成功后点 <code>Edit</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210810135108.png"></p>
+<p>在 <code>CSS/JSON Filter</code> 中输入 <code>json:$.data.wendu</code>，其中前缀 <code>json:</code> 是必须要的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210810135357.png"></p>
+<p>保存，180分钟后如果温度有变化，就会发送邮件了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210810191740.png"></p>
+<p>查看 <code>Diff</code>，温度从 <code>37C°</code> 降为了 <code>33C°</code> </p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210810191420.png"></p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>dgtlmoon/changedetection.io: changedetection.io - The best and simplest self-hosted website change detection monitoring and notification service. An alternative to Visualping, Watchtower etc. Designed for simplicity - the main goal is to simply monitor which websites had a text change. Open source web page change detection - Now also includes JSON API change detection and monitoring support!<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RndGxtb29uL2NoYW5nZWRldGVjdGlvbi5pbw==">https://github.com/dgtlmoon/changedetection.io<i class="fa fa-external-link-alt"></i></span></p>
+<p>免费天气API，天气JSON API，不限次数获取十五天的天气预报 —技术博客<br>地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cuc29qc29uLmNvbS9ibG9nLzMwNS5odG1s">https://www.sojson.com/blog/305.html<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>网页监控</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>用来打发时间的EUserv</title>
     <url>/2021/08/31/%E7%94%A8%E6%9D%A5%E6%89%93%E5%8F%91%E6%97%B6%E9%97%B4%E7%9A%84EUserv/</url>
     <content><![CDATA[<p><strong>什么是 EUserv ？</strong></p>
@@ -11753,7 +11909,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiMxMDA7JiN4NmQ7JiMxMDU7JiN4NmU7JiM2NDsmIzExMTsmIzExMjsmI3g2NTsmIzExMDsmIzExNTsmI3g3NTsmI3g2MjsmIzExNjsmI3g2OTsmIzExNjsmI3g2YzsmI3g2NTsmIzExNTsmI3gyZTsmIzExMTsmIzExNDsmIzEwMzs=">&#97;&#100;&#x6d;&#105;&#x6e;&#64;&#111;&#112;&#x65;&#110;&#115;&#x75;&#x62;&#116;&#x69;&#116;&#x6c;&#x65;&#115;&#x2e;&#111;&#114;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiN4NjQ7JiN4NmQ7JiMxMDU7JiMxMTA7JiN4NDA7JiMxMTE7JiN4NzA7JiN4NjU7JiN4NmU7JiMxMTU7JiMxMTc7JiM5ODsmI3g3NDsmI3g2OTsmI3g3NDsmIzEwODsmIzEwMTsmI3g3MzsmI3gyZTsmI3g2ZjsmIzExNDsmIzEwMzs=">&#97;&#x64;&#x6d;&#105;&#110;&#x40;&#111;&#x70;&#x65;&#x6e;&#115;&#117;&#98;&#x74;&#x69;&#x74;&#108;&#101;&#x73;&#x2e;&#x6f;&#114;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
@@ -17724,6 +17880,35 @@
       </tags>
   </entry>
   <entry>
+    <title>群晖上的Zerotier GUI一直显示offline的原因</title>
+    <url>/2020/04/28/%E7%BE%A4%E6%99%96%E4%B8%8A%E7%9A%84Zerotier%20GUI%E4%B8%80%E7%9B%B4%E6%98%BE%E7%A4%BAoffline%E7%9A%84%E5%8E%9F%E5%9B%A0/</url>
+    <content><![CDATA[<p>两台黑群晖，因为共用了frps，所以为了避免端口冲突，一台保留了端口：5000，另一台启用了端口：5002。</p>
+<p>其中在局域网一台正常：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-150636-1587366421033.jpg" alt="title"></p>
+<p>之所以强调局域网是因为在用域名访问时，也同样出现了offline</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-150235-1587366203005.jpg" alt="title"></p>
+<p>用ssh登录后发现可以正常使用<br><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/WechatIMG3868-1587366673982.png" alt="title"></p>
+<p>说明我们下载的包是没问题的，有问题的只是WEB GUI而已。</p>
+<p>参考文档：</p>
+<blockquote>
+<p>1、<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3plcm90aWVyL1plcm9UaWVyTkFTL2lzc3Vlcy8xOA==">Zerotier GUI on Synology shows offline #18<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>文档中有一段描述，可以证明其只能连接端口：5000<br><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-151837-1587367148388.jpg" alt="title"></p>
+<p>而在使用frp后，所有域名是不带端口的，所以才会导致局域网正常而使用frp后又显示offline的原因。</p>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>frp</tag>
+        <tag>NAS</tag>
+        <tag>ngrok</tag>
+        <tag>ZeroTier</tag>
+        <tag>GUI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>群晖app访问遇到的端口问题</title>
     <url>/2020/04/28/%E7%BE%A4%E6%99%96app%E8%AE%BF%E9%97%AE%E9%81%87%E5%88%B0%E7%9A%84%E7%AB%AF%E5%8F%A3%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p><strong>什么是 NAS</strong></p>
@@ -17778,39 +17963,10 @@
         <tag>frp</tag>
         <tag>VPS</tag>
         <tag>NAS</tag>
+        <tag>ngrok</tag>
+        <tag>ZeroTier</tag>
         <tag>黑群</tag>
         <tag>QuickConnect</tag>
-        <tag>ngrok</tag>
-        <tag>ZeroTier</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>群晖上的Zerotier GUI一直显示offline的原因</title>
-    <url>/2020/04/28/%E7%BE%A4%E6%99%96%E4%B8%8A%E7%9A%84Zerotier%20GUI%E4%B8%80%E7%9B%B4%E6%98%BE%E7%A4%BAoffline%E7%9A%84%E5%8E%9F%E5%9B%A0/</url>
-    <content><![CDATA[<p>两台黑群晖，因为共用了frps，所以为了避免端口冲突，一台保留了端口：5000，另一台启用了端口：5002。</p>
-<p>其中在局域网一台正常：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-150636-1587366421033.jpg" alt="title"></p>
-<p>之所以强调局域网是因为在用域名访问时，也同样出现了offline</p>
-<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-150235-1587366203005.jpg" alt="title"></p>
-<p>用ssh登录后发现可以正常使用<br><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/WechatIMG3868-1587366673982.png" alt="title"></p>
-<p>说明我们下载的包是没问题的，有问题的只是WEB GUI而已。</p>
-<p>参考文档：</p>
-<blockquote>
-<p>1、<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3plcm90aWVyL1plcm9UaWVyTkFTL2lzc3Vlcy8xOA==">Zerotier GUI on Synology shows offline #18<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<p>文档中有一段描述，可以证明其只能连接端口：5000<br><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-151837-1587367148388.jpg" alt="title"></p>
-<p>而在使用frp后，所有域名是不带端口的，所以才会导致局域网正常而使用frp后又显示offline的原因。</p>
-]]></content>
-      <categories>
-        <category>各种折腾</category>
-      </categories>
-      <tags>
-        <tag>群晖</tag>
-        <tag>frp</tag>
-        <tag>NAS</tag>
-        <tag>ngrok</tag>
-        <tag>ZeroTier</tag>
-        <tag>GUI</tag>
       </tags>
   </entry>
   <entry>
