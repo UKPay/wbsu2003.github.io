@@ -51,7 +51,7 @@
 <p>点 <code>Configration Manager</code> –&gt; <code>CONFIGRATION</code>，在文本框中填入下面的内容</p>
 <figure class="highlight"><table><tr><td class="code"><pre><span class="line"># 88 邮箱</span><br><span class="line">mailto://wbsu2003:密码@88.com?smtp=smtp.88.com&amp;to=wbsu2003@gmail.com</span><br></pre></td></tr></table></figure>
 
-<p>参数在『 <a href="">用Changedetection监控网页的变化</a> 』一文中已做了详细描述</p>
+<p>参数在『 <a href="https://laosu.ml/2021/09/03/%E7%94%A8Changedetection%E7%9B%91%E6%8E%A7%E7%BD%91%E9%A1%B5%E7%9A%84%E5%8F%98%E5%8C%96/">用Changedetection监控网页的变化</a> 』一文中已做了详细描述</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210808211022.png"></p>
 <p>如果保存失败</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210808195948.png"></p>
