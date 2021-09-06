@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-09-03T06:13:32.752Z</updated>
+  <updated>2021-09-06T11:04:06.858Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>几乎每个平台都可以使用的推送通知apprise</title>
+    <link href="https://laosu.ml/2021/09/06/%E5%87%A0%E4%B9%8E%E6%AF%8F%E4%B8%AA%E5%B9%B3%E5%8F%B0%E9%83%BD%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E7%9A%84%E6%8E%A8%E9%80%81%E9%80%9A%E7%9F%A5apprise/"/>
+    <id>https://laosu.ml/2021/09/06/%E5%87%A0%E4%B9%8E%E6%AF%8F%E4%B8%AA%E5%B9%B3%E5%8F%B0%E9%83%BD%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E7%9A%84%E6%8E%A8%E9%80%81%E9%80%9A%E7%9F%A5apprise/</id>
+    <published>2021-09-06T11:00:00.000Z</published>
+    <updated>2021-09-06T11:04:06.858Z</updated>
+    
+    
+    <summary type="html">Apprise 几乎适用于所有平台的推送通知，例如：Telegram、Discord、Slack、Amazon SNS、Gotify 等。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="消息推送" scheme="https://laosu.ml/tags/%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81/"/>
+    
+  </entry>
   
   <entry>
     <title>用Changedetection监控网页的变化</title>
@@ -452,29 +475,6 @@
     <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
     
     <category term="笔记" scheme="https://laosu.ml/tags/%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Chevereto配合PicGo打造个人图床</title>
-    <link href="https://laosu.ml/2021/07/19/Chevereto%E9%85%8D%E5%90%88PicGo%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E5%9B%BE%E5%BA%8A/"/>
-    <id>https://laosu.ml/2021/07/19/Chevereto%E9%85%8D%E5%90%88PicGo%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E5%9B%BE%E5%BA%8A/</id>
-    <published>2021-07-19T11:00:00.000Z</published>
-    <updated>2021-07-19T11:22:51.405Z</updated>
-    
-    
-    <summary type="html">Chevereto 是一款自建图床程序，PicGo 则是免费开源的图片上传与管理工具。</summary>
-    
-    
-    
-    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
-    
-    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
-    
-    <category term="图床" scheme="https://laosu.ml/tags/%E5%9B%BE%E5%BA%8A/"/>
     
   </entry>
   

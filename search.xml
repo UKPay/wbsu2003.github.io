@@ -1,6 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>几乎每个平台都可以使用的推送通知apprise</title>
+    <url>/2021/09/06/%E5%87%A0%E4%B9%8E%E6%AF%8F%E4%B8%AA%E5%B9%B3%E5%8F%B0%E9%83%BD%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E7%9A%84%E6%8E%A8%E9%80%81%E9%80%9A%E7%9F%A5apprise/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>之所以拿 <code>Apprise</code> 出来单独写一篇，不仅是上一篇 『<a href="https://laosu.ml/2021/09/03/%E7%94%A8Changedetection%E7%9B%91%E6%8E%A7%E7%BD%91%E9%A1%B5%E7%9A%84%E5%8F%98%E5%8C%96/">用Changedetection监控网页的变化</a>』 中 <code>Changedetection</code> 用了 <code>Apprise</code> 来做通知服务，还有我们尚未介绍的网站在线监控工具 <code>Uptime Kuma</code> 同样支持 <code>Apprise</code>，所以单独拎出来简单介绍一下。</p>
+<p><strong>什么是 Apprise API ？</strong></p>
+<blockquote>
+<p><code>Apprise</code> 允许您向我们今天可用的几乎所有最流行的通知服务发送通知，例如：<code>Telegram</code>、<code>Discord</code>、 <code>Slack</code>、<code>Amazon SNS</code>、<code>Gotify</code> 等。此 <code>API</code> 提供了一个简单的网关，可以通过 <code>HTTP</code> 接口直接访问它。</p>
+</blockquote>
+<p><code>apprise</code> 可以让研发人员不再需要研究每一个通知服务，只需要包含这一个库，就可以立即访问我们今天几乎所有可用的通知服务。</p>
+<blockquote>
+<p>这个项目是老外的，所以微信啥的就别指望了，期待有国内的研发人员参与到项目中去</p>
+</blockquote>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>在群晖上以 Docker 方式安装。</p>
+<p>在注册表中搜索 <code>apprise</code> ，选择第一个 <code>caronc/apprise</code>，版本选择 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210808190108.png"></p>
+<h2 id="卷"><a href="#卷" class="headerlink" title="卷"></a>卷</h2><p>在 <code>docker</code> 文件夹中创建一个新文件夹，将其命名为 <code>apprise</code>，再在 <code>apprise</code> 中建一个子目录 <code>config</code></p>
+<table>
+<thead>
+<tr>
+<th align="center">文件夹</th>
+<th align="center">装载路径</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>docker/apprise/config</code></td>
+<td align="center"><code>/config </code></td>
+<td align="center">存放设置</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210808191426.png"></p>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>端口不能冲突</p>
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">8181</td>
+<td align="center">8000</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210808191522.png"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>在浏览器中输入 <code>http://群晖IP:8181</code>，就能看到主界面了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210808191933.png"></p>
+<h2 id="邮件通知"><a href="#邮件通知" class="headerlink" title="邮件通知"></a>邮件通知</h2><p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210810145139.png"></p>
+<p>点 <code>Configration Manager</code> –&gt; <code>CONFIGRATION</code>，在文本框中填入下面的内容</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># 88 邮箱</span><br><span class="line">mailto://wbsu2003:密码@88.com?smtp=smtp.88.com&amp;to=wbsu2003@gmail.com</span><br></pre></td></tr></table></figure>
+
+<p>参数在『 <a href="">用Changedetection监控网页的变化</a> 』一文中已做了详细描述</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210808211022.png"></p>
+<p>如果保存失败</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210808195948.png"></p>
+<p>需要执行下面的命令重新设置 <code>config</code> 目录的权限</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">chmod 777 /volume2/docker/apprise/config</span><br></pre></td></tr></table></figure>
+
+<p>修改权限之后，保存就应该没问题了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210808200724.png"></p>
+<p>点 <code>NOTIFICATIONS</code>，输入标题和内容，<code>tags</code> 可以不填</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210808211322.png"></p>
+<p>点 <code>SEND NOTIFICATION</code> 按钮</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210808211450.png"></p>
+<p>一会儿就能收到邮件了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210808212422.png"></p>
+<h2 id="Home-Assistant"><a href="#Home-Assistant" class="headerlink" title="Home Assistant"></a>Home Assistant</h2><p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210810145328.png"></p>
+<p>用管理员账号登录 <code>Home Assistant</code>，进入 <code>用户资料</code>，下拉到最底部的 <code>长期访问令牌</code>，点 <code>创建令牌</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210810152541.png"></p>
+<p>为令牌指定名称</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210810153647.png"></p>
+<p>会生成一个 <code>token</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210810153935.png"></p>
+<p>不需要了可以删除</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210810154058.png"></p>
+<p>点 <code>Configration Manager</code> –&gt; <code>CONFIGRATION</code>，在文本框中填入下面的内容</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># home assistant</span><br><span class="line">hassio://hostname:port/accesstoken</span><br></pre></td></tr></table></figure>
+
+<p>完成后记得 <code>SAVE CONFIGURATION</code> 保存</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210810154626.png"></p>
+<p>点 <code>NOTIFICATIONS</code>，输入标题和内容，<code>tags</code> 可以不填</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210810154501.png"></p>
+<p>点 <code>SEND NOTIFICATION</code> 按钮</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210810160106.png"></p>
+<p>在 <code>Home Assistant</code> 中左下角 <code>消息</code> </p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210810160427.png"></p>
+<p>打开可以看到刚刚的消息推送</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210810160244.png"></p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>caronc/apprise: Apprise - Push Notifications that work with just about every platform!<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nhcm9uYy9hcHByaXNl">https://github.com/caronc/apprise<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>消息推送</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>用Changedetection监控网页的变化</title>
     <url>/2021/09/03/%E7%94%A8Changedetection%E7%9B%91%E6%8E%A7%E7%BD%91%E9%A1%B5%E7%9A%84%E5%8F%98%E5%8C%96/</url>
     <content><![CDATA[<p><strong>什么是 ChangeDetect ？</strong></p>
@@ -3939,8 +4040,8 @@
       </categories>
       <tags>
         <tag>群晖</tag>
-        <tag>微信</tag>
         <tag>消息推送</tag>
+        <tag>微信</tag>
       </tags>
   </entry>
   <entry>
@@ -11909,7 +12010,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjeDY0OyYjMTA5OyYjeDY5OyYjMTEwOyYjeDQwOyYjeDZmOyYjMTEyOyYjMTAxOyYjeDZlOyYjeDczOyYjeDc1OyYjOTg7JiMxMTY7JiN4Njk7JiN4NzQ7JiMxMDg7JiMxMDE7JiN4NzM7JiM0NjsmIzExMTsmIzExNDsmI3g2Nzs=">&#x61;&#x64;&#109;&#x69;&#110;&#x40;&#x6f;&#112;&#101;&#x6e;&#x73;&#x75;&#98;&#116;&#x69;&#x74;&#108;&#101;&#x73;&#46;&#111;&#114;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiN4NjQ7JiMxMDk7JiMxMDU7JiMxMTA7JiM2NDsmIzExMTsmIzExMjsmI3g2NTsmI3g2ZTsmI3g3MzsmIzExNzsmIzk4OyYjeDc0OyYjMTA1OyYjMTE2OyYjMTA4OyYjeDY1OyYjeDczOyYjNDY7JiN4NmY7JiN4NzI7JiMxMDM7">&#97;&#x64;&#109;&#105;&#110;&#64;&#111;&#112;&#x65;&#x6e;&#x73;&#117;&#98;&#x74;&#105;&#116;&#108;&#x65;&#x73;&#46;&#x6f;&#x72;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
@@ -16525,10 +16626,10 @@
         <tag>路由器</tag>
         <tag>千兆</tag>
         <tag>电力猫</tag>
+        <tag>WDS</tag>
         <tag>Mesh路由</tag>
         <tag>wifi6</tag>
         <tag>光猫</tag>
-        <tag>WDS</tag>
       </tags>
   </entry>
   <entry>
