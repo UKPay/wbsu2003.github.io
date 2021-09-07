@@ -1,6 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>类Notion的项目管理工具Focalboard</title>
+    <url>/2021/09/08/%E7%B1%BBNotion%E7%9A%84%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7Focalboard/</url>
+    <content><![CDATA[<p><strong>什么是 Focalboard ？</strong></p>
+<blockquote>
+<p><code>Focalboard</code> 号称是 <code>Trello</code>、<code>Asana</code> 和 <code>Notion</code> 的开源替代品。它是一个项目管理工具，使用看板视图帮助个人和团队对任务进行组织、跟踪和管理。有两个版本：<code>Focalboard</code> 个人桌面版和 <code>Focalboard</code> 个人服务器版</p>
+</blockquote>
+<p>之前我们介绍过他们家的开源协作平台 <code>Mattermost</code> ：『<a href="https://laosu.ml/2020/08/28/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E8%81%8A%E5%A4%A9%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%88Mattermost%E7%AF%87%EF%BC%89">搭建自己的聊天服务器（Mattermost篇）</a>』</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>在群晖上以 Docker 方式安装。</p>
+<p>在注册表中搜索 <code>focalboard</code> ，选择第一个 <code>mattermost/focalboard</code>，版本选择 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210906123100.png"></p>
+<p><code>focalboard</code> 支持 <code>SQLite</code> 、<code>MySQL</code>、<code>PostgreSQL</code> 三种数据库，如果你是生产环境，官方建议用 <code>PostgreSQL</code> ，采用 <code>Docker Compose</code> 方式进行安装，在 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hdHRlcm1vc3QvZm9jYWxib2FyZC90cmVlL21haW4vZG9ja2Vy">https://github.com/mattermost/focalboard/tree/main/docker<i class="fa fa-external-link-alt"></i></span> 能找到官方提供的 <code>docker-compose.yml</code> 文件。</p>
+<p>而 <code>MySQL</code> 可以作为 <code>Postgres</code> 的替代方案，具体方法：<span class="exturl" data-url="aHR0cHM6Ly93d3cuZm9jYWxib2FyZC5jb20vZG93bmxvYWQvcGVyc29uYWwtZWRpdGlvbi91YnVudHUvI2luc3RhbGwtbXlzcWw=">https://www.focalboard.com/download/personal-edition/ubuntu/#install-mysql<i class="fa fa-external-link-alt"></i></span></p>
+<p>个人体验用 <code>SQLite</code> 足够了</p>
+<blockquote>
+<p>习惯命令行方式安装的请按下面👇的命令操作，目录请根据自己的修改</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建目录</span></span><br><span class="line">mkdir /volume2/docker/focalboard</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入 focalboard 目录</span></span><br><span class="line"><span class="built_in">cd</span> /volume2/docker/focalboard</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建空数据库</span></span><br><span class="line">sqlite3 focalboard.db <span class="string">&quot;create table t(f int); drop table t;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者建个空的文件</span></span><br><span class="line">touch focalboard.db</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一定要修改数据库文件的权限</span></span><br><span class="line">chmod 777 focalboard.db</span><br><span class="line"></span><br><span class="line"><span class="comment"># 目录权限不改也会报错</span></span><br><span class="line">chmod 777 /volume2/docker/focalboard</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行容器</span></span><br><span class="line">docker run -it \</span><br><span class="line">--name mattermost-focalboard1 \</span><br><span class="line">-v /volume2/docker/focalboard:/data \</span><br><span class="line">-p 9090:8000 \</span><br><span class="line">mattermost/focalboard</span><br></pre></td></tr></table></figure>
+
+<h2 id="卷"><a href="#卷" class="headerlink" title="卷"></a>卷</h2><p>在 <code>docker</code> 文件夹中，创建一个新文件夹，并将其命名为 <code>focalboard</code></p>
+<p>在电脑上新建一个空的 <code>txt</code> 文件，将其重命名为 <code>focalboard.db</code> ，并上传到 <code>focalboard</code>目录中</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210907173752.png"></p>
+<p><code>目录</code> 上右键 –&gt; <code>属性</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210907173944.png"></p>
+<p>属性界面，进入 <code>权限</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210907174056.png"></p>
+<p><code>权限</code> –&gt; <code>新增</code> –&gt; 用户中选取 <code>Everyone</code> –&gt; 勾选 <code>读取</code> 和 <code>写入</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210907174339.png"></p>
+<p>勾选 <code>应用到这个文件夹、子文件夹及文件</code>，然后确定</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210907174624.png"></p>
+<table>
+<thead>
+<tr>
+<th align="center">文件夹</th>
+<th align="center">装载路径</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>docker/focalboard</code></td>
+<td align="center"><code>/data</code></td>
+<td align="center">存放数据库</td>
+</tr>
+<tr>
+<td align="center"><code>docker/focalboard/config.json</code></td>
+<td align="center"><code>/opt/focalboard/config.json</code></td>
+<td align="center">设置文件</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>采用 <code>SQLite</code> 做数据库可以不需要配置 <code>config.json</code>、而用<code>MySQL</code>、<code>PostgreSQL</code> 需要通过 <code>config.json</code> 的 <code>dbtype</code> 、<code>dbconfig</code> 来指定数据库类型和连接参数</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210907174835.png"></p>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>端口不冲突就行</p>
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">9090</td>
+<td align="center">8000</td>
+</tr>
+<tr>
+<td align="center">自动</td>
+<td align="center">9092</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210906124921.png"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>在浏览器中输入 <code>http://群晖IP:9090</code>，就能看到主界面了，第一次需要点红框部分进行注册</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210906143346.png"></p>
+<p>需要输入邮箱、账号和密码</p>
+<blockquote>
+<p>密码不能少于8个字符</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210906143555.png"></p>
+<p>登录之后，主界面现在还是空空如也</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210906144131.png"></p>
+<h2 id="设置中文"><a href="#设置中文" class="headerlink" title="设置中文"></a>设置中文</h2><p>先设置中文，左下角 <code>Settings</code> –&gt; <code>Set Language</code> –&gt; <code>中文（简体）</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210906144223.png"></p>
+<h2 id="新增版面"><a href="#新增版面" class="headerlink" title="新增版面"></a>新增版面</h2><p><code>新增版面</code> 时，可以选择不同的模板，如果模板不够用，可以也自建模板</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210906173309.png"></p>
+<p>先试试 <code>Poroject Tasks</code> 模板</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210907103409.png"></p>
+<p>直接生成了一个看板，新建一个任务</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210907104420.png"></p>
+<p>任务中可以 <code>新增属性</code>，类型支持文本框、邮件、链接等等</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210907105351.png"></p>
+<p><code>新增内容</code> 支持文本、图片等</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210907105438.png"></p>
+<p>老苏随便加了几个，卡片支持拖拽操作</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210907105228.png"></p>
+<p>支持多种排序和查看方式</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210907105903.png"></p>
+<p>还能导出和分享</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210907110207.png"></p>
+<p><code>Personal Goals</code> 和 <code>Personal Tasks</code> 都差不多。</p>
+<h2 id="新模板"><a href="#新模板" class="headerlink" title="新模板"></a>新模板</h2><p>老苏建了个 <code>ToDo</code> 的模板</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210907141338.png"></p>
+<p>在 <code>新增版面</code> 中可以直接使用</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210907141710.png"></p>
+<p>和模板是一模一样的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210907141601.png"></p>
+<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><p> 从代码库看 <code>Focalboard</code> 支持插件，可以从 <code>Trello</code>、<code>Asana</code> 、<code>Notion</code>、<code>todoist</code> 导入数据，但是看说明文档有点云里雾里的，最后在 <code>Release</code> 中找到了一行小字 </p>
+<blockquote>
+<p><code>NOTE: The v0.9 Focalboard plugin requires Mattermost v6.0.</code></p>
+</blockquote>
+<p> <img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/202109072225816.png"></p>
+<p> 查了一下，<code>Mattermost v6.0</code> 原计划在 9 月份发布，但最新消息推迟到了 10 月，留给有兴趣折腾的小伙伴吧</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p> 如果你用过 <code>Notion</code> 或者 <code>我来</code>，感觉 <code>Focalboard</code> 上手还是很容易的。</p>
+<p>  除了个人服务器版外，还有个人桌面版，可以在 <span class="exturl" data-url="aHR0cHM6Ly93d3cuZm9jYWxib2FyZC5jb20vZG93bmxvYWQvcGVyc29uYWwtZWRpdGlvbi9kZXNrdG9wLw==">https://www.focalboard.com/download/personal-edition/desktop/<i class="fa fa-external-link-alt"></i></span> 找到各平台的安装包。</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>mattermost/focalboard: Focalboard is an open source, self-hosted alternative to Trello, Notion, and Asana.<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hdHRlcm1vc3QvZm9jYWxib2FyZA==">https://github.com/mattermost/focalboard<i class="fa fa-external-link-alt"></i></span></p>
+<p>Focalboard: Open source alternative to Trello, Asana, and Notion<br>地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cuZm9jYWxib2FyZC5jb20v">https://www.focalboard.com/<i class="fa fa-external-link-alt"></i></span></p>
+<p>Upcoming Changes with Mattermost 6.0 - Announcements - Mattermost, Inc.<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9mb3J1bS5tYXR0ZXJtb3N0Lm9yZy90L3VwY29taW5nLWNoYW5nZXMtd2l0aC1tYXR0ZXJtb3N0LTYtMC8xMTg3OA==">https://forum.mattermost.org/t/upcoming-changes-with-mattermost-6-0/11878<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>看板</tag>
+        <tag>项目管理软件</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>几乎每个平台都可以使用的推送通知apprise</title>
     <url>/2021/09/06/%E5%87%A0%E4%B9%8E%E6%AF%8F%E4%B8%AA%E5%B9%B3%E5%8F%B0%E9%83%BD%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E7%9A%84%E6%8E%A8%E9%80%81%E9%80%9A%E7%9F%A5apprise/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>之所以拿 <code>Apprise</code> 出来单独写一篇，不仅是上一篇 『<a href="https://laosu.ml/2021/09/03/%E7%94%A8Changedetection%E7%9B%91%E6%8E%A7%E7%BD%91%E9%A1%B5%E7%9A%84%E5%8F%98%E5%8C%96/">用Changedetection监控网页的变化</a>』 中 <code>Changedetection</code> 用了 <code>Apprise</code> 来做通知服务，还有我们尚未介绍的网站在线监控工具 <code>Uptime Kuma</code> 同样支持 <code>Apprise</code>，所以单独拎出来简单介绍一下。</p>
@@ -12010,7 +12139,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiN4NjQ7JiMxMDk7JiMxMDU7JiMxMTA7JiM2NDsmIzExMTsmIzExMjsmI3g2NTsmI3g2ZTsmI3g3MzsmIzExNzsmIzk4OyYjeDc0OyYjMTA1OyYjMTE2OyYjMTA4OyYjeDY1OyYjeDczOyYjNDY7JiN4NmY7JiN4NzI7JiMxMDM7">&#97;&#x64;&#109;&#105;&#110;&#64;&#111;&#112;&#x65;&#x6e;&#x73;&#117;&#98;&#x74;&#105;&#116;&#108;&#x65;&#x73;&#46;&#x6f;&#x72;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjeDY0OyYjMTA5OyYjeDY5OyYjMTEwOyYjeDQwOyYjMTExOyYjeDcwOyYjeDY1OyYjMTEwOyYjeDczOyYjMTE3OyYjeDYyOyYjeDc0OyYjeDY5OyYjMTE2OyYjeDZjOyYjeDY1OyYjeDczOyYjNDY7JiMxMTE7JiN4NzI7JiMxMDM7">&#x61;&#x64;&#109;&#x69;&#110;&#x40;&#111;&#x70;&#x65;&#110;&#x73;&#117;&#x62;&#x74;&#x69;&#116;&#x6c;&#x65;&#x73;&#46;&#111;&#x72;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
@@ -16626,10 +16755,10 @@
         <tag>路由器</tag>
         <tag>千兆</tag>
         <tag>电力猫</tag>
-        <tag>WDS</tag>
         <tag>Mesh路由</tag>
         <tag>wifi6</tag>
         <tag>光猫</tag>
+        <tag>WDS</tag>
       </tags>
   </entry>
   <entry>
@@ -16793,9 +16922,9 @@
       <tags>
         <tag>群晖</tag>
         <tag>看板</tag>
+        <tag>项目管理软件</tag>
         <tag>Kanboard</tag>
         <tag>kanban</tag>
-        <tag>项目管理软件</tag>
       </tags>
   </entry>
   <entry>
@@ -17522,11 +17651,11 @@
       </categories>
       <tags>
         <tag>刮削器</tag>
-        <tag>ZogVM</tag>
-        <tag>极影派</tag>
         <tag>Kodi</tag>
         <tag>MediaElch</tag>
         <tag>tinyMediaManager</tag>
+        <tag>ZogVM</tag>
+        <tag>极影派</tag>
       </tags>
   </entry>
   <entry>
@@ -17579,11 +17708,11 @@
         <tag>Emby</tag>
         <tag>jellyfin</tag>
         <tag>刮削器</tag>
-        <tag>Scrapers</tag>
-        <tag>Plex</tag>
+        <tag>Kodi</tag>
         <tag>ZogVM</tag>
         <tag>极影派</tag>
-        <tag>Kodi</tag>
+        <tag>Scrapers</tag>
+        <tag>Plex</tag>
       </tags>
   </entry>
   <entry>
