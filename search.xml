@@ -113,7 +113,7 @@
 <tr>
 <td align="center">√</td>
 <td align="center">×</td>
-<td align="center">frp 反代挂了</td>
+<td align="center">外网故障或者 frp 反代挂了</td>
 </tr>
 <tr>
 <td align="center">√</td>
