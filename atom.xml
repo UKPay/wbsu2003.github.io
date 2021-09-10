@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-09-08T00:56:30.691Z</updated>
+  <updated>2021-09-10T10:59:34.863Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>网站在线监控工具Uptime Kuma</title>
+    <link href="https://laosu.ml/2021/09/10/%E7%BD%91%E7%AB%99%E5%9C%A8%E7%BA%BF%E7%9B%91%E6%8E%A7%E5%B7%A5%E5%85%B7Uptime%20Kuma/"/>
+    <id>https://laosu.ml/2021/09/10/%E7%BD%91%E7%AB%99%E5%9C%A8%E7%BA%BF%E7%9B%91%E6%8E%A7%E5%B7%A5%E5%85%B7Uptime%20Kuma/</id>
+    <published>2021-09-10T11:00:00.000Z</published>
+    <updated>2021-09-10T10:59:34.863Z</updated>
+    
+    
+    <summary type="html">Uptime Kuma 是一个类似于 Uptime Robot 的自托管监控工具。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="网站监控" scheme="https://laosu.ml/tags/%E7%BD%91%E7%AB%99%E7%9B%91%E6%8E%A7/"/>
+    
+  </entry>
   
   <entry>
     <title>类Notion的项目管理工具Focalboard</title>
@@ -454,29 +477,6 @@
     <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
     
     <category term="音乐" scheme="https://laosu.ml/tags/%E9%9F%B3%E4%B9%90/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>一个非常强大的静态导航网站nav</title>
-    <link href="https://laosu.ml/2021/07/26/%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E5%BC%BA%E5%A4%A7%E7%9A%84%E9%9D%99%E6%80%81%E5%AF%BC%E8%88%AA%E7%BD%91%E7%AB%99nav/"/>
-    <id>https://laosu.ml/2021/07/26/%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E5%BC%BA%E5%A4%A7%E7%9A%84%E9%9D%99%E6%80%81%E5%AF%BC%E8%88%AA%E7%BD%91%E7%AB%99nav/</id>
-    <published>2021-07-26T11:00:00.000Z</published>
-    <updated>2021-07-26T01:47:59.454Z</updated>
-    
-    
-    <summary type="html">发现导航 , 一个非常强大的静态导航网站(支持SEO)。</summary>
-    
-    
-    
-    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
-    
-    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
-    
-    <category term="导航" scheme="https://laosu.ml/tags/%E5%AF%BC%E8%88%AA/"/>
     
   </entry>
   

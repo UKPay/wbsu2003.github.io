@@ -1,6 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>网站在线监控工具Uptime Kuma</title>
+    <url>/2021/09/10/%E7%BD%91%E7%AB%99%E5%9C%A8%E7%BA%BF%E7%9B%91%E6%8E%A7%E5%B7%A5%E5%85%B7Uptime%20Kuma/</url>
+    <content><![CDATA[<p>如果你有多个服务或者多台服务器（包括群晖或者vps）在运行，就需要一个在线监控工具来协助管理，提高可用性，防止因为服务器、程序错误等原因导致网站无法访问。如果只是自己用问题不大，但是如果是对外提供服务的，那问题就大了。</p>
+<p>能提供在线监控的网站挺多的，包括 <code>Uptime robot</code>、<code>阿里云监控</code> 等</p>
+<p><strong>什么是 Uptime Kuma ？</strong></p>
+<blockquote>
+<p><code>Uptime Kuma</code> 是一个类似于 <code>Uptime Robot</code> 的自托管监控工具。</p>
+</blockquote>
+<p>目前 <code>Uptime Kuma</code> 项目代码更新比较活跃，有兴趣可以关注下作者的开发计划：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2xvdWlzbGFtL3VwdGltZS1rdW1hL3Byb2plY3RzLzE=">https://github.com/louislam/uptime-kuma/projects/1<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>在群晖上以 Docker 方式安装。</p>
+<p>在注册表中搜索 <code>uptime-kuma</code> ，选择第一个 <code>louislam/uptime-kuma</code>，版本选择 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/202108311914905.png"></p>
+<h2 id="卷"><a href="#卷" class="headerlink" title="卷"></a>卷</h2><p>在 <code>docker</code> 文件夹中，创建一个新文件夹，并将其命名为 <code>uptime-kuma</code></p>
+<table>
+<thead>
+<tr>
+<th align="center">文件夹</th>
+<th align="center">装载路径</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>docker/uptime-kuma</code></td>
+<td align="center"><code>/app/data</code></td>
+<td align="center">存放设置</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/202108311932803.png"></p>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>端口不冲突就行，老苏随便选了个 <code>3211</code></p>
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>3211</code></td>
+<td align="center"><code>3001</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/202108311932380.png"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>在浏览器中输入 <code>http://群晖IP:3211</code>，就能看到创建用户界面了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/202108311933517.png"></p>
+<p>创建完成后会自动跳转到登录界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/202108311935800.png"></p>
+<p>登录成功后</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/202108311936632.png"></p>
+<h1 id="设置报警"><a href="#设置报警" class="headerlink" title="设置报警"></a>设置报警</h1><p>点右上角的 <code>Settings</code> </p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/202108312017192.png"></p>
+<p>点 <code>Setup Notification</code>，报警方式很多，还有我们之前介绍过的 <code>Apprise</code></p>
+<blockquote>
+<p>相关文档：『 <a href="https://laosu.ml/2021/09/06/%E5%87%A0%E4%B9%8E%E6%AF%8F%E4%B8%AA%E5%B9%B3%E5%8F%B0%E9%83%BD%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E7%9A%84%E6%8E%A8%E9%80%81%E9%80%9A%E7%9F%A5apprise/">几乎每个平台都可以使用的推送通知apprise</a> 』</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/202108312018143.png"></p>
+<p>虽然方式众多，但老苏独爱 <code>Email</code>，还是以 <code>88</code> 邮箱为例</p>
+<blockquote>
+<p><code>Password</code> 不是邮箱密码，而是用于第三方邮件客户端登录的专用密码</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/202108312025487.png"></p>
+<p>填完之后点 <code>Test</code>，右下角有发送标识</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/202108312028405.png"></p>
+<p>检查邮箱，如果收到这样的邮件，表示设置 <code>OK</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/202108312029767.png"></p>
+<p>保存邮件设置就可以了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/202108312031152.png"></p>
+<h1 id="创建监控"><a href="#创建监控" class="headerlink" title="创建监控"></a>创建监控</h1><p>点 <code>Add New Monitor</code> 新增一个监控，监控类型支持 <code>HTTP(s)</code>、<code>TCP Port</code> 、<code>Ping</code> 、<code>HTTP(s)-Keyword</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/202108311940426.png"></p>
+<p>假设我们来监控老苏群晖中的 <code>HomeAssistant</code>，因为采用了 <code>frp</code> 反代，当在外网访问不到 <code>HomeAssistant</code> 时，我们可能一时并不清楚是 <code>frp</code> 出了问题还是 <code>HomeAssistant</code> 服务本身出了问题，但是借助 <code>Uptime Kuma</code> ，我们可以进行分段监控</p>
+<table>
+<thead>
+<tr>
+<th align="center">网络</th>
+<th align="center">地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>局域网</code></td>
+<td align="center"><code>http://192.168.0.199:7123</code></td>
+</tr>
+<tr>
+<td align="center"><code>公网</code></td>
+<td align="center"><code>https://ha.abc.xyz</code></td>
+</tr>
+</tbody></table>
+<p>设置很简单，别忘了打开报警 <code>Notifications</code>，否则收不到邮件的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/202108312046559.png"></p>
+<p>保存监控设置</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/202108312048454.png"></p>
+<p>再设一个公网的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/202108312050370.png"></p>
+<p>当检测不到时会收到下线的邮件通知</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210903142302.png"></p>
+<p>而上线的时候也一样有通知</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210903142337.png"></p>
+<p>通过监控的结果我们可以很容易判断出问题出在哪一段</p>
+<table>
+<thead>
+<tr>
+<th align="center">局域网</th>
+<th align="center">公网</th>
+<th align="center">结论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">×</td>
+<td align="center"></td>
+<td align="center">HA 服务挂了</td>
+</tr>
+<tr>
+<td align="center">√</td>
+<td align="center">×</td>
+<td align="center">frp 反代挂了</td>
+</tr>
+<tr>
+<td align="center">√</td>
+<td align="center">√</td>
+<td align="center">一切正常</td>
+</tr>
+</tbody></table>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>louislam/uptime-kuma: A fancy self-hosted monitoring tool<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2xvdWlzbGFtL3VwdGltZS1rdW1h">https://github.com/louislam/uptime-kuma<i class="fa fa-external-link-alt"></i></span></p>
+<p>【好玩的Docker项目】5分钟搭建一个网站监控工具！ - Break The Wall<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9icmVha3RoZXdhMTEuY29tL2FyY2hpdmVzL2RvY2tlci11cHRpbWUta3VtYS5odG1s">https://breakthewa11.com/archives/docker-uptime-kuma.html<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>网站监控</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>类Notion的项目管理工具Focalboard</title>
     <url>/2021/09/08/%E7%B1%BBNotion%E7%9A%84%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7Focalboard/</url>
     <content><![CDATA[<p><strong>什么是 Focalboard ？</strong></p>
@@ -12139,7 +12274,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjMTAwOyYjMTA5OyYjMTA1OyYjMTEwOyYjeDQwOyYjeDZmOyYjeDcwOyYjMTAxOyYjeDZlOyYjeDczOyYjeDc1OyYjOTg7JiN4NzQ7JiN4Njk7JiMxMTY7JiN4NmM7JiMxMDE7JiN4NzM7JiN4MmU7JiN4NmY7JiN4NzI7JiN4Njc7">&#x61;&#100;&#109;&#105;&#110;&#x40;&#x6f;&#x70;&#101;&#x6e;&#x73;&#x75;&#98;&#x74;&#x69;&#116;&#x6c;&#101;&#x73;&#x2e;&#x6f;&#x72;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjeDY0OyYjeDZkOyYjeDY5OyYjeDZlOyYjNjQ7JiN4NmY7JiN4NzA7JiN4NjU7JiN4NmU7JiN4NzM7JiMxMTc7JiM5ODsmIzExNjsmIzEwNTsmIzExNjsmIzEwODsmIzEwMTsmI3g3MzsmIzQ2OyYjeDZmOyYjeDcyOyYjMTAzOw==">&#x61;&#x64;&#x6d;&#x69;&#x6e;&#64;&#x6f;&#x70;&#x65;&#x6e;&#x73;&#117;&#98;&#116;&#105;&#116;&#108;&#101;&#x73;&#46;&#x6f;&#x72;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
@@ -12205,8 +12340,8 @@
       </categories>
       <tags>
         <tag>群晖</tag>
-        <tag>多媒体</tag>
         <tag>torrent</tag>
+        <tag>多媒体</tag>
       </tags>
   </entry>
   <entry>
