@@ -17,7 +17,7 @@
 <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>在群晖上以 Docker 方式安装。</p>
 <p>在注册表中搜索 <code>openspeedtest</code> ，选择第一个 <code>openspeedtest/latest </code>，版本选择 <code>latest</code>。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/05/20210530125951.png"></p>
-<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>之前安装 <code>Speedtest</code> 用了 <code>8180</code>，所以这次我们用 <code>8280</code></p>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>之前安装 <code>LibreSpeed</code> 用了 <code>8180</code>，所以这次我们用 <code>8280</code></p>
 <table>
 <thead>
 <tr>
