@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-09-13T10:52:40.434Z</updated>
+  <updated>2021-09-15T10:53:32.760Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>网络测速服务器OpenSpeedTest</title>
+    <link href="https://laosu.ml/2021/09/15/%E7%BD%91%E7%BB%9C%E6%B5%8B%E9%80%9F%E6%9C%8D%E5%8A%A1%E5%99%A8OpenSpeedTest/"/>
+    <id>https://laosu.ml/2021/09/15/%E7%BD%91%E7%BB%9C%E6%B5%8B%E9%80%9F%E6%9C%8D%E5%8A%A1%E5%99%A8OpenSpeedTest/</id>
+    <published>2021-09-15T11:00:00.000Z</published>
+    <updated>2021-09-15T10:53:32.760Z</updated>
+    
+    
+    <summary type="html">由 OpenSpeedtest.com 提供的 Speedtest | HTML5 网络速度测试应用程序。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="测速" scheme="https://laosu.ml/tags/%E6%B5%8B%E9%80%9F/"/>
+    
+    <category term="网络" scheme="https://laosu.ml/tags/%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
   
   <entry>
     <title>网络性能监控工具Smokeping</title>
@@ -452,31 +477,6 @@
     <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
     
     <category term="网盘" scheme="https://laosu.ml/tags/%E7%BD%91%E7%9B%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>简约但绝不简单的Komga</title>
-    <link href="https://laosu.ml/2021/08/02/%E7%AE%80%E7%BA%A6%E4%BD%86%E7%BB%9D%E4%B8%8D%E7%AE%80%E5%8D%95%E7%9A%84Komga/"/>
-    <id>https://laosu.ml/2021/08/02/%E7%AE%80%E7%BA%A6%E4%BD%86%E7%BB%9D%E4%B8%8D%E7%AE%80%E5%8D%95%E7%9A%84Komga/</id>
-    <published>2021-08-02T10:30:00.000Z</published>
-    <updated>2021-08-02T10:29:00.379Z</updated>
-    
-    
-    <summary type="html">Komga 是一个免费、开源的漫画服务器，支持 REST API 和 OPDS 。</summary>
-    
-    
-    
-    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
-    
-    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
-    
-    <category term="calibre" scheme="https://laosu.ml/tags/calibre/"/>
-    
-    <category term="小人书" scheme="https://laosu.ml/tags/%E5%B0%8F%E4%BA%BA%E4%B9%A6/"/>
     
   </entry>
   
