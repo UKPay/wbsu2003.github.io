@@ -18,9 +18,6 @@
 <p>在注册表中搜索 <code>openspeedtest</code> ，选择第一个 <code>openspeedtest/latest </code>，版本选择 <code>latest</code>。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/05/20210530125951.png"></p>
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>之前安装 <code>Speedtest</code> 用了 <code>8180</code>，所以这次我们用 <code>8280</code></p>
-<blockquote>
-<p>关于 Speedtest 可以参考 『 <a href="https://laosu.ml/2020/10/27/%E8%87%AA%E5%BB%BASpeedtest%E7%BD%91%E7%BB%9C%E6%B5%8B%E9%80%9F%E6%9C%8D%E5%8A%A1%E5%99%A8">自建Speedtest网络测速服务器</a> 』</p>
-</blockquote>
 <table>
 <thead>
 <tr>
