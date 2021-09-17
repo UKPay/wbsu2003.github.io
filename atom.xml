@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-09-17T04:38:49.774Z</updated>
+  <updated>2021-09-17T09:09:16.633Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://laosu.ml/2021/09/17/%E4%B9%90%E8%B0%B1%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6SheetAble/"/>
     <id>https://laosu.ml/2021/09/17/%E4%B9%90%E8%B0%B1%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6SheetAble/</id>
     <published>2021-09-17T11:00:00.000Z</published>
-    <updated>2021-09-17T04:38:49.774Z</updated>
+    <updated>2021-09-17T09:09:16.633Z</updated>
     
     
     <summary type="html">SheetAble 是一款易于使用的乐谱管理软件，适用于所有音乐爱好者。</summary>
@@ -36,6 +36,8 @@
     <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
     
     <category term="音乐" scheme="https://laosu.ml/tags/%E9%9F%B3%E4%B9%90/"/>
+    
+    <category term="OOPS" scheme="https://laosu.ml/tags/OOPS/"/>
     
   </entry>
   

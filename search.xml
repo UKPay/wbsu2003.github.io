@@ -3,12 +3,20 @@
   <entry>
     <title>乐谱管理软件SheetAble</title>
     <url>/2021/09/17/%E4%B9%90%E8%B0%B1%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6SheetAble/</url>
-    <content><![CDATA[<p><strong>什么是 SheetAble ？</strong></p>
+    <content><![CDATA[<p>周三 <a href="https://laosu.ml/">https://laosu.ml</a> 国内访问中断了3个小时，但没有看到 <span class="exturl" data-url="aHR0cHM6Ly93d3cudmVyY2VsLXN0YXR1cy5jb20v">https://www.vercel-status.com/<i class="fa fa-external-link-alt"></i></span> 有任何说明，如果再次出现不能访问，可以试试下面的备站：</p>
+<p>国内最快的：<span class="exturl" data-url="aHR0cHM6Ly93YnN1MjAwMy5naXRlZS5pby8=">https://wbsu2003.gitee.io<i class="fa fa-external-link-alt"></i></span><br>备站（Github）：<span class="exturl" data-url="aHR0cHM6Ly9sYW9zdS5nYS8=">https://laosu.ga<i class="fa fa-external-link-alt"></i></span><br>备站（Netlify）：<span class="exturl" data-url="aHR0cHM6Ly9sYW9zdS50ay8=">https://laosu.tk<i class="fa fa-external-link-alt"></i></span><br>备站（Cloudflare）：<a href="https://wbsu2003.pages.dev/"><br>https://wbsu2003.pages.dev</a></p>
+<hr>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109171358722.png"></p>
+<p><strong>什么是 SheetAble ？</strong></p>
 <blockquote>
-<p><code>SheetAble</code> 是一款易于使用的乐谱管理软件，适用于所有音乐爱好者。目标从一开始就让 <code>SheetAble</code> 在所有设备上可用，可以在您的 <code>pdf</code> 上做笔记，并将它们存储在您的家庭服务器上。</p>
+<p><code>SheetAble</code> 是一款易于使用的乐谱管理软件，适用于所有音乐爱好者。作者的目标是想让 <code>SheetAble</code> 在所有设备上可用，可以通过 <code>Tablet/iPad</code> 在 <code>pdf</code> 上做笔记，并将它们存储在您的家庭服务器上。</p>
 </blockquote>
 <p>来一张官方的动图</p>
 <p><img src="http://sheetable.net/img/SheetAbleShowcase.gif"></p>
+<p><strong>什么是 OOPS ？</strong></p>
+<blockquote>
+<p>主界面的 <code>OOPS</code> 应该是指 <code>Open Opus API</code>，这是免费、开放的古典音乐元数据，通过 <code>API</code> 能获取作曲家和作品的完整而准确的信息。可以移步 <span class="exturl" data-url="aHR0cHM6Ly9vcGVub3B1cy5vcmcv">https://openopus.org<i class="fa fa-external-link-alt"></i></span> 做进一步了解。</p>
+</blockquote>
 <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>在群晖上以 Docker 方式安装。</p>
 <p>在注册表中搜索 <code>sheetable</code> ，选择第一个 <code>vallezw/sheetable</code>，版本选择 <code>latest</code>。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109170958076.png"></p>
@@ -45,8 +53,8 @@
 <td align="center">8080</td>
 </tr>
 </tbody></table>
-<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109171033497.png"></p>
-<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p><code>SheetAble</code> 支持 <code>SQLite</code>、<code>MySQL</code>, <code>PostgreSQL</code> 三种数据库，如果你用 <code>sqlite</code> 可以不用设置环境变量，如果你想用 <code>MySQL</code>，首先要在 <code>MariaDB 10</code> 中建表</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109171317962.png"></p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p><code>SheetAble</code> 支持 <code>SQLite</code>、<code>MySQL</code>, <code>PostgreSQL</code> 三种数据库，如果你用 <code>sqlite</code> 可以不用设置环境变量，如果你想用 <code>MySQL</code>，首先要在 <code>MariaDB 10</code> 中建库</p>
 <blockquote>
 <p>文档中未找到对 <code>MariaDB</code> 版本的要求，但是老苏尝试用 <code>MariaDB 5</code>，容器日志中会报错导致无法启动</p>
 </blockquote>
@@ -87,7 +95,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109171026787.png" alt="3307"></p>
 <p>如果设置有错误，默认会启用 <code>SQLite</code>，是否设置正确看看 <code>MariaDB</code> 中有没有建表就知道了</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109171041664.png"></p>
-<p>更多的环境变量，请参考官方文档：<span class="exturl" data-url="aHR0cDovL3NoZWV0YWJsZS5uZXQvZG9jcy9jb25maWd1cmF0aW9u">http://sheetable.net/docs/configuration<i class="fa fa-external-link-alt"></i></span></p>
+<p>更多的环境变量，请参考官方文档：<br><span class="exturl" data-url="aHR0cDovL3NoZWV0YWJsZS5uZXQvZG9jcy9jb25maWd1cmF0aW9u">http://sheetable.net/docs/configuration<i class="fa fa-external-link-alt"></i></span></p>
 <h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>在浏览器中输入 <code>http://群晖IP:8585</code>，就能看到登录界面了</p>
 <blockquote>
 <ul>
@@ -115,10 +123,12 @@
 <p>选中一篇 <code>Sheets</code>  可以直接查看</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109171121022.png"></p>
 <p>右下角的 <code>Media Player Coming Soon</code> 是否意味着很快就可以直接播放🎼乐谱🎼呢？不知道这个功能是否也会包含在基础版里？</p>
+<p>毕竟这个功能原来是需要专门的软件来完成的，像 <code>PDFtoMusic Pro</code>、<code>Neuratron PhotoScore</code> 、<code>SeeScore</code> 等，当然也有专门的网站能实现，比如：<span class="exturl" data-url="aHR0cHM6Ly9tdXNlc2NvcmUub3JnL3poLWhhbnMvJUU3JTk0JUE4JUU2JTg4JUI3JUU2JTg5JThCJUU1JTg2JThDLyVFNSU5QyVBOCVFNyVCQSVCRiVFNSU4NSVCMSVFNCVCQSVBQiVFNCVCOSU5MCVFOCVCMCVCMQ==">https://musescore.org/<i class="fa fa-external-link-alt"></i></span></p>
 <h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
 <p>SheetAble/SheetAble: Self-hosted music sheet organizing software<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1NoZWV0QWJsZS9TaGVldEFibGU=">https://github.com/SheetAble/SheetAble<i class="fa fa-external-link-alt"></i></span></p>
 <p>Self-hosted music sheet organizer | SheetAble<br>地址：<span class="exturl" data-url="aHR0cDovL3NoZWV0YWJsZS5uZXQv">http://sheetable.net/<i class="fa fa-external-link-alt"></i></span></p>
 <p>免費樂譜 - 免費下載超過100,000個pdf文件Musopen<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9tdXNvcGVuLm9yZy96aC1oYW50L3NoZWV0bXVzaWMv">https://musopen.org/zh-hant/sheetmusic/<i class="fa fa-external-link-alt"></i></span></p>
+<p>Sheet Music Library (PDF) , Sheet Music Library (PDF)<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9zaGVldG11c2ljbGlicmFyeS53ZWJzaXRlLw==">https://sheetmusiclibrary.website/<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
 ]]></content>
       <categories>
@@ -128,6 +138,7 @@
         <tag>群晖</tag>
         <tag>docker</tag>
         <tag>音乐</tag>
+        <tag>OOPS</tag>
       </tags>
   </entry>
   <entry>
@@ -12663,7 +12674,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjMTAwOyYjeDZkOyYjMTA1OyYjeDZlOyYjeDQwOyYjMTExOyYjeDcwOyYjeDY1OyYjeDZlOyYjMTE1OyYjeDc1OyYjOTg7JiMxMTY7JiN4Njk7JiMxMTY7JiN4NmM7JiMxMDE7JiN4NzM7JiN4MmU7JiMxMTE7JiN4NzI7JiMxMDM7">&#x61;&#100;&#x6d;&#105;&#x6e;&#x40;&#111;&#x70;&#x65;&#x6e;&#115;&#x75;&#98;&#116;&#x69;&#116;&#x6c;&#101;&#x73;&#x2e;&#111;&#x72;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiMxMDA7JiN4NmQ7JiMxMDU7JiMxMTA7JiM2NDsmIzExMTsmIzExMjsmIzEwMTsmIzExMDsmI3g3MzsmI3g3NTsmI3g2MjsmI3g3NDsmIzEwNTsmI3g3NDsmI3g2YzsmIzEwMTsmIzExNTsmIzQ2OyYjeDZmOyYjeDcyOyYjeDY3Ow==">&#97;&#100;&#x6d;&#105;&#110;&#64;&#111;&#112;&#101;&#110;&#x73;&#x75;&#x62;&#x74;&#105;&#x74;&#x6c;&#101;&#115;&#46;&#x6f;&#x72;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
@@ -18634,6 +18645,35 @@
       </tags>
   </entry>
   <entry>
+    <title>群晖上的Zerotier GUI一直显示offline的原因</title>
+    <url>/2020/04/28/%E7%BE%A4%E6%99%96%E4%B8%8A%E7%9A%84Zerotier%20GUI%E4%B8%80%E7%9B%B4%E6%98%BE%E7%A4%BAoffline%E7%9A%84%E5%8E%9F%E5%9B%A0/</url>
+    <content><![CDATA[<p>两台黑群晖，因为共用了frps，所以为了避免端口冲突，一台保留了端口：5000，另一台启用了端口：5002。</p>
+<p>其中在局域网一台正常：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-150636-1587366421033.jpg" alt="title"></p>
+<p>之所以强调局域网是因为在用域名访问时，也同样出现了offline</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-150235-1587366203005.jpg" alt="title"></p>
+<p>用ssh登录后发现可以正常使用<br><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/WechatIMG3868-1587366673982.png" alt="title"></p>
+<p>说明我们下载的包是没问题的，有问题的只是WEB GUI而已。</p>
+<p>参考文档：</p>
+<blockquote>
+<p>1、<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3plcm90aWVyL1plcm9UaWVyTkFTL2lzc3Vlcy8xOA==">Zerotier GUI on Synology shows offline #18<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>文档中有一段描述，可以证明其只能连接端口：5000<br><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-151837-1587367148388.jpg" alt="title"></p>
+<p>而在使用frp后，所有域名是不带端口的，所以才会导致局域网正常而使用frp后又显示offline的原因。</p>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>frp</tag>
+        <tag>NAS</tag>
+        <tag>ngrok</tag>
+        <tag>ZeroTier</tag>
+        <tag>GUI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>群晖app访问遇到的端口问题</title>
     <url>/2020/04/28/%E7%BE%A4%E6%99%96app%E8%AE%BF%E9%97%AE%E9%81%87%E5%88%B0%E7%9A%84%E7%AB%AF%E5%8F%A3%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p><strong>什么是 NAS</strong></p>
@@ -18688,39 +18728,10 @@
         <tag>frp</tag>
         <tag>VPS</tag>
         <tag>NAS</tag>
+        <tag>ngrok</tag>
+        <tag>ZeroTier</tag>
         <tag>黑群</tag>
         <tag>QuickConnect</tag>
-        <tag>ngrok</tag>
-        <tag>ZeroTier</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>群晖上的Zerotier GUI一直显示offline的原因</title>
-    <url>/2020/04/28/%E7%BE%A4%E6%99%96%E4%B8%8A%E7%9A%84Zerotier%20GUI%E4%B8%80%E7%9B%B4%E6%98%BE%E7%A4%BAoffline%E7%9A%84%E5%8E%9F%E5%9B%A0/</url>
-    <content><![CDATA[<p>两台黑群晖，因为共用了frps，所以为了避免端口冲突，一台保留了端口：5000，另一台启用了端口：5002。</p>
-<p>其中在局域网一台正常：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-150636-1587366421033.jpg" alt="title"></p>
-<p>之所以强调局域网是因为在用域名访问时，也同样出现了offline</p>
-<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-150235-1587366203005.jpg" alt="title"></p>
-<p>用ssh登录后发现可以正常使用<br><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/WechatIMG3868-1587366673982.png" alt="title"></p>
-<p>说明我们下载的包是没问题的，有问题的只是WEB GUI而已。</p>
-<p>参考文档：</p>
-<blockquote>
-<p>1、<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3plcm90aWVyL1plcm9UaWVyTkFTL2lzc3Vlcy8xOA==">Zerotier GUI on Synology shows offline #18<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<p>文档中有一段描述，可以证明其只能连接端口：5000<br><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-151837-1587367148388.jpg" alt="title"></p>
-<p>而在使用frp后，所有域名是不带端口的，所以才会导致局域网正常而使用frp后又显示offline的原因。</p>
-]]></content>
-      <categories>
-        <category>各种折腾</category>
-      </categories>
-      <tags>
-        <tag>群晖</tag>
-        <tag>frp</tag>
-        <tag>NAS</tag>
-        <tag>ngrok</tag>
-        <tag>ZeroTier</tag>
-        <tag>GUI</tag>
       </tags>
   </entry>
   <entry>
