@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-09-15T11:12:02.499Z</updated>
+  <updated>2021-09-17T04:38:49.774Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>乐谱管理软件SheetAble</title>
+    <link href="https://laosu.ml/2021/09/17/%E4%B9%90%E8%B0%B1%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6SheetAble/"/>
+    <id>https://laosu.ml/2021/09/17/%E4%B9%90%E8%B0%B1%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6SheetAble/</id>
+    <published>2021-09-17T11:00:00.000Z</published>
+    <updated>2021-09-17T04:38:49.774Z</updated>
+    
+    
+    <summary type="html">SheetAble 是一款易于使用的乐谱管理软件，适用于所有音乐爱好者。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="音乐" scheme="https://laosu.ml/tags/%E9%9F%B3%E4%B9%90/"/>
+    
+  </entry>
   
   <entry>
     <title>网络测速服务器OpenSpeedTest</title>
@@ -443,29 +466,6 @@
     
     
     <summary type="html">镜像 wbsu2003/cloud189-cli 已经更新，解决了登录报错。</summary>
-    
-    
-    
-    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
-    
-    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
-    
-    <category term="网盘" scheme="https://laosu.ml/tags/%E7%BD%91%E7%9B%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>能将阿里云盘挂载为webdav的webdav-aliyundriver</title>
-    <link href="https://laosu.ml/2021/08/04/%E8%83%BD%E5%B0%86%E9%98%BF%E9%87%8C%E4%BA%91%E7%9B%98%E6%8C%82%E8%BD%BD%E4%B8%BAwebdav%E7%9A%84webdav-aliyundriver/"/>
-    <id>https://laosu.ml/2021/08/04/%E8%83%BD%E5%B0%86%E9%98%BF%E9%87%8C%E4%BA%91%E7%9B%98%E6%8C%82%E8%BD%BD%E4%B8%BAwebdav%E7%9A%84webdav-aliyundriver/</id>
-    <published>2021-08-04T11:00:00.000Z</published>
-    <updated>2021-08-04T11:01:52.497Z</updated>
-    
-    
-    <summary type="html">webdav-aliyundriver 实现了阿里云盘的 webdav 协议。</summary>
     
     
     
