@@ -4,9 +4,14 @@
     <title>乐谱管理软件SheetAble</title>
     <url>/2021/09/17/%E4%B9%90%E8%B0%B1%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6SheetAble/</url>
     <content><![CDATA[<p>周三 <a href="https://laosu.ml/">https://laosu.ml</a> 国内访问中断了3个小时，但没有看到 <span class="exturl" data-url="aHR0cHM6Ly93d3cudmVyY2VsLXN0YXR1cy5jb20v">https://www.vercel-status.com/<i class="fa fa-external-link-alt"></i></span> 有任何说明，如果再次出现不能访问，可以试试下面的备站：</p>
-<p>国内最快的：<span class="exturl" data-url="aHR0cHM6Ly93YnN1MjAwMy5naXRlZS5pby8=">https://wbsu2003.gitee.io<i class="fa fa-external-link-alt"></i></span><br>备站（Github）：<span class="exturl" data-url="aHR0cHM6Ly9sYW9zdS5nYS8=">https://laosu.ga<i class="fa fa-external-link-alt"></i></span><br>备站（Netlify）：<span class="exturl" data-url="aHR0cHM6Ly9sYW9zdS50ay8=">https://laosu.tk<i class="fa fa-external-link-alt"></i></span><br>备站（Cloudflare）：<a href="https://wbsu2003.pages.dev/"><br>https://wbsu2003.pages.dev</a></p>
+<ul>
+<li>国内最快的：<span class="exturl" data-url="aHR0cHM6Ly93YnN1MjAwMy5naXRlZS5pby8=">https://wbsu2003.gitee.io<i class="fa fa-external-link-alt"></i></span></li>
+<li>备站（Github）：<span class="exturl" data-url="aHR0cHM6Ly9sYW9zdS5nYS8=">https://laosu.ga<i class="fa fa-external-link-alt"></i></span></li>
+<li>备站（Netlify）：<span class="exturl" data-url="aHR0cHM6Ly9sYW9zdS50ay8=">https://laosu.tk<i class="fa fa-external-link-alt"></i></span></li>
+<li>备站（Cloudflare）：<span class="exturl" data-url="aHR0cHM6Ly93YnN1MjAwMy5wYWdlcy5kZXYv">https://wbsu2003.pages.dev<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<p>如果你会科学上网，当我啥也没说~</p>
 <hr>
-<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109171358722.png"></p>
 <p><strong>什么是 SheetAble ？</strong></p>
 <blockquote>
 <p><code>SheetAble</code> 是一款易于使用的乐谱管理软件，适用于所有音乐爱好者。作者的目标是想让 <code>SheetAble</code> 在所有设备上可用，可以通过 <code>Tablet/iPad</code> 在 <code>pdf</code> 上做笔记，并将它们存储在您的家庭服务器上。</p>
