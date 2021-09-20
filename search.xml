@@ -1,6 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>LibreNMS</title>
+    <url>/2021/09/20/%E5%BC%80%E6%BA%90%E7%9A%84SNMP%E7%BD%91%E7%AE%A1%E7%B3%BB%E7%BB%9FLibreNMS/</url>
+    <content><![CDATA[<p><strong>什么是 SNMP ？</strong></p>
+<blockquote>
+<p>简单网络管理协议（ <code>SNMP</code>） 是专门设计用于在 <code>IP</code> 网络管理网络节点（服务器、工作站、路由器、交换机及 <code>HUBS</code> 等）的一种标准协议，它是一种应用层协议。<code>SNMP</code> 使网络管理员能够管理网络效能，发现并解决网络问题以及规划网络增长。通过 <code>SNMP</code> 接收随机消息（及事件报告）获知网络出现问题。【百度百科】</p>
+</blockquote>
+<p><strong>什么是 LibreNMS ？</strong></p>
+<blockquote>
+<p><code>LibreNMS</code> 是一套开源、功能齐全的网络监控系统，基于 <code>PHP</code> 、<code>MySQL</code>、<code>SNMP</code> 技术开发，提供丰富的功能和设备支持。</p>
+</blockquote>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>对于熟悉 <code>Docker Compose</code> 的人来说，<code>LibreNMS</code> 的安装并不复杂，官方提供了安装的 <code>demo</code>，在 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2xpYnJlbm1zL2RvY2tlci90cmVlL21hc3Rlci9leGFtcGxlcy9jb21wb3Nl">https://github.com/librenms/docker/tree/master/examples/compose<i class="fa fa-external-link-alt"></i></span> 能找到 <code>4</code> 个文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210906092526.png"></p>
+<p>下载后根据自己的情况修改保存，主要也就是端口和卷，然后建两个空目录，分别是 <code>db</code> 和 <code>librenms</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210906095223.png"></p>
+<p>再运行 <code>docker-compose up -d</code> 就搞定了，一共会启动 <code>8</code> 个容器</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210906094216.png"></p>
+<p>使用了一阵，各方面都挺正常的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210906092037.png"></p>
+<p>but，老苏觉得咱也不是专业的网管，能不能简化一下呢？比如就装一个 <code>librenms</code> 容器呢？</p>
+<p>结论是可行的，但是图表出不来</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109170929616.png"></p>
+<p>下图是 <code>Docker Compose</code> 安装的同一个页面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210907155954.png"></p>
+<p>其他功能可以正常使用，具体原因老苏也没弄明白。如果你只是想体验一下，而且没有强迫症的话，就跟着老苏来试试单容器的效果。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><p>通过 <code>phpMyAdmin</code> 在 <code>MariaDB 10</code> 中新建用户 <code>librenms</code>，创建同名的库 <code>librenms</code> 并授予所有权限。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210830120536.png"></p>
+<p>如果使用 <code>MariaDB 5</code>，首次登陆会显示下图</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210830120045.png"></p>
+<p>群晖上的 <code>MariaDB 10</code> 版本是 <code>10.3.7</code>，已经可以满足要求，不然就需要另外通过容器来安装了 <code>MariaDB</code> 了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210830120404.png"></p>
+<h2 id="安装镜像"><a href="#安装镜像" class="headerlink" title="安装镜像"></a>安装镜像</h2><p>在群晖上以 Docker 方式安装。</p>
+<p>在注册表中搜索 <code>librenms</code> ，选择第一个 <code>librenms/librenms</code>，版本选择 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210830094748.png"></p>
+<h3 id="卷"><a href="#卷" class="headerlink" title="卷"></a>卷</h3><p>在 <code>docker</code> 文件夹中，创建一个新文件夹，并将其命名为 <code>librenms</code>，再建一个子目录 <code>data</code></p>
+<table>
+<thead>
+<tr>
+<th align="center">文件夹</th>
+<th align="center">装载路径</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>docker/librenms/data</code></td>
+<td align="center"><code>/data</code></td>
+<td align="center">存放设置等</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><code>/data</code>：包含配置、插件、<code>rrd</code> 数据库、日志、额外的监控插件、额外的 <code>syslog-ng</code> 配置文件</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109170913025.png"></p>
+<h3 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h3><p><code>http</code> 端口改为了 <code>8234</code> ，其他采用了默认的自动</p>
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">8234</td>
+<td align="center">8000</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210830112250.png"></p>
+<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><p>完整的环境变量参数在：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2xpYnJlbm1zL2RvY2tlci9ibG9iL21hc3Rlci9kb2MvZG9ja2VyL2Vudmlyb25tZW50LXZhcmlhYmxlcy5tZA==">https://github.com/librenms/docker/blob/master/doc/docker/environment-variables.md<i class="fa fa-external-link-alt"></i></span></p>
+<p>老苏只是按自己的需要改了几个跟数据库相关的部分：</p>
+<table>
+<thead>
+<tr>
+<th align="center">可变</th>
+<th align="center">值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>TZ</code></td>
+<td align="center">时区</td>
+</tr>
+<tr>
+<td align="center"><code>DB_HOST</code></td>
+<td align="center">数据库主机名或者 IP</td>
+</tr>
+<tr>
+<td align="center"><code>DB_PORT</code></td>
+<td align="center">数据库端口</td>
+</tr>
+<tr>
+<td align="center"><code>DB_NAME</code></td>
+<td align="center">数据库名称</td>
+</tr>
+<tr>
+<td align="center"><code>DB_USER</code></td>
+<td align="center">数据库用户</td>
+</tr>
+<tr>
+<td align="center"><code>DB_PASSWORD</code></td>
+<td align="center">数据库密码</td>
+</tr>
+<tr>
+<td align="center"><code>DB_TIMEOUT</code></td>
+<td align="center">数据库超时</td>
+</tr>
+</tbody></table>
+<p><code>TZ</code> 默认值为 <code>UTC</code>，改为 <code>Asia/Shanghai</code>、<code>PUID</code> 和 <code>PGID</code> 用了默认的 <code>1000</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109170918696.png"></p>
+<p>点 <code>+</code> 号新增跟数据库相关的内容</p>
+<blockquote>
+<p><code>3306</code> 是 <code>MariaDB 5</code> 的默认端口，<code>3307</code> 才是 <code>MariaDB 10</code> 的默认端口</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210830165121.png" alt="数据库"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>在浏览器中输入 <code>http://群晖IP:8234</code>，就能看到登陆界面了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210830123603.png"></p>
+<blockquote>
+<p>默认的账号：librenms，密码：librenms</p>
+</blockquote>
+<p>登陆成功后</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210830123845.png"></p>
+<h2 id="设置中文"><a href="#设置中文" class="headerlink" title="设置中文"></a>设置中文</h2><p>点右上角用户 <code>librenms</code> –&gt; <code>My Settings</code> –&gt; <code>Language</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210830143536.png"></p>
+<p>下拉选择 <code>简体中文</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210830143904.png"></p>
+<p>就像界面上提示的 <code>多国语系功能尚未完备</code>，很多地方依然还是显示的英文</p>
+<h2 id="新增设备"><a href="#新增设备" class="headerlink" title="新增设备"></a>新增设备</h2><p>菜单栏中 <code>设备</code> </p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210830161243.png"></p>
+<p>点 <code>新增设备</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210830161419.png"></p>
+<p>这种方式只能一台设备一台设备添加</p>
+<h3 id="路由器"><a href="#路由器" class="headerlink" title="路由器"></a>路由器</h3><p>首先要在路由器中启用 <code>SNMP</code> 协议</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210830163103.png"></p>
+<p>填入相关信息，应用</p>
+<ul>
+<li>第一个红框中是一些说明信息</li>
+<li>第二个框是 <code>Community String</code>，你可以认为这是一个密码，建议像密码一样设的复杂一点，老苏这里只是为了演示。</li>
+<li>大部分网络供应商提供的设备默认密码为 “<code>public</code>” 。（这就是所谓的“默认公共社区字符串”。）</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210903090040.png"></p>
+<p>回到 <code>LibreNMS</code> 的 <code>新增设备</code> 页面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210903092150.png"></p>
+<p>刚添加完成，还是一个 <code>Generic Device</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210903113511.png"></p>
+<p>需要在 <code>Capture</code> 中 <code>Discovery</code>一下（<code>Docker Compose</code> 安装的似乎不用，估计是有 <code>dispatcher</code> 的缘故）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210903114017.png"></p>
+<p>完成之后就能正确显示了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210903114103.png"></p>
+<h3 id="群晖"><a href="#群晖" class="headerlink" title="群晖"></a>群晖</h3><p><code>控制面板</code> –&gt; <code>终端机和SNMP</code> –&gt; <code>SNMP</code>，默认也没有启用 <code>SNMP</code> 服务</p>
+<ul>
+<li>这里的 <code>社群</code> 就是 <code>Community String</code></li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210830165715.png"></p>
+<p>回到 <code>LibreNMS</code> 的 <code>新增设备</code> 页面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210830165806.png"></p>
+<p>两个设备添加完成之后，可以在设备列表中看到</p>
+<p> <img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210903092939.png"></p>
+<h2 id="自动发现"><a href="#自动发现" class="headerlink" title="自动发现"></a>自动发现</h2><p>如果你是一个网管，管理着很多的设备，这种逐个添加设备的方式显然不太适合，因此就会需要用到自动发现功能</p>
+<p>但是在你使用之前，老苏想告诉你，这个功能特别耗资源，而且也很费时，如果你是在内存比较小的机器、或者猫盘这类设备上安装的 <code>LibreNMS</code>，不建议使用，一旦开启就会像下面👇这样，老苏的机器中途还自动关机了一次</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/20210831160009.png"></p>
+<p>操作需要进入容器内部，进入容器可以通过 <code>SSH</code> 客户端，也可以通过群晖 <code>Docker</code> 的终端机</p>
+<h3 id="SSH-客户端"><a href="#SSH-客户端" class="headerlink" title="SSH 客户端"></a>SSH 客户端</h3><p><code>SSH</code> 客户端直接执行下面👇的命令即可进入到容器内部</p>
+<blockquote>
+<p><code>librenms-librenms1</code> 为容器的名称</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 用 root 身份进入</span></span><br><span class="line">docker <span class="built_in">exec</span> --user root -it librenms-librenms1 /bin/bash</span><br></pre></td></tr></table></figure>
+
+<h3 id="终端机"><a href="#终端机" class="headerlink" title="终端机"></a>终端机</h3><p>容器上右键进入「详情」</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210903095716.png"></p>
+<p>「终端机」 =&gt; 「新增」 =&gt; 「通过命令启动」=&gt; 「请输入一个命令」=&gt; 「bash」</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210903095759.png"></p>
+<p>进入容器之后，操作命令都是一样的了，默认在 <code>/opt/librenms</code> 下</p>
+<p>你可以抓取自定义的网段</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 自定义网段扫描</span></span><br><span class="line">./snmp-scan.py 192.168.0.0/16</span><br></pre></td></tr></table></figure>
+
+<p>也可以将需要扫描的网段添加在 <code>config.php</code> 中</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$config</span>[<span class="string">&#x27;nets&#x27;</span>][] = <span class="string">&quot;192.168.0.0/16&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210903100529.png"></p>
+<p>然后执行扫描</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 根据配置文件扫描</span></span><br><span class="line">./snmp-scan.py</span><br></pre></td></tr></table></figure>
+
+<h1 id="诊断"><a href="#诊断" class="headerlink" title="诊断"></a>诊断</h1><p>如果运行中有什么问题，可以用下面的方法进行诊断</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Do not run validate.php as root</span></span><br><span class="line">docker <span class="built_in">exec</span> --user librenms -it librenms-librenms1 /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 诊断</span></span><br><span class="line">./validate.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/202109032059658.png"></p>
+<p>似乎不管怎么装都会有这个数据库警告</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/202109032100411.png"></p>
+<p>处不处理好像也没什么不同，只是看着舒服一点</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/08/202109032101524.png"></p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p><code>LibreNMS</code> 可以通过 <code>SNMP</code> 协议，将设备的处理器、操作系统、内存、网卡、存储等信息收集起来，通过图表的方式进行展示和查询，利用报警可以让我们及时了解设备的状况，而通过历史数据又可以很容易分析出故障的原因，更多的功能等待你去发掘。</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>librenms/librenms: Community-based GPL-licensed network monitoring system<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2xpYnJlbm1zL2xpYnJlbm1z">https://github.com/librenms/librenms<i class="fa fa-external-link-alt"></i></span></p>
+<p>LibreNMS<br>地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cubGlicmVubXMub3JnLw==">https://www.librenms.org/<i class="fa fa-external-link-alt"></i></span></p>
+<p>librenms/docker: LibreNMS Docker image based on Alpine Linux and Nginx<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2xpYnJlbm1zL2RvY2tlcg==">https://github.com/librenms/docker<i class="fa fa-external-link-alt"></i></span></p>
+<p>LibreNMS Docs<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmxpYnJlbm1zLm9yZy8=">https://docs.librenms.org/<i class="fa fa-external-link-alt"></i></span></p>
+<p>Synology SNMP Network Monitoring with LibreNMS Docker - Jason Loong<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9qYXNvbmxvb25nLmNvbS8yMDE3L3N5bm9sb2d5LXNubXAtbmV0d29yay1tb25pdG9yaW5nLXdpdGgtbGlicmVubXMtZG9ja2VyLw==">https://jasonloong.com/2017/synology-snmp-network-monitoring-with-librenms-docker/<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>乐谱管理软件SheetAble</title>
     <url>/2021/09/17/%E4%B9%90%E8%B0%B1%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6SheetAble/</url>
     <content><![CDATA[<p>周三 <a href="https://laosu.ml/">https://laosu.ml</a> 国内访问中断了3个小时，但没有看到 <span class="exturl" data-url="aHR0cHM6Ly93d3cudmVyY2VsLXN0YXR1cy5jb20v">https://www.vercel-status.com/<i class="fa fa-external-link-alt"></i></span> 有任何说明，如果再次出现不能访问，可以试试下面的备站：</p>
@@ -12679,7 +12885,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiMxMDA7JiN4NmQ7JiMxMDU7JiMxMTA7JiM2NDsmIzExMTsmIzExMjsmIzEwMTsmIzExMDsmI3g3MzsmI3g3NTsmI3g2MjsmI3g3NDsmIzEwNTsmI3g3NDsmI3g2YzsmIzEwMTsmIzExNTsmIzQ2OyYjeDZmOyYjeDcyOyYjeDY3Ow==">&#97;&#100;&#x6d;&#105;&#110;&#64;&#111;&#112;&#101;&#110;&#x73;&#x75;&#x62;&#x74;&#105;&#x74;&#x6c;&#101;&#115;&#46;&#x6f;&#x72;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiMxMDA7JiMxMDk7JiN4Njk7JiN4NmU7JiN4NDA7JiN4NmY7JiMxMTI7JiN4NjU7JiN4NmU7JiMxMTU7JiN4NzU7JiM5ODsmIzExNjsmIzEwNTsmI3g3NDsmIzEwODsmIzEwMTsmI3g3MzsmI3gyZTsmIzExMTsmI3g3MjsmIzEwMzs=">&#97;&#100;&#109;&#x69;&#x6e;&#x40;&#x6f;&#112;&#x65;&#x6e;&#115;&#x75;&#98;&#116;&#105;&#x74;&#108;&#101;&#x73;&#x2e;&#111;&#x72;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
@@ -12745,8 +12951,8 @@
       </categories>
       <tags>
         <tag>群晖</tag>
-        <tag>多媒体</tag>
         <tag>torrent</tag>
+        <tag>多媒体</tag>
       </tags>
   </entry>
   <entry>
@@ -18650,35 +18856,6 @@
       </tags>
   </entry>
   <entry>
-    <title>群晖上的Zerotier GUI一直显示offline的原因</title>
-    <url>/2020/04/28/%E7%BE%A4%E6%99%96%E4%B8%8A%E7%9A%84Zerotier%20GUI%E4%B8%80%E7%9B%B4%E6%98%BE%E7%A4%BAoffline%E7%9A%84%E5%8E%9F%E5%9B%A0/</url>
-    <content><![CDATA[<p>两台黑群晖，因为共用了frps，所以为了避免端口冲突，一台保留了端口：5000，另一台启用了端口：5002。</p>
-<p>其中在局域网一台正常：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-150636-1587366421033.jpg" alt="title"></p>
-<p>之所以强调局域网是因为在用域名访问时，也同样出现了offline</p>
-<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-150235-1587366203005.jpg" alt="title"></p>
-<p>用ssh登录后发现可以正常使用<br><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/WechatIMG3868-1587366673982.png" alt="title"></p>
-<p>说明我们下载的包是没问题的，有问题的只是WEB GUI而已。</p>
-<p>参考文档：</p>
-<blockquote>
-<p>1、<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3plcm90aWVyL1plcm9UaWVyTkFTL2lzc3Vlcy8xOA==">Zerotier GUI on Synology shows offline #18<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<p>文档中有一段描述，可以证明其只能连接端口：5000<br><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-151837-1587367148388.jpg" alt="title"></p>
-<p>而在使用frp后，所有域名是不带端口的，所以才会导致局域网正常而使用frp后又显示offline的原因。</p>
-]]></content>
-      <categories>
-        <category>各种折腾</category>
-      </categories>
-      <tags>
-        <tag>群晖</tag>
-        <tag>frp</tag>
-        <tag>NAS</tag>
-        <tag>ngrok</tag>
-        <tag>ZeroTier</tag>
-        <tag>GUI</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>群晖app访问遇到的端口问题</title>
     <url>/2020/04/28/%E7%BE%A4%E6%99%96app%E8%AE%BF%E9%97%AE%E9%81%87%E5%88%B0%E7%9A%84%E7%AB%AF%E5%8F%A3%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p><strong>什么是 NAS</strong></p>
@@ -18733,10 +18910,39 @@
         <tag>frp</tag>
         <tag>VPS</tag>
         <tag>NAS</tag>
-        <tag>ngrok</tag>
-        <tag>ZeroTier</tag>
         <tag>黑群</tag>
         <tag>QuickConnect</tag>
+        <tag>ngrok</tag>
+        <tag>ZeroTier</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>群晖上的Zerotier GUI一直显示offline的原因</title>
+    <url>/2020/04/28/%E7%BE%A4%E6%99%96%E4%B8%8A%E7%9A%84Zerotier%20GUI%E4%B8%80%E7%9B%B4%E6%98%BE%E7%A4%BAoffline%E7%9A%84%E5%8E%9F%E5%9B%A0/</url>
+    <content><![CDATA[<p>两台黑群晖，因为共用了frps，所以为了避免端口冲突，一台保留了端口：5000，另一台启用了端口：5002。</p>
+<p>其中在局域网一台正常：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-150636-1587366421033.jpg" alt="title"></p>
+<p>之所以强调局域网是因为在用域名访问时，也同样出现了offline</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-150235-1587366203005.jpg" alt="title"></p>
+<p>用ssh登录后发现可以正常使用<br><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/WechatIMG3868-1587366673982.png" alt="title"></p>
+<p>说明我们下载的包是没问题的，有问题的只是WEB GUI而已。</p>
+<p>参考文档：</p>
+<blockquote>
+<p>1、<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3plcm90aWVyL1plcm9UaWVyTkFTL2lzc3Vlcy8xOA==">Zerotier GUI on Synology shows offline #18<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>文档中有一段描述，可以证明其只能连接端口：5000<br><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-151837-1587367148388.jpg" alt="title"></p>
+<p>而在使用frp后，所有域名是不带端口的，所以才会导致局域网正常而使用frp后又显示offline的原因。</p>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>frp</tag>
+        <tag>NAS</tag>
+        <tag>ngrok</tag>
+        <tag>ZeroTier</tag>
+        <tag>GUI</tag>
       </tags>
   </entry>
   <entry>

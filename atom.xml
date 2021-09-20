@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-09-17T10:35:19.241Z</updated>
+  <updated>2021-09-20T10:35:08.800Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>LibreNMS</title>
+    <link href="https://laosu.ml/2021/09/20/%E5%BC%80%E6%BA%90%E7%9A%84SNMP%E7%BD%91%E7%AE%A1%E7%B3%BB%E7%BB%9FLibreNMS/"/>
+    <id>https://laosu.ml/2021/09/20/%E5%BC%80%E6%BA%90%E7%9A%84SNMP%E7%BD%91%E7%AE%A1%E7%B3%BB%E7%BB%9FLibreNMS/</id>
+    <published>2021-09-20T11:00:00.000Z</published>
+    <updated>2021-09-20T10:35:08.800Z</updated>
+    
+    
+    <summary type="html">LibreNMS 是一个使用 SNMP 协议，开源且功能强大的网络监控系统。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="网络" scheme="https://laosu.ml/tags/%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
   
   <entry>
     <title>乐谱管理软件SheetAble</title>
@@ -456,29 +479,6 @@
     <category term="RSS" scheme="https://laosu.ml/tags/RSS/"/>
     
     <category term="网页监控" scheme="https://laosu.ml/tags/%E7%BD%91%E9%A1%B5%E7%9B%91%E6%8E%A7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>《在群晖上使用天翼云盘》的更新说明</title>
-    <link href="https://laosu.ml/2021/08/05/%E3%80%8E%E5%9C%A8%E7%BE%A4%E6%99%96%E4%B8%8A%E4%BD%BF%E7%94%A8%E5%A4%A9%E7%BF%BC%E4%BA%91%E7%9B%98%E3%80%8F%E7%9A%84%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E/"/>
-    <id>https://laosu.ml/2021/08/05/%E3%80%8E%E5%9C%A8%E7%BE%A4%E6%99%96%E4%B8%8A%E4%BD%BF%E7%94%A8%E5%A4%A9%E7%BF%BC%E4%BA%91%E7%9B%98%E3%80%8F%E7%9A%84%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E/</id>
-    <published>2021-08-05T11:00:00.000Z</published>
-    <updated>2021-08-05T04:43:11.256Z</updated>
-    
-    
-    <summary type="html">镜像 wbsu2003/cloud189-cli 已经更新，解决了登录报错。</summary>
-    
-    
-    
-    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
-    
-    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
-    
-    <category term="网盘" scheme="https://laosu.ml/tags/%E7%BD%91%E7%9B%98/"/>
     
   </entry>
   
