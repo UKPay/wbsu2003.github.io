@@ -95,7 +95,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221108140.png"></p>
 <p>点网址前面的锁🔐标志可以修改权限</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221355823.png"></p>
-<p>地址栏可以修改权限</p>
+<p>地址栏也可以修改权限</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221110261.png"></p>
 <ol start="3">
 <li> 导入 <code>mid</code> 文件报错</li>
@@ -109,7 +109,7 @@
 <li>存在 <code>MIDI</code> 格式兼容问题</li>
 <li>或者存在音色库不支持的乐器</li>
 </ul>
-<p>老苏尝试过几个 <code>mid</code>，这几个文件用 <code>Windows Media Player</code> 测试都是能正常播放的，也在下面两个网站上做过测试都是 <code>OK</code>的</p>
+<p>老苏尝试过几个 <code>mid</code>，这几个文件用 <code>Windows Media Player</code> 测试都是能正常播放的，也在下面两个网站上做过测试都是 <code>OK</code> 的</p>
 <ul>
 <li><span class="exturl" data-url="aHR0cHM6Ly9vbmxpbmVzZXF1ZW5jZXIubmV0Lw==">https://onlinesequencer.net<i class="fa fa-external-link-alt"></i></span>  </li>
 <li><span class="exturl" data-url="aHR0cHM6Ly93d3cub25saW5lbWlkaS5jb20vRWRpdG9yLnBocA==">https://www.onlinemidi.com/Editor.php<i class="fa fa-external-link-alt"></i></span>  </li>
