@@ -1,6 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>开源的在线MIDI编辑器signal</title>
+    <url>/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BF%20MIDI%20%E7%BC%96%E8%BE%91%E5%99%A8signal/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>中秋节在家折腾了几个项目，但是几乎差点颗粒无收</p>
+<h2 id="Real-ESRGAN"><a href="#Real-ESRGAN" class="headerlink" title="Real-ESRGAN"></a>Real-ESRGAN</h2><p>这是一套算法，简单的说是就是把低分辨率的模糊图像，还原成更高的分辨率，作者 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3hpbm50YW8=">Xintao Wang<i class="fa fa-external-link-alt"></i></span>（<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3hpbm50YW8=">https://github.com/xinntao<i class="fa fa-external-link-alt"></i></span>） 是腾讯 ARC 实验室的研究员，老苏用来构建镜像的是 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0FLMzkx">AK391<i class="fa fa-external-link-alt"></i></span>（<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0FLMzkx">https://github.com/AK391<i class="fa fa-external-link-alt"></i></span>）集成了 <code>Gradio</code> 的版本，<code>demo</code> 在： <span class="exturl" data-url="aHR0cHM6Ly9odWdnaW5nZmFjZS5jby9zcGFjZXMvYWtoYWxpcS9SZWFsLUVTUkdBTg==">https://huggingface.co/spaces/akhaliq/Real-ESRGAN<i class="fa fa-external-link-alt"></i></span> </p>
+<p>项目地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3hpbm50YW8vUmVhbC1FU1JHQU4=">https://github.com/xinntao/Real-ESRGAN<i class="fa fa-external-link-alt"></i></span></p>
+<p>镜像构建成功后存在几个问题：</p>
+<ul>
+<li>本地不能访问，增加了 <code>share=true</code> 之后，可以通过 <code>https://xxx.gradio.app</code> 这样的临时地址（72小时有效）访问</li>
+<li>每次运行会重复下载 <code>RealESRGAN_x4plus.pth</code>，但是保存的目录似乎不对</li>
+<li>上传图片后 <code>Output</code> 有报错（可能跟上一条有关）</li>
+</ul>
+<p>老苏觉得自己有点膨胀了，居然都敢开始玩人工智能了</p>
+<h2 id="B2A"><a href="#B2A" class="headerlink" title="B2A"></a>B2A</h2><p><code>B2A</code> 就是 <code>BaiduYun To AliYun</code> 的缩写，程序基于 <code>Python cli</code> 实现了从百度云网盘迁移文件到阿里云盘，官方只提供了 <code>exe</code> 程序</p>
+<p>项目地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3lhcm9uenovQmFpZHVZdW5Ub0FsaVl1bg==">https://github.com/yaronzz/BaiduYunToAliYun<i class="fa fa-external-link-alt"></i></span></p>
+<p>镜像构建成功后，能够登录阿里云和百度云，并且也能列出文件目录，但是在迁移时显示文件下载错误</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Err: 下载文件块失败：Can&#39;t instantiate abstract class RangeRequestIO with abstract methods __enter__, __exit__, closed, fileno, flush, isatty, mode, name, readable, readline, readlines, truncate, write, writelines</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109201716005.png"></p>
+<h2 id="PyBoy"><a href="#PyBoy" class="headerlink" title="PyBoy"></a>PyBoy</h2><p><code>PyBoy</code> 是一个基于 <code>Python</code> 的 <code>Game Boy</code> 模拟器，官方提供了很多版本的 <code>Dockerfile</code> 文件，但是老苏依次编译后没有一个能成功启动容器，即便改成了源代码编译也是一样，而且没有任何报错信息</p>
+<p>项目地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0JhZWthbGZlbi9QeUJveQ==">https://github.com/Baekalfen/PyBoy<i class="fa fa-external-link-alt"></i></span></p>
+<p>这几个项目本身没问题，有问题的是容器这种运行环境可能不适合项目，需要做代码或者其他的调整，但是老苏水平有限，只能暂时搁置。</p>
+<p>唯一成功的项目是 <code>signal</code></p>
+<p><strong>什么是 signal ？</strong></p>
+<blockquote>
+<p><code>signal</code> 是一个开源的免费在线 <code>MIDI</code> 编辑器和播放器。</p>
+</blockquote>
+<p>项目官网地址：<span class="exturl" data-url="aHR0cHM6Ly9zaWduYWwudmVyY2VsLmFwcC8=">https://signal.vercel.app<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>什么是 MIDI ？</strong></p>
+<blockquote>
+<p><code>MIDI</code> （ <code>Musical Instrument Digital Interface</code>）乐器数字接口 ，是编曲界最广泛的音乐标准格式，可称为“计算机能理解的乐谱”。它用音符的数字控制信号来记录音乐。几乎所有的现代音乐都是用 <code>MIDI</code> 加上音色库来制作合成的。<code>MIDI</code> 传输的不是声音信号，而是音符、控制参数等指令，它指示 <code>MIDI</code> 设备要做什么，怎么做， 如演奏哪个音符、多大音量等。它们被统一表示成 <code>MIDI</code> 消息（<code>MIDI Message</code>）。【改编自百度百科】</p>
+</blockquote>
+<h1 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h1><blockquote>
+<p>如果你不想自己构建，可以跳过，直接阅读下一章节</p>
+</blockquote>
+<p><code>Signal</code> 官方没有提供 <code>Dockerfile</code> 或者镜像，也没有找到第三方的，所以老苏准备自己构建</p>
+<p>准备两个文件，一个是 <code>Dockerfile</code>，用于构建镜像</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:<span class="number">16.5</span> as build-deps</span><br><span class="line"><span class="keyword">MAINTAINER</span> laosu&lt;wbsu2003@gmail.com&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /signal</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> package.json tsconfig.json ./</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> yarn</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> . ./</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> yarn build</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> nginx:<span class="number">1.12</span>-alpine</span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> --from=build-deps /signal/dist /usr/share/nginx/html</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> rm /etc/nginx/conf.d/default.conf</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> default.conf /etc/nginx/conf.d</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">&quot;nginx&quot;</span>, <span class="string">&quot;-g&quot;</span>, <span class="string">&quot;daemon off;&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p>另一个是 <code>default.conf</code> 文件，这是 <code>nginx</code> 的设置文件，可以让 <code>nginx</code> 上的静态网页在访问的时候没有 <code>html</code> 后缀</p>
+<p>老苏是从 <code>nginx:1.12-alpine</code> 中把默认的 <code>/etc/nginx/conf.d/default.conf</code> 拷贝出来，在 <code>location</code> 中新增下面的内容，达到了访问时没有 <code>html</code> 后缀的目的</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if (!-e $request_filename)&#123;</span><br><span class="line">   rewrite ^(.*)$ &#x2F;$1.html last;</span><br><span class="line">   break;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109212153425.png"></p>
+<p>完整的 <code>default.conf</code> 如下👇</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen       80;</span><br><span class="line">    server_name  localhost;</span><br><span class="line"></span><br><span class="line">    #charset koi8-r;</span><br><span class="line">    #access_log  &#x2F;var&#x2F;log&#x2F;nginx&#x2F;host.access.log  main;</span><br><span class="line"></span><br><span class="line">    location &#x2F; &#123;</span><br><span class="line">        root   &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html;</span><br><span class="line">        index  index.html index.htm;</span><br><span class="line">        if (!-e $request_filename)&#123;</span><br><span class="line">           rewrite ^(.*)$ &#x2F;$1.html last;</span><br><span class="line">           break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    #error_page  404              &#x2F;404.html;</span><br><span class="line"></span><br><span class="line">    # redirect server error pages to the static page &#x2F;50x.html</span><br><span class="line">    #</span><br><span class="line">    error_page   500 502 503 504  &#x2F;50x.html;</span><br><span class="line">    location &#x3D; &#x2F;50x.html &#123;</span><br><span class="line">        root   &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    # proxy the PHP scripts to Apache listening on 127.0.0.1:80</span><br><span class="line">    #                                           </span><br><span class="line">    #location ~ \.php$ &#123;                         </span><br><span class="line">    #    proxy_pass   http:&#x2F;&#x2F;127.0.0.1;         </span><br><span class="line">    #&#125;                                                         </span><br><span class="line">                                               </span><br><span class="line">    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span><br><span class="line">    #                                                       </span><br><span class="line">    #location ~ \.php$ &#123;                         </span><br><span class="line">    #    root           html;                   </span><br><span class="line">    #    fastcgi_pass   127.0.0.1:9000;         </span><br><span class="line">    #    fastcgi_index  index.php;               </span><br><span class="line">    #    fastcgi_param  SCRIPT_FILENAME  &#x2F;scripts$fastcgi_script_name;  </span><br><span class="line">    #    include        fastcgi_params;         </span><br><span class="line">    #&#125;                                                                             </span><br><span class="line">    # deny access to .htaccess files, if Apache&#39;s document root         </span><br><span class="line">    # concurs with nginx&#39;s one                   </span><br><span class="line">    #                                           </span><br><span class="line">    #location ~ &#x2F;\.ht &#123;                         </span><br><span class="line">    #    deny  all;                             </span><br><span class="line">    #&#125;                                           </span><br><span class="line">&#125;   </span><br></pre></td></tr></table></figure>
+
+<p>构建镜像的基本流程如下👇</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 下载代码</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/ryohey/signal.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入目录</span></span><br><span class="line"><span class="built_in">cd</span> signal</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将 Dockerfile 和 default.conf 放到代码根目录</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建镜像</span></span><br><span class="line">docker build -t wbsu2003/signal:v1 .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行容器</span></span><br><span class="line">docker run -d --name signal \</span><br><span class="line">--restart=always \</span><br><span class="line">-p 7800:80 \</span><br><span class="line">wbsu2003/signal:v1</span><br></pre></td></tr></table></figure>
+
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>在群晖上以 Docker 方式安装。</p>
+<p>在注册表中搜索 <code>wbsu2003</code> ，找到 <code>wbsu2003/signal</code>，版本选择 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221010698.png"></p>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p> 找了个不冲突的本地端口 <code>7800</code> </p>
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">7800</td>
+<td align="center">80</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221023533.png"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>在浏览器中输入 <code>http://群晖IP:7800</code>，就能看到主界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221026033.png"></p>
+<p>点 <code>Launch</code> 进入到编辑界面，左侧是钢琴的琴键🎹，可以直接弹奏</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221028761.png"></p>
+<p>右侧随便点点就可以形成一首曲子播放了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221046252.png"></p>
+<p>可以保存为 <code>mid</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221047061.png"></p>
+<p>软件的界面很友好，如果你懂乐理，上手应该很容易的，就算和老苏一样完全不懂，也可以当 <code>MIDI</code> 播放器用</p>
+<h1 id="答疑"><a href="#答疑" class="headerlink" title="答疑"></a>答疑</h1><ol>
+<li><code>WebGL can&#39;t be initialized. may be browser doesn&#39;t support</code></li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221059317.png"></p>
+<p>【建议】：换个浏览器试试，一般来说现代浏览器都是没问题的，老苏试过  <code>Chrome</code> 、<code>Edge</code>、<code>Safari</code>，上图只出现在『 <a href="https://laosu.ml/2020/11/01/%E7%BB%99%E7%BE%A4%E6%99%96%E5%AE%89%E8%A3%85firefox%E6%B5%8F%E8%A7%88%E5%99%A8">给群晖安装firefox浏览器</a>  』一文安装的 <code>firefox</code> 上，可能是版本老了，也可能是其他原因</p>
+<ol start="2">
+<li><code>Web MIDI API is not Supported by your browser</code></li>
+</ol>
+<p>在 <code>Setting</code> 中，你会看到提示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221051705.png"></p>
+<p>并不是说你的浏览器真的不支持 <code>Web MIDI API</code> ，而是因为局域网中使用了 <code>http</code> 而不是 <code>https</code> 协议</p>
+<p>老苏用的 <code>frp</code>，需做反代设置</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221056746.png"></p>
+<p>进入编辑界面时，会弹出权限申请，点 <code>允许</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221107081.png"></p>
+<p>再进到 <code>Setting</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221108140.png"></p>
+<p>地址栏可以修改权限</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221110261.png"></p>
+<ol start="3">
+<li> 打开 <code>mid</code> 文件报错</li>
+</ol>
+<p>出现这样的错误： <code>TypeError: Cannot read property &#39;value&#39; of null</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221229901.png"></p>
+<p>可能</p>
+<ul>
+<li>存在 <code>MIDI</code> 格式兼容问题</li>
+<li>或者是音色库不支持除钢琴外的乐器</li>
+</ul>
+<p>老苏尝试过几个 <code>mid</code>，像纯钢琴的是可以导入，并正常播放⏯的，比如下面这首</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L2doL3dic3UyMDAzL2dpdG5vdGUtaW1hZ2VzQG1hc3Rlci9waWNnby8yMDIxLzA5LzIwMjEwOTIyMTEzMTYyNC5taWQ=">石进-夜的钢琴曲(ONE).mid<i class="fa fa-external-link-alt"></i></span></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221136791.png"></p>
+<p>而像下面这两首就不行</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L2doL3dic3UyMDAzL2dpdG5vdGUtaW1hZ2VzQG1hc3Rlci9waWNnby8yMDIxLzA5LzIwMjEwOTIyMTIyNjMwNy5taWQ=">After The ThrillIs Gone.mid<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L2doL3dic3UyMDAzL2dpdG5vdGUtaW1hZ2VzQG1hc3Rlci9waWNnby8yMDIxLzA5LzIwMjEwOTIyMTIyNzU2Mi5taWQ=">稻香-周杰伦.mid<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>ryohey/signal: A friendly music sequencer built with web technology<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3J5b2hleS9zaWduYWwv">https://github.com/ryohey/signal/<i class="fa fa-external-link-alt"></i></span></p>
+<p>signal - Online MIDI Editor<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9zaWduYWwudmVyY2VsLmFwcC8=">https://signal.vercel.app/<i class="fa fa-external-link-alt"></i></span></p>
+<p>让nginx上的静态网页在访问的时候没有html后缀-云社区-华为云<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9iYnMuaHVhd2VpY2xvdWQuY29tL2Jsb2dzL2RldGFpbC8xMjYyMTE=">https://bbs.huaweicloud.com/blogs/detail/126211<i class="fa fa-external-link-alt"></i></span></p>
+<p>11 Best Free Online MIDI Editors &amp; MIDI Players<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9oaXBob3BtYWtlcnMuY29tL2ZyZWUtb25saW5lLW1pZGktZWRpdG9ycy1taWRpLXBsYXllcnM=">https://hiphopmakers.com/free-online-midi-editors-midi-players<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>音乐</tag>
+        <tag>MIDI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>开源的SNMP网管系统LibreNMS</title>
     <url>/2021/09/20/%E5%BC%80%E6%BA%90%E7%9A%84SNMP%E7%BD%91%E7%AE%A1%E7%B3%BB%E7%BB%9FLibreNMS/</url>
     <content><![CDATA[<p><strong>什么是 SNMP ？</strong></p>
@@ -12885,7 +13013,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiMxMDA7JiMxMDk7JiN4Njk7JiN4NmU7JiN4NDA7JiN4NmY7JiMxMTI7JiN4NjU7JiN4NmU7JiMxMTU7JiN4NzU7JiM5ODsmIzExNjsmIzEwNTsmI3g3NDsmIzEwODsmIzEwMTsmI3g3MzsmI3gyZTsmIzExMTsmI3g3MjsmIzEwMzs=">&#97;&#100;&#109;&#x69;&#x6e;&#x40;&#x6f;&#112;&#x65;&#x6e;&#115;&#x75;&#98;&#116;&#105;&#x74;&#108;&#101;&#x73;&#x2e;&#111;&#x72;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjeDY0OyYjMTA5OyYjMTA1OyYjMTEwOyYjeDQwOyYjMTExOyYjMTEyOyYjMTAxOyYjeDZlOyYjMTE1OyYjMTE3OyYjOTg7JiN4NzQ7JiMxMDU7JiN4NzQ7JiMxMDg7JiMxMDE7JiN4NzM7JiM0NjsmIzExMTsmI3g3MjsmIzEwMzs=">&#x61;&#x64;&#109;&#105;&#110;&#x40;&#111;&#112;&#101;&#x6e;&#115;&#117;&#98;&#x74;&#105;&#x74;&#108;&#101;&#x73;&#46;&#111;&#x72;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
@@ -12951,8 +13079,8 @@
       </categories>
       <tags>
         <tag>群晖</tag>
-        <tag>torrent</tag>
         <tag>多媒体</tag>
+        <tag>torrent</tag>
       </tags>
   </entry>
   <entry>
