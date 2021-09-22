@@ -23,16 +23,16 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"laosu.ml","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"changyan","storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="signal 是一个开源的免费在线 MIDI 编辑器和播放器。">
+<meta name="description" content="signal 是使用 React 构建的完全开源的在线 MIDI 编辑器和播放器">
 <meta property="og:type" content="article">
 <meta property="og:title" content="开源的在线MIDI编辑器signal">
-<meta property="og:url" content="https://laosu.ml/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BF%20MIDI%20%E7%BC%96%E8%BE%91%E5%99%A8signal/index.html">
+<meta property="og:url" content="https://laosu.ml/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BFMIDI%E7%BC%96%E8%BE%91%E5%99%A8signal/index.html">
 <meta property="og:site_name" content="老苏的blog">
-<meta property="og:description" content="signal 是一个开源的免费在线 MIDI 编辑器和播放器。">
+<meta property="og:description" content="signal 是使用 React 构建的完全开源的在线 MIDI 编辑器和播放器">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221317072.png">
-<meta property="article:published_time" content="2021-09-22T05:00:00.000Z">
-<meta property="article:modified_time" content="2021-09-22T05:20:08.272Z">
+<meta property="article:published_time" content="2021-09-22T10:30:00.000Z">
+<meta property="article:modified_time" content="2021-09-22T10:39:14.829Z">
 <meta property="article:author" content="杨浦老苏">
 <meta property="article:tag" content="群晖">
 <meta property="article:tag" content="docker">
@@ -42,11 +42,11 @@
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221317072.png">
 
 
-<link rel="canonical" href="https://laosu.ml/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BF%20MIDI%20%E7%BC%96%E8%BE%91%E5%99%A8signal/">
+<link rel="canonical" href="https://laosu.ml/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BFMIDI%E7%BC%96%E8%BE%91%E5%99%A8signal/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://laosu.ml/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BF%20MIDI%20%E7%BC%96%E8%BE%91%E5%99%A8signal/","path":"2021/09/22/开源的在线 MIDI 编辑器signal/","title":"开源的在线MIDI编辑器signal"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://laosu.ml/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BFMIDI%E7%BC%96%E8%BE%91%E5%99%A8signal/","path":"2021/09/22/开源的在线MIDI编辑器signal/","title":"开源的在线MIDI编辑器signal"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>开源的在线MIDI编辑器signal | 老苏的blog</title>
@@ -178,7 +178,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Real-ESRGAN"><span class="nav-number">1.1.</span> <span class="nav-text">Real-ESRGAN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B2A"><span class="nav-number">1.2.</span> <span class="nav-text">B2A</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PyBoy"><span class="nav-number">1.3.</span> <span class="nav-text">PyBoy</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F"><span class="nav-number">2.</span> <span class="nav-text">构建镜像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">3.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3"><span class="nav-number">3.1.</span> <span class="nav-text">端口</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C"><span class="nav-number">4.</span> <span class="nav-text">运行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AD%94%E7%96%91"><span class="nav-number">5.</span> <span class="nav-text">答疑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">6.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Real-ESRGAN"><span class="nav-number">1.1.</span> <span class="nav-text">Real-ESRGAN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B2A"><span class="nav-number">1.2.</span> <span class="nav-text">B2A</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PyBoy"><span class="nav-number">1.3.</span> <span class="nav-text">PyBoy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#signal"><span class="nav-number">1.4.</span> <span class="nav-text">signal</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F"><span class="nav-number">2.</span> <span class="nav-text">构建镜像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">3.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3"><span class="nav-number">3.1.</span> <span class="nav-text">端口</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C"><span class="nav-number">4.</span> <span class="nav-text">运行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AD%94%E7%96%91"><span class="nav-number">5.</span> <span class="nav-text">答疑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">6.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -286,7 +286,7 @@
     </div>
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://laosu.ml/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BF%20MIDI%20%E7%BC%96%E8%BE%91%E5%99%A8signal/">
+    <link itemprop="mainEntityOfPage" href="https://laosu.ml/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BFMIDI%E7%BC%96%E8%BE%91%E5%99%A8signal/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/laosu_wx.jpg">
@@ -311,7 +311,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2021-09-22 13:00:00 / 修改时间：13:20:08" itemprop="dateCreated datePublished" datetime="2021-09-22T13:00:00+08:00">2021-09-22</time>
+      <time title="创建时间：2021-09-22 18:30:00 / 修改时间：18:39:14" itemprop="dateCreated datePublished" datetime="2021-09-22T18:30:00+08:00">2021-09-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -332,13 +332,13 @@
     </span>
     <span class="post-meta-item-text">Waline：</span>
   
-    <a title="waline" href="/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BF%20MIDI%20%E7%BC%96%E8%BE%91%E5%99%A8signal/#waline-comments" itemprop="discussionUrl">
-      <span class="post-comments-count waline-comment-count" id="/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BF%20MIDI%20%E7%BC%96%E8%BE%91%E5%99%A8signal/" data-xid="/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BF%20MIDI%20%E7%BC%96%E8%BE%91%E5%99%A8signal/" itemprop="commentCount"></span>
+    <a title="waline" href="/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BFMIDI%E7%BC%96%E8%BE%91%E5%99%A8signal/#waline-comments" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" id="/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BFMIDI%E7%BC%96%E8%BE%91%E5%99%A8signal/" data-xid="/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BFMIDI%E7%BC%96%E8%BE%91%E5%99%A8signal/" itemprop="commentCount"></span>
     </a>
   </span>
   
   
-    <span id="/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BF%20MIDI%20%E7%BC%96%E8%BE%91%E5%99%A8signal/" class="post-meta-item leancloud_visitors" data-flag-title="开源的在线MIDI编辑器signal" title="阅读次数">
+    <span id="/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BFMIDI%E7%BC%96%E8%BE%91%E5%99%A8signal/" class="post-meta-item leancloud_visitors" data-flag-title="开源的在线MIDI编辑器signal" title="阅读次数">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
@@ -356,7 +356,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>4.4k</span>
+      <span>4.8k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -367,7 +367,7 @@
     </span>
 </div>
 
-            <div class="post-description">signal 是一个开源的免费在线 MIDI 编辑器和播放器。</div>
+            <div class="post-description">signal 是使用 React 构建的完全开源的在线 MIDI 编辑器和播放器</div>
         </div>
       </header>
 
@@ -375,17 +375,17 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>中秋节在家折腾了几个项目，但是几乎差点颗粒无收</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>中秋节宅在家折腾了几个项目，选题的范围涵盖了人工智能、网盘、游戏和音乐，但是几乎差点颗粒无收，成功率只有可怜的 <code>25%</code></p>
 <h2 id="Real-ESRGAN"><a href="#Real-ESRGAN" class="headerlink" title="Real-ESRGAN"></a>Real-ESRGAN</h2><p>这是一套算法，简单的说是就是把低分辨率的模糊图像，还原成更高的分辨率，作者 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3hpbm50YW8=">Xintao Wang<i class="fa fa-external-link-alt"></i></span>（<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3hpbm50YW8=">https://github.com/xinntao<i class="fa fa-external-link-alt"></i></span>） 是腾讯 ARC 实验室的研究员，老苏用来构建镜像的是 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0FLMzkx">AK391<i class="fa fa-external-link-alt"></i></span>（<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0FLMzkx">https://github.com/AK391<i class="fa fa-external-link-alt"></i></span>）集成了 <code>Gradio</code> 的版本，<code>demo</code> 在： <span class="exturl" data-url="aHR0cHM6Ly9odWdnaW5nZmFjZS5jby9zcGFjZXMvYWtoYWxpcS9SZWFsLUVTUkdBTg==">https://huggingface.co/spaces/akhaliq/Real-ESRGAN<i class="fa fa-external-link-alt"></i></span> </p>
 <p>项目地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3hpbm50YW8vUmVhbC1FU1JHQU4=">https://github.com/xinntao/Real-ESRGAN<i class="fa fa-external-link-alt"></i></span></p>
 <p>镜像构建成功后存在几个问题：</p>
 <ul>
-<li>本地不能访问，增加了 <code>share=true</code> 之后，可以通过 <code>https://xxx.gradio.app</code> 这样的临时地址（72小时有效）访问</li>
+<li>本地不能访问，增加了 <code>share=true</code> 之后，可以通过 <code>https://xxx.gradio.app</code> 这样的临时地址（ <code>72</code> 小时有效）访问</li>
 <li>每次运行会重复下载 <code>RealESRGAN_x4plus.pth</code>，但是保存的目录似乎不对</li>
 <li>上传图片后 <code>Output</code> 有报错（可能跟上一条有关）</li>
 </ul>
 <p>老苏觉得自己有点膨胀了，居然都敢开始玩人工智能了</p>
-<h2 id="B2A"><a href="#B2A" class="headerlink" title="B2A"></a>B2A</h2><p><code>B2A</code> 就是 <code>BaiduYun To AliYun</code> 的缩写，程序基于 <code>Python cli</code> 实现了从百度云网盘迁移文件到阿里云盘，官方只提供了 <code>exe</code> 程序</p>
+<h2 id="B2A"><a href="#B2A" class="headerlink" title="B2A"></a>B2A</h2><p><code>B2A</code> 就是 <code>BaiduYun To AliYun</code> 的缩写，程序基于 <code>Python cli</code> 实现了从百度云盘迁移文件到阿里云盘，官方只提供了 <code>exe</code> 程序</p>
 <p>项目地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3lhcm9uenovQmFpZHVZdW5Ub0FsaVl1bg==">https://github.com/yaronzz/BaiduYunToAliYun<i class="fa fa-external-link-alt"></i></span></p>
 <p>镜像构建成功后，能够登录阿里云和百度云，并且也能列出文件目录，但是在迁移时显示文件下载错误</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Err: 下载文件块失败：Can&#39;t instantiate abstract class RangeRequestIO with abstract methods __enter__, __exit__, closed, fileno, flush, isatty, mode, name, readable, readline, readlines, truncate, write, writelines</span><br></pre></td></tr></table></figure>
@@ -394,10 +394,10 @@
 <h2 id="PyBoy"><a href="#PyBoy" class="headerlink" title="PyBoy"></a>PyBoy</h2><p><code>PyBoy</code> 是一个基于 <code>Python</code> 的 <code>Game Boy</code> 模拟器，官方提供了很多版本的 <code>Dockerfile</code> 文件，但是老苏依次编译后没有一个能成功启动容器，即便改成了源代码编译也是一样，而且没有任何报错信息</p>
 <p>项目地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0JhZWthbGZlbi9QeUJveQ==">https://github.com/Baekalfen/PyBoy<i class="fa fa-external-link-alt"></i></span></p>
 <p>这几个项目本身没问题，有问题的是容器这种运行环境可能不适合项目，需要做代码或者其他的调整，但是老苏水平有限，只能暂时搁置。</p>
-<p>唯一成功的项目是 <code>signal</code></p>
-<p><strong>什么是 signal ？</strong></p>
+<p>唯一成功的项目只有 <code>signal</code></p>
+<h2 id="signal"><a href="#signal" class="headerlink" title="signal"></a>signal</h2><p><strong>什么是 signal ？</strong></p>
 <blockquote>
-<p><code>signal</code> 是一个开源的免费在线 <code>MIDI</code> 编辑器和播放器。</p>
+<p><code>signal</code> 是使用 <code>React</code> 构建的完全开源的在线 <code>MIDI</code> 编辑器和播放器。</p>
 </blockquote>
 <p>项目官网地址：<span class="exturl" data-url="aHR0cHM6Ly9zaWduYWwudmVyY2VsLmFwcC8=">https://signal.vercel.app<i class="fa fa-external-link-alt"></i></span></p>
 <p><strong>什么是 MIDI ？</strong></p>
@@ -408,7 +408,7 @@
 <p>如果你不想自己构建，可以跳过，直接阅读下一章节</p>
 </blockquote>
 <p><code>Signal</code> 官方没有提供 <code>Dockerfile</code> 或者镜像，也没有找到第三方的，所以老苏准备自己构建</p>
-<p>准备两个文件，一个是 <code>Dockerfile</code>，用于构建镜像</p>
+<p>要准备两个文件，一个是 <code>Dockerfile</code>，用于构建镜像</p>
 <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:<span class="number">16.5</span> as build-deps</span><br><span class="line"><span class="keyword">MAINTAINER</span> laosu&lt;wbsu2003@gmail.com&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /signal</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> package.json tsconfig.json ./</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> yarn</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> . ./</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> yarn build</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> nginx:<span class="number">1.12</span>-alpine</span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> --from=build-deps /signal/dist /usr/share/nginx/html</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> rm /etc/nginx/conf.d/default.conf</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> default.conf /etc/nginx/conf.d</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">&quot;nginx&quot;</span>, <span class="string">&quot;-g&quot;</span>, <span class="string">&quot;daemon off;&quot;</span>]</span></span><br></pre></td></tr></table></figure>
 
 <p>另一个是 <code>default.conf</code> 文件，这是 <code>nginx</code> 的设置文件，可以让 <code>nginx</code> 上的静态网页在访问的时候没有 <code>html</code> 后缀</p>
@@ -461,28 +461,44 @@
 <p>并不是说你的浏览器真的不支持 <code>Web MIDI API</code> ，而是因为局域网中使用了 <code>http</code> 而不是 <code>https</code> 协议</p>
 <p>老苏用的 <code>frp</code>，需做反代设置</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221056746.png"></p>
-<p>进入编辑界面时，会弹出权限申请，点 <code>允许</code></p>
+<p>通过 <code>https://域名</code> 再进入编辑界面时，会弹出权限申请，要点 <code>允许</code></p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221107081.png"></p>
-<p>再进到 <code>Setting</code></p>
+<p>再进到 <code>Setting</code>，发现⚠️警告⚠️已经没有了</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221108140.png"></p>
+<p>点网址前面的锁🔐标志可以修改权限</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221355823.png"></p>
 <p>地址栏可以修改权限</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221110261.png"></p>
 <ol start="3">
-<li> 打开 <code>mid</code> 文件报错</li>
+<li> 导入 <code>mid</code> 文件报错</li>
 </ol>
-<p>出现这样的错误： <code>TypeError: Cannot read property &#39;value&#39; of null</code></p>
+<p><code>Windows + Chrome</code> 出现这样的错误： <code>TypeError: Cannot read property &#39;value&#39; of null</code></p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221229901.png"></p>
-<p>可能</p>
+<p><code>MacOS + Chrome</code> 则显示 <code>TypeError: Cannot read property of null (reading &#39;value&#39;)</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221348413.png"></p>
+<p>可能：</p>
 <ul>
 <li>存在 <code>MIDI</code> 格式兼容问题</li>
-<li>或者是音色库不支持除钢琴外的乐器</li>
+<li>或者存在音色库不支持的乐器</li>
 </ul>
-<p>老苏尝试过几个 <code>mid</code>，像纯钢琴的是可以导入，并正常播放⏯的，比如下面这首</p>
+<p>老苏尝试过几个 <code>mid</code>，这几个文件用 <code>Windows Media Player</code> 测试都是能正常播放的，也在下面两个网站上做过测试都是 <code>OK</code>的</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9vbmxpbmVzZXF1ZW5jZXIubmV0Lw==">https://onlinesequencer.net<i class="fa fa-external-link-alt"></i></span>  </li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cub25saW5lbWlkaS5jb20vRWRpdG9yLnBocA==">https://www.onlinemidi.com/Editor.php<i class="fa fa-external-link-alt"></i></span>  </li>
+</ul>
+<p>但在 <code>signal</code> 上有的可以导入，并能正常播放⏯，比如下面这首百听不厌的钢琴曲：</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L2doL3dic3UyMDAzL2dpdG5vdGUtaW1hZ2VzQG1hc3Rlci9waWNnby8yMDIxLzA5LzIwMjEwOTIyMTEzMTYyNC5taWQ=">石进-夜的钢琴曲(ONE).mid<i class="fa fa-external-link-alt"></i></span></p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109221136791.png"></p>
-<p>而像下面这两首就不行</p>
+<p>而像下面👇这两首导入时会出现上面👆的报错</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L2doL3dic3UyMDAzL2dpdG5vdGUtaW1hZ2VzQG1hc3Rlci9waWNnby8yMDIxLzA5LzIwMjEwOTIyMTIyNjMwNy5taWQ=">After The ThrillIs Gone.mid<i class="fa fa-external-link-alt"></i></span></p>
 <p><span class="exturl" data-url="aHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L2doL3dic3UyMDAzL2dpdG5vdGUtaW1hZ2VzQG1hc3Rlci9waWNnby8yMDIxLzA5LzIwMjEwOTIyMTIyNzU2Mi5taWQ=">稻香-周杰伦.mid<i class="fa fa-external-link-alt"></i></span></p>
+<p>还有的导入时并不报错，但是导入后编辑器是空的</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L2doL3dic3UyMDAzL2dpdG5vdGUtaW1hZ2VzQG1hc3Rlci9waWNnby8yMDIxLzA5LzIwMjEwOTIyMTQzOTcxMS5taWQ=">茉莉花.mid<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L2doL3dic3UyMDAzL2dpdG5vdGUtaW1hZ2VzQG1hc3Rlci9waWNnby8yMDIxLzA5LzIwMjEwOTIyMTQzNDgyNC5taWQ=">在水一方.mid<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L2doL3dic3UyMDAzL2dpdG5vdGUtaW1hZ2VzQG1hc3Rlci9waWNnby8yMDIxLzA5LzIwMjEwOTIyMTQzNjcyNi5taWQ=">只盼着深山出太阳.mid<i class="fa fa-external-link-alt"></i></span></p>
+<blockquote>
+<p>以上 <code>mid</code> 文件均来自网上，仅用于做软件测试、验证，请不要用于商业用途。</p>
+</blockquote>
 <h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
 <p>ryohey/signal: A friendly music sequencer built with web technology<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3J5b2hleS9zaWduYWwv">https://github.com/ryohey/signal/<i class="fa fa-external-link-alt"></i></span></p>
 <p>signal - Online MIDI Editor<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9zaWduYWwudmVyY2VsLmFwcC8=">https://signal.vercel.app/<i class="fa fa-external-link-alt"></i></span></p>
@@ -553,7 +569,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://laosu.ml/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BF%20MIDI%20%E7%BC%96%E8%BE%91%E5%99%A8signal/" title="开源的在线MIDI编辑器signal">https://laosu.ml/2021/09/22/开源的在线 MIDI 编辑器signal/</a>
+      <a href="https://laosu.ml/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BFMIDI%E7%BC%96%E8%BE%91%E5%99%A8signal/" title="开源的在线MIDI编辑器signal">https://laosu.ml/2021/09/22/开源的在线MIDI编辑器signal/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
@@ -693,7 +709,7 @@
 
 
 
-<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://0x404.ml","placeholder":"有什么想法和需求，可以留个言","avatar":"monsterid","meta":["nick","mail","link"],"pageSize":10,"visitor":true,"comment_count":true,"requiredFields":[],"path":"/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BF%20MIDI%20%E7%BC%96%E8%BE%91%E5%99%A8signal/","requiredMeta":["nick","mail"],"emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili"],"libUrl":"https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js","dark":"auto","el":"#waline-comments"}</script>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://0x404.ml","placeholder":"有什么想法和需求，可以留个言","avatar":"monsterid","meta":["nick","mail","link"],"pageSize":10,"visitor":true,"comment_count":true,"requiredFields":[],"path":"/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BFMIDI%E7%BC%96%E8%BE%91%E5%99%A8signal/","requiredMeta":["nick","mail"],"emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili"],"libUrl":"https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js","dark":"auto","el":"#waline-comments"}</script>
 <script>
 document.addEventListener('page:loaded', () => {
   NexT.utils.loadComments(CONFIG.waline.el).then(() => 

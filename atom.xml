@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-09-22T05:20:08.272Z</updated>
+  <updated>2021-09-22T10:39:14.829Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -18,13 +18,13 @@
   
   <entry>
     <title>开源的在线MIDI编辑器signal</title>
-    <link href="https://laosu.ml/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BF%20MIDI%20%E7%BC%96%E8%BE%91%E5%99%A8signal/"/>
-    <id>https://laosu.ml/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BF%20MIDI%20%E7%BC%96%E8%BE%91%E5%99%A8signal/</id>
-    <published>2021-09-22T05:00:00.000Z</published>
-    <updated>2021-09-22T05:20:08.272Z</updated>
+    <link href="https://laosu.ml/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BFMIDI%E7%BC%96%E8%BE%91%E5%99%A8signal/"/>
+    <id>https://laosu.ml/2021/09/22/%E5%BC%80%E6%BA%90%E7%9A%84%E5%9C%A8%E7%BA%BFMIDI%E7%BC%96%E8%BE%91%E5%99%A8signal/</id>
+    <published>2021-09-22T10:30:00.000Z</published>
+    <updated>2021-09-22T10:39:14.829Z</updated>
     
     
-    <summary type="html">signal 是一个开源的免费在线 MIDI 编辑器和播放器。</summary>
+    <summary type="html">signal 是使用 React 构建的完全开源的在线 MIDI 编辑器和播放器</summary>
     
     
     
