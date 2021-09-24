@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-09-22T12:17:30.469Z</updated>
+  <updated>2021-09-24T04:45:20.805Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>一个简易的网盘目录列表PanIndex</title>
+    <link href="https://laosu.ml/2021/09/24/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84%E7%BD%91%E7%9B%98%E7%9B%AE%E5%BD%95%E5%88%97%E8%A1%A8PanIndex/"/>
+    <id>https://laosu.ml/2021/09/24/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84%E7%BD%91%E7%9B%98%E7%9B%AE%E5%BD%95%E5%88%97%E8%A1%A8PanIndex/</id>
+    <published>2021-09-24T04:30:00.000Z</published>
+    <updated>2021-09-24T04:45:20.805Z</updated>
+    
+    
+    <summary type="html">一个简易的网盘目录列表，支持多种网盘。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="网盘" scheme="https://laosu.ml/tags/%E7%BD%91%E7%9B%98/"/>
+    
+  </entry>
   
   <entry>
     <title>开源的在线MIDI编辑器signal</title>
@@ -456,29 +479,6 @@
     <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
     
     <category term="看板" scheme="https://laosu.ml/tags/%E7%9C%8B%E6%9D%BF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>TrWebOCR开源的离线OCR</title>
-    <link href="https://laosu.ml/2021/08/09/TrWebOCR%E5%BC%80%E6%BA%90%E7%9A%84%E7%A6%BB%E7%BA%BFOCR/"/>
-    <id>https://laosu.ml/2021/08/09/TrWebOCR%E5%BC%80%E6%BA%90%E7%9A%84%E7%A6%BB%E7%BA%BFOCR/</id>
-    <published>2021-08-09T10:30:00.000Z</published>
-    <updated>2021-08-09T10:38:33.524Z</updated>
-    
-    
-    <summary type="html">TrWebOCR 是开源、易用的中文离线 OCR 。</summary>
-    
-    
-    
-    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
-    
-    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
-    
-    <category term="OCR" scheme="https://laosu.ml/tags/OCR/"/>
     
   </entry>
   
