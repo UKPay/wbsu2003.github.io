@@ -73,9 +73,9 @@
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210908153931.png"></p>
 <p>先设置 <code>基础配置</code>，老苏就只设置网站标题，其他的没动</p>
 <p>关于 <code>基础配置</code> 中各参数的说明，请看官方文档：<span class="exturl" data-url="aHR0cHM6Ly9saWJzZ2guZ2l0aHViLmlvL1BhbkluZGV4LyMvY29uZmlnP2lkPSVFNSU5RiVCQSVFNyVBMSU4MCVFOSU4NSU4RCVFNyVCRCVBRQ==">https://libsgh.github.io/PanIndex/#/config?id=基础配置<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="本地"><a href="#本地" class="headerlink" title="本地"></a>本地</h2><p>本地模式利用的是群晖的空间，因为采用容器安装的，而容器中唯一映射的卷只有 <code>/app/data</code>，所以老苏将根目录指向了容器的 <code>/app/data/local</code> 目录，这意味着是群晖的 <code>/volume2/docker/panindex/local</code> 目录</p>
+<h2 id="本地"><a href="#本地" class="headerlink" title="本地"></a>本地</h2><p>本地模式利用的是群晖的空间，因为采用容器安装的，而容器中唯一映射的卷只有 <code>/app/data</code>，所以老苏将根目录指向了容器的 <code>/app/data/local</code> 目录，这对应的是群晖的 <code>/volume2/docker/panindex/local</code> 目录</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210908170134.png"></p>
-<p>保存之后要启用一下</p>
+<p>保存之后要启用一下（其实应该就是主页默认显示）</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210908170218.png"></p>
 <p>到  <code>基础配置</code> 中点一次保存，然后打开 <code>http://群晖IP:5238</code> 回到首页，因为什么都没上传，所以还是空空的</p>
 <blockquote>
@@ -96,7 +96,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210908173312.png"></p>
 <p><code>添加</code> 完成后需要启用</p>
 <blockquote>
-<p>似乎程序设定只能同时启用一个，当启用了阿里云盘，之前的本地盘会自动关闭</p>
+<p>默认显示只能是一个，当启用了阿里云盘，之前的本地盘会自动关闭</p>
 </blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/20210908173411.png"></p>
 <p>刷新首页就能看到阿里云盘的内容了</p>
@@ -153,6 +153,10 @@
 <p><code>OneDrive</code> 缓存可能需要时间</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109131224625.png"></p>
 <h2 id="天翼云盘"><a href="#天翼云盘" class="headerlink" title="天翼云盘"></a>天翼云盘</h2><p>有天翼盘的可以自己研究一下，官方文档 ：<span class="exturl" data-url="aHR0cHM6Ly9saWJzZ2guZ2l0aHViLmlvL1BhbkluZGV4LyMvY29uZmln">https://libsgh.github.io/PanIndex/#/config<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="切换网盘"><a href="#切换网盘" class="headerlink" title="切换网盘"></a>切换网盘</h1><p>点左上角的 <code>home</code> 图标</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241354609.png"></p>
+<p>可以在不同的网盘之间进行切换</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241355655.png"></p>
 <h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
 <p>libsgh/PanIndex: 网盘目录列表，目前支持天翼云、teambition盘、阿里云盘、OneDrive等<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2xpYnNnaC9QYW5JbmRleA==">https://github.com/libsgh/PanIndex<i class="fa fa-external-link-alt"></i></span></p>
 <p>PanIndex<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9saWJzZ2guZ2l0aHViLmlvL1BhbkluZGV4LyMv">https://libsgh.github.io/PanIndex/#/<i class="fa fa-external-link-alt"></i></span></p>
@@ -13198,7 +13202,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjeDY0OyYjMTA5OyYjeDY5OyYjeDZlOyYjNjQ7JiN4NmY7JiMxMTI7JiMxMDE7JiMxMTA7JiN4NzM7JiMxMTc7JiN4NjI7JiMxMTY7JiMxMDU7JiMxMTY7JiN4NmM7JiMxMDE7JiN4NzM7JiM0NjsmI3g2ZjsmIzExNDsmIzEwMzs=">&#x61;&#x64;&#109;&#x69;&#x6e;&#64;&#x6f;&#112;&#101;&#110;&#x73;&#117;&#x62;&#116;&#105;&#116;&#x6c;&#101;&#x73;&#46;&#x6f;&#114;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjMTAwOyYjMTA5OyYjeDY5OyYjeDZlOyYjNjQ7JiMxMTE7JiMxMTI7JiN4NjU7JiN4NmU7JiN4NzM7JiMxMTc7JiN4NjI7JiN4NzQ7JiMxMDU7JiN4NzQ7JiN4NmM7JiN4NjU7JiMxMTU7JiM0NjsmIzExMTsmIzExNDsmI3g2Nzs=">&#x61;&#100;&#109;&#x69;&#x6e;&#64;&#111;&#112;&#x65;&#x6e;&#x73;&#117;&#x62;&#x74;&#105;&#x74;&#x6c;&#x65;&#115;&#46;&#111;&#114;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
@@ -17814,10 +17818,10 @@
         <tag>路由器</tag>
         <tag>千兆</tag>
         <tag>电力猫</tag>
-        <tag>WDS</tag>
         <tag>Mesh路由</tag>
         <tag>wifi6</tag>
         <tag>光猫</tag>
+        <tag>WDS</tag>
       </tags>
   </entry>
   <entry>
