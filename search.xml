@@ -176,9 +176,9 @@
 <p>输入法需要自己编译，可以参考： <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzM1ODAyODE5MS9hbnN3ZXIvMTE1Nzk0ODMzNQ==">https://www.zhihu.com/question/358028191/answer/1157948335<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109162135476.png"></p>
-<h3 id="vlc"><a href="#vlc" class="headerlink" title="vlc"></a>vlc</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装指定软件</span></span><br><span class="line">apk add vlc-qt</span><br></pre></td></tr></table></figure>
+<h3 id="VLC"><a href="#VLC" class="headerlink" title="VLC"></a>VLC</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装指定软件</span></span><br><span class="line">apk add vlc-qt</span><br></pre></td></tr></table></figure>
 
-<p>可以在 <code>application</code> 中找到安装好的 <code>vlc</code> </p>
+<p>可以在 <code>application</code> 中找到安装好的 <code>VLC media player</code> </p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109271632808.png"></p>
 <p>将视频文件放在容器的 <code>/config</code> 目录中</p>
 <blockquote>
@@ -186,7 +186,7 @@
 </blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109271626401.png"></p>
 <p>有跳帧，但还能接受，声音估计要开启 <code>https</code> 才会有</p>
-<h3 id="pyboy"><a href="#pyboy" class="headerlink" title="pyboy"></a>pyboy</h3><p>老苏也尝试了 <code>Pyboy</code>，安装好了所需要的环境，运行之后没有报错，只是看不到图像</p>
+<h3 id="Pyboy"><a href="#Pyboy" class="headerlink" title="Pyboy"></a>Pyboy</h3><p>老苏也尝试了 <code>Pyboy</code>，安装好了所需要的环境，运行之后没有报错，只是看不到图像</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109270911477.png"></p>
 <p>感觉上像是性能不足（不确定是 <code>CPU</code> 还是 <code>GPU</code> ），慢慢研究</p>
 <h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
