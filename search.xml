@@ -1,6 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>能在浏览器中运行桌面版linux的Webtop</title>
+    <url>/2021/09/27/%E8%83%BD%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E8%BF%90%E8%A1%8C%E6%A1%8C%E9%9D%A2%E7%89%88linux%E7%9A%84Webtop/</url>
+    <content><![CDATA[<p><strong>什么是 WebTop ？</strong></p>
+<blockquote>
+<p>它是一个基于 <code>Linux</code> （ <code>Ubuntu</code> 和 <code>Alpine</code> 两种版本）的轻量级容器，具有在浏览器中运行的完整桌面环境，具有基本的窗口管理器、像素完美的渲染分辨率、音频支持、剪贴板支持、屏幕键盘支持，以及用于上传/下载的远程文件管理。</p>
+</blockquote>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>推荐用命令行（<code>docker cli</code>）或者 <code>docker compose</code> 安装，因为可以通过 <code>shm_size</code> 参数调整共享内存的大小，来达到优化效果。</p>
+<blockquote>
+<p><code>optional</code> 为可选项，请根据需要进行修改</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建容器</span></span><br><span class="line">docker run -d \</span><br><span class="line">  --name=webtop \</span><br><span class="line">  --privileged `<span class="comment">#optional` \</span></span><br><span class="line">  -e PUID=1000 \</span><br><span class="line">  -e PGID=1000 \</span><br><span class="line">  -e TZ=Asia/Shanghai \</span><br><span class="line">  -e SUBFOLDER=/ `<span class="comment">#optional` \</span></span><br><span class="line">  -p 3000:3000 \</span><br><span class="line">  -v /path/to/data:/config \</span><br><span class="line">  -v /var/run/docker.sock:/var/run/docker.sock `<span class="comment">#optional` \</span></span><br><span class="line">  --shm-size=<span class="string">&quot;1gb&quot;</span> `<span class="comment">#optional` \</span></span><br><span class="line">  --restart unless-stopped \</span><br><span class="line">  linuxserver/webtop</span><br></pre></td></tr></table></figure>
+
+<p>当然也可以用群晖 Docker 管理器安装。</p>
+<p>在注册表中搜索 <code>webtop</code> ，选择第一个 <code>linuxserver/webtop</code>，版本选择 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109142309835.png"></p>
+<p>默认是 <code>Alpine</code> ，看起来还有 <code>fedora</code>、<code>Ubuntu</code>、而桌面环境或者窗口管理器有 <code>Xfce</code>、<code>Openbox</code>、<code>Ubuntu MATE</code>、<code>KDE</code>、<code>IceWM</code>、<code>i3</code>，排列组合之后版本让人有点眼花缭乱。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109162305720.png"></p>
+<p>但是从官网看，已经没有 <code>fedora</code> 了，可能是被弃用了，所以其实也没那么多版本</p>
+<table>
+<thead>
+<tr>
+<th align="center">Tag</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">latest</td>
+<td align="center">XFCE Alpine</td>
+</tr>
+<tr>
+<td align="center">ubuntu-xfce</td>
+<td align="center">XFCE Ubuntu</td>
+</tr>
+<tr>
+<td align="center">alpine-kde</td>
+<td align="center">KDE Alpine</td>
+</tr>
+<tr>
+<td align="center">ubuntu-kde</td>
+<td align="center">KDE Ubuntu</td>
+</tr>
+<tr>
+<td align="center">alpine-mate</td>
+<td align="center">MATE Alpine</td>
+</tr>
+<tr>
+<td align="center">ubuntu-mate</td>
+<td align="center">MATE Ubuntu</td>
+</tr>
+<tr>
+<td align="center">alpine-i3</td>
+<td align="center">i3 Alpine</td>
+</tr>
+<tr>
+<td align="center">ubuntu-i3</td>
+<td align="center">i3 Ubuntu</td>
+</tr>
+<tr>
+<td align="center">alpine-openbox</td>
+<td align="center">Openbox Alpine</td>
+</tr>
+<tr>
+<td align="center">ubuntu-openbox</td>
+<td align="center">Openbox Ubuntu</td>
+</tr>
+<tr>
+<td align="center">alpine-icewm</td>
+<td align="center">IceWM Alpine</td>
+</tr>
+<tr>
+<td align="center">ubuntu-icewm</td>
+<td align="center">IceWM Ubuntu</td>
+</tr>
+</tbody></table>
+<h2 id="卷"><a href="#卷" class="headerlink" title="卷"></a>卷</h2><p>在 <code>docker</code> 文件夹中，创建一个新文件夹，并将其命名为 <code>webtop</code></p>
+<table>
+<thead>
+<tr>
+<th align="center">文件夹</th>
+<th align="center">装载路径</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>docker/webtop</code></td>
+<td align="center"><code>/config</code></td>
+<td align="center">存放设置</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109141914238.png"></p>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>端口不冲突即可</p>
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">3388</td>
+<td align="center">3000</td>
+</tr>
+<tr>
+<td align="center">3389</td>
+<td align="center">3389</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109141915730.png"></p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><table>
+<thead>
+<tr>
+<th align="center">可变</th>
+<th align="center">值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>PUID</code></td>
+<td align="center"><code>&lt;uid&gt;</code> 设为 <code>1000</code></td>
+</tr>
+<tr>
+<td align="center"><code>PGID</code></td>
+<td align="center"><code>&lt;gid&gt;</code> 设为 <code>1000</code></td>
+</tr>
+<tr>
+<td align="center"><code>TZ</code></td>
+<td align="center">系统时区设置，设置为 <code>Asia/Shanghai</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109141917022.png"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>容器启动之后需要一些时间，在浏览器中输入 <code>http://群晖IP:3388</code>，会看到一个 <code>Alpine Xfce</code> 桌面环境</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109141924582.png"></p>
+<p><code>about Xfce</code> 中的信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109141926929.png"></p>
+<p>浏览器的标题显示 <code>guacamole Client</code>，显然其内置了 <code>Apache Guacamole</code></p>
+<blockquote>
+<p>相关文章：『<a href="https://laosu.ml/2020/10/16/%E9%83%A8%E7%BD%B2Guacamole%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E7%BD%91%E5%85%B3%E6%9C%8D%E5%8A%A1/">部署Guacamole远程桌面网关服务</a>』</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109180843087.png"></p>
+<h2 id="中文支持"><a href="#中文支持" class="headerlink" title="中文支持"></a>中文支持</h2><p>默认 <code>Alpine Xfce</code> 桌面环境是不支持中文的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109141930562.png"></p>
+<p>先进入容器内部</p>
+<blockquote>
+<p>理论上桌面的终端（<code>Terminal</code>） 应该也是可以的，不过老苏没试，主要是命令比较多，不能直接复制、粘贴所以觉得比较麻烦</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 进入容器</span></span><br><span class="line">docker <span class="built_in">exec</span> -it --user root linuxserver-webtop1 /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>然后执行下面的命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装 wget</span></span><br><span class="line">apk --no-cache add ca-certificates wget </span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装公钥 </span></span><br><span class="line">wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub </span><br><span class="line"></span><br><span class="line"><span class="comment">#下载字体</span></span><br><span class="line">wget https://github.com/Fangyh09/font-ttf/raw/master/simsun.ttc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建文件夹 </span></span><br><span class="line">mkdir /usr/share/fonts/win</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移动字库</span></span><br><span class="line">mv simsun.ttc /usr/share/fonts/win</span><br><span class="line"></span><br><span class="line"><span class="comment"># 扫描字体目录并生成字体信息的缓存</span></span><br><span class="line">fc-cache -vf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看系统内所有中文字体及字体文件的路径</span></span><br><span class="line">fc-list :lang=zh</span><br></pre></td></tr></table></figure>
+
+<p>刷新页面，原来的小方块已经可以正常显示了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109142250729.png"></p>
+<h2 id="访问认证"><a href="#访问认证" class="headerlink" title="访问认证"></a>访问认证</h2><p>默认情况下，镜像启用 <code>abc</code> 用户，无需认证就可以访问。<code>abc</code> 用户默认密码也是 <code>abc</code>。如果要更改此密码并在访问界面时启用身份验证，需要通过在容器中执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it linuxserver-webtop1 passwd abc </span><br></pre></td></tr></table></figure>
+
+<p>或者在 <code>Alpine Xfce</code> 桌面的终端里执行 <code>passwd abc </code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109142256035.png"></p>
+<p>然后通过 <code>http://群晖IP:3388/?login=true</code> 访问</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109142024333.png"></p>
+<h2 id="安装应用"><a href="#安装应用" class="headerlink" title="安装应用"></a>安装应用</h2><p>屏幕的左侧是一个箭头，该箭头可以用来扩展某些内置的远程交互功能的菜单，也可以使用 <code>ctrl + alt + shift</code> 组合键打开和关闭此菜单：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109142022714.png"></p>
+<p><code>ClipBoard</code> 可以用来实现内外部的复制和粘贴操作</p>
+<blockquote>
+<p>安装软件的意义在于，构建带 <code>GUI</code> 的镜像不一定非要用 <code>VNC</code> 了，应该算是多了一个选择吧</p>
+</blockquote>
+<p>如果你愿意，可以安装诸如 <code>Libre Office</code> 等应用程序。</p>
+<h3 id="Libre-Office"><a href="#Libre-Office" class="headerlink" title="Libre Office"></a>Libre Office</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 切换用户</span></span><br><span class="line">sudo -i</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新最新本地镜像源</span></span><br><span class="line">apk update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定软件</span></span><br><span class="line">apk add libreoffice</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109162120941.png"></p>
+<p>可以在 <code>application</code> 中找到安装好的 <code>libreoffice</code> 套件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109162125714.png"></p>
+<p>没有安装中文输入法，不能打中文，但是显示是没问题的</p>
+<blockquote>
+<p>输入法需要自己编译，可以参考： <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzM1ODAyODE5MS9hbnN3ZXIvMTE1Nzk0ODMzNQ==">https://www.zhihu.com/question/358028191/answer/1157948335<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109162135476.png"></p>
+<h3 id="vlc"><a href="#vlc" class="headerlink" title="vlc"></a>vlc</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装指定软件</span></span><br><span class="line">apk add vlc-qt</span><br></pre></td></tr></table></figure>
+
+<p>可以在 <code>application</code> 中找到安装好的 <code>vlc</code> </p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109271632808.png"></p>
+<p>将视频文件放在容器的 <code>/config</code> 目录中</p>
+<blockquote>
+<p>对应于前面主机映射的卷，老苏的是 <code>/volume2/docker/webtop</code> </p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109271626401.png"></p>
+<p>有跳帧，但还能接受，声音估计要开启 <code>https</code> 才会有</p>
+<h3 id="pyboy"><a href="#pyboy" class="headerlink" title="pyboy"></a>pyboy</h3><p>老苏也尝试了 <code>Pyboy</code>，安装好了所需要的环境，运行之后没有报错，只是看不到图像</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109270911477.png"></p>
+<p>感觉上像是性能不足（不确定是 <code>CPU</code> 还是 <code>GPU</code> ），慢慢研究</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>linuxserver/docker-webtop: Ubuntu and Alpine based Webtop images, Linux in a web browser supporting popular desktop environments.<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2xpbnV4c2VydmVyL2RvY2tlci13ZWJ0b3A=">https://github.com/linuxserver/docker-webtop<i class="fa fa-external-link-alt"></i></span></p>
+<p>Meet Webtops A Linux Desktop Environment In Your Browser | LinuxServer.io<br>地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cubGludXhzZXJ2ZXIuaW8vYmxvZy8yMDIxLTA1LTA1LW1lZXQtd2VidG9wcy1hLWxpbnV4LWRlc2t0b3AtZW52aXJvbm1lbnQtaW4teW91ci1icm93c2Vy">https://www.linuxserver.io/blog/2021-05-05-meet-webtops-a-linux-desktop-environment-in-your-browser<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一个简易的网盘目录列表PanIndex</title>
     <url>/2021/09/24/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84%E7%BD%91%E7%9B%98%E7%9B%AE%E5%BD%95%E5%88%97%E8%A1%A8PanIndex/</url>
     <content><![CDATA[<p>网盘的目录文件列表应用非常多，老苏之前也写过一些，有的支持多种网盘</p>
@@ -13202,7 +13405,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjMTAwOyYjMTA5OyYjeDY5OyYjeDZlOyYjNjQ7JiMxMTE7JiMxMTI7JiN4NjU7JiN4NmU7JiN4NzM7JiMxMTc7JiN4NjI7JiN4NzQ7JiMxMDU7JiN4NzQ7JiN4NmM7JiN4NjU7JiMxMTU7JiM0NjsmIzExMTsmIzExNDsmI3g2Nzs=">&#x61;&#100;&#109;&#x69;&#x6e;&#64;&#111;&#112;&#x65;&#x6e;&#x73;&#117;&#x62;&#x74;&#105;&#x74;&#x6c;&#x65;&#115;&#46;&#111;&#114;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiN4NjQ7JiN4NmQ7JiN4Njk7JiN4NmU7JiN4NDA7JiMxMTE7JiN4NzA7JiN4NjU7JiN4NmU7JiN4NzM7JiMxMTc7JiM5ODsmI3g3NDsmIzEwNTsmIzExNjsmI3g2YzsmIzEwMTsmIzExNTsmIzQ2OyYjeDZmOyYjMTE0OyYjMTAzOw==">&#97;&#x64;&#x6d;&#x69;&#x6e;&#x40;&#111;&#x70;&#x65;&#x6e;&#x73;&#117;&#98;&#x74;&#105;&#116;&#x6c;&#101;&#115;&#46;&#x6f;&#114;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
