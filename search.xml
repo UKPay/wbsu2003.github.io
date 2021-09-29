@@ -9,7 +9,7 @@
 </blockquote>
 <p>最新版本 <code>Nextcloud 21</code> 除了提供出色的基于云的文件服务器外，还支持各种文件的在线编辑，办公软件的在线读取，还添加了更多协作功能，包括内置的视频会议和小组会议服务等等。</p>
 <blockquote>
-<p>本文完成于 <code>2021</code> 年上半年，目前最新版本已是 <code>Nextcloud 22</code> ，老苏已做对本文进行了相应的调整和补充</p>
+<p>本文完成于 <code>2021</code> 年上半年，目前最新版本已是 <code>Nextcloud 22</code> ，老苏已对本文进行了相应的调整和补充</p>
 </blockquote>
 <p>简而言之，<code>Nextcloud Hub</code> 已经是一个具有音频+视频团队聊天，实时协作文档编辑，邮件客户端和日历+联系人管理等功能的一个完全集成的本地内容协作平台。</p>
 <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><p>通过 <code>phpMyAdmin</code> 在 <code>MariaDB 5</code> 中新建用户 <code>nextcloud</code>，创建同名的库 <code>nextcloud</code> 并授予所有权限。</p>
@@ -37,7 +37,7 @@
 <tbody><tr>
 <td align="center"><code>/docker/nextcloud</code></td>
 <td align="center"><code>/var/www/html</code></td>
-<td align="center">配置</td>
+<td align="center">主目录</td>
 </tr>
 </tbody></table>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/picgo/2021/0520210517210906.png"></p>
@@ -82,11 +82,11 @@
 </tr>
 </tbody></table>
 <blockquote>
-<p><code>Mariadb</code> 5 端口是 <code>3306</code></p>
+<p><code>Mariadb 5</code> 端口是 <code>3306</code></p>
 </blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/picgo/2021/0520210516213510.png" alt="5"></p>
 <blockquote>
-<p><code>MariaDB 10</code> 是 <code>3307</code></p>
+<p><code>MariaDB 10</code> 端口是 <code>3307</code></p>
 </blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109291029199.png" alt="10"></p>
 <h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>在浏览器中输入 <code>http://群晖IP:8383</code>，就能看到主界面了</p>
@@ -13575,7 +13575,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiN4NjQ7JiN4NmQ7JiN4Njk7JiN4NmU7JiM2NDsmI3g2ZjsmIzExMjsmIzEwMTsmI3g2ZTsmI3g3MzsmI3g3NTsmI3g2MjsmIzExNjsmI3g2OTsmI3g3NDsmI3g2YzsmI3g2NTsmI3g3MzsmI3gyZTsmIzExMTsmI3g3MjsmI3g2Nzs=">&#97;&#x64;&#x6d;&#x69;&#x6e;&#64;&#x6f;&#112;&#101;&#x6e;&#x73;&#x75;&#x62;&#116;&#x69;&#x74;&#x6c;&#x65;&#x73;&#x2e;&#111;&#x72;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjMTAwOyYjeDZkOyYjMTA1OyYjMTEwOyYjeDQwOyYjMTExOyYjMTEyOyYjeDY1OyYjMTEwOyYjeDczOyYjeDc1OyYjOTg7JiN4NzQ7JiMxMDU7JiMxMTY7JiN4NmM7JiN4NjU7JiN4NzM7JiN4MmU7JiN4NmY7JiMxMTQ7JiMxMDM7">&#x61;&#100;&#x6d;&#105;&#110;&#x40;&#111;&#112;&#x65;&#110;&#x73;&#x75;&#98;&#x74;&#105;&#116;&#x6c;&#x65;&#x73;&#x2e;&#x6f;&#114;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
@@ -18191,10 +18191,10 @@
         <tag>路由器</tag>
         <tag>千兆</tag>
         <tag>电力猫</tag>
-        <tag>WDS</tag>
         <tag>Mesh路由</tag>
         <tag>wifi6</tag>
         <tag>光猫</tag>
+        <tag>WDS</tag>
       </tags>
   </entry>
   <entry>
