@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-09-27T11:18:44.167Z</updated>
+  <updated>2021-09-29T04:35:27.295Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>开源生产力套件Nextcloud</title>
+    <link href="https://laosu.ml/2021/09/29/%E5%BC%80%E6%BA%90%E7%94%9F%E4%BA%A7%E5%8A%9B%E5%A5%97%E4%BB%B6Nextcloud/"/>
+    <id>https://laosu.ml/2021/09/29/%E5%BC%80%E6%BA%90%E7%94%9F%E4%BA%A7%E5%8A%9B%E5%A5%97%E4%BB%B6Nextcloud/</id>
+    <published>2021-09-29T05:00:00.000Z</published>
+    <updated>2021-09-29T04:35:27.295Z</updated>
+    
+    
+    <summary type="html">Nextcloud 不仅仅是支持同步服务的云盘，也是团队协作工具。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="网盘" scheme="https://laosu.ml/tags/%E7%BD%91%E7%9B%98/"/>
+    
+  </entry>
   
   <entry>
     <title>能在浏览器中运行桌面版linux的Webtop</title>
@@ -456,29 +479,6 @@
     <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
     
     <category term="网盘" scheme="https://laosu.ml/tags/%E7%BD%91%E7%9B%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>在浏览器中运行Windows11网页版</title>
-    <link href="https://laosu.ml/2021/08/13/%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E8%BF%90%E8%A1%8CWindows11%E7%BD%91%E9%A1%B5%E7%89%88/"/>
-    <id>https://laosu.ml/2021/08/13/%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E8%BF%90%E8%A1%8CWindows11%E7%BD%91%E9%A1%B5%E7%89%88/</id>
-    <published>2021-08-13T11:00:00.000Z</published>
-    <updated>2021-08-13T11:04:48.220Z</updated>
-    
-    
-    <summary type="html">开源项目 Windows 11 in React 旨在使用 React、CSS (SCSS) 和 JS 等标准 Web 技术在 Web 上复刻 Windows 11 桌面体验。</summary>
-    
-    
-    
-    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
-    
-    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
-    
-    <category term="windows" scheme="https://laosu.ml/tags/windows/"/>
     
   </entry>
   
