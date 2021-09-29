@@ -3,7 +3,7 @@
   <entry>
     <title>开源生产力套件Nextcloud</title>
     <url>/2021/09/29/%E5%BC%80%E6%BA%90%E7%94%9F%E4%BA%A7%E5%8A%9B%E5%A5%97%E4%BB%B6Nextcloud/</url>
-    <content><![CDATA[<p><strong>什么是 NextCloud ？</strong></p>
+    <content><![CDATA[<p><strong>什么是 Nextcloud ？</strong></p>
 <blockquote>
 <p><code>Nextcloud</code> 是一套用于创建网络硬盘的客户端/服务器开源软件。<code>Nextcloud</code> 服务器是以 <code>PHP</code> 与 <code>JavaScript</code> 脚本语言撰写，可与多种数据库管理系统一协同运作，包含了 <code>SQLite</code> 、 <code>MariaDB</code> 、 <code>MySQL</code> 、 <code>Oracle</code> 、<code>PostgreSQL</code> 数据库。与 <code>Dropbox</code> 等专有服务相比，<code>Nextcloud</code> 的开放架构让用户可以利用应用程序的方式在服务器上新增额外的功能，并让用户可以完全掌控自己的资料。<code>NextCloud</code> 的客户端覆盖了 <code>Windows</code> 、<code>Mac</code> 、<code>Android</code> 、<code>iOS</code> 、<code>Linux</code> 等各种平台，也提供了网页端以及 <code>WebDAV</code> 接口，所以你几乎可以在各种设备上方便地访问你的云盘。</p>
 </blockquote>
@@ -17,13 +17,13 @@
 <p>建议使用 <code>MariaDB 10</code></p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109290947607.png"></p>
 <h2 id="安装镜像"><a href="#安装镜像" class="headerlink" title="安装镜像"></a>安装镜像</h2><p>在群晖上以 Docker 方式安装。</p>
-<p>在注册表中搜索 <code>nextcloud</code> ，选择第一个 <code>nextcloud</code>，版本选择 <code>22.1.0</code>。</p>
+<p>在注册表中搜索 <code>nextcloud</code> ，选择第一个 <code>nextcloud</code>，版本选择 <code>22.1.0</code>（通过 <code>version.php</code> 获知详细版本为 <code>22.1.0.1</code>）。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109291041775.png"></p>
 <p>不能用 <code>latest</code> 版本（目前是 <code>22.1.1.2</code>），因为在初始化时会出现下面的错误</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Function not implemented: AH00141: Could not initialize random number generator</span><br></pre></td></tr></table></figure>
 
 <p>官网有人反馈：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25leHRjbG91ZC9kb2NrZXIvaXNzdWVzLzE1NzQ=">https://github.com/nextcloud/docker/issues/1574<i class="fa fa-external-link-alt"></i></span></p>
-<p>不光老苏的 <code>DSM 6.1.7</code>， <code>DSM 6.2.4</code> 、<code>DSM 7.0</code> 上也一样，看起来像是群晖内核版本太低导致的问题</p>
+<p>不光老苏的 <code>DSM 6.1.7</code>，就是 <code>DSM 6.2.4</code> 、<code>DSM 7.0</code> 上也一样，从回复看像是群晖内核版本太低导致的问题</p>
 <p><code>Your NAS is using a linux kernel &lt; 3.16 and is missing some dependencies required by apache2 now.</code></p>
 <h3 id="卷"><a href="#卷" class="headerlink" title="卷"></a>卷</h3><p>在 <code>docker</code> 文件夹中，创建一个新文件夹，并将其命名为 <code>nextcloud</code></p>
 <table>
@@ -94,7 +94,7 @@
 <p>第一次需要初始化，主要是创建数据库、拷贝文件</p>
 </blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/picgo/2021/0520210516173656.png"></p>
-<p>第一次使用需要进行设置，首先需要创建管理员账号</p>
+<p>第一次使用需要进行设置，首先需要创建 <code>管理员账号</code></p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/picgo/2021/0520210516173835.png"></p>
 <p>如果遇到错误，一般是数据库设置问题</p>
 <blockquote>
@@ -107,11 +107,11 @@
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/picgo/2021/0520210516201936.png"></p>
 <p>接下来就可以使用了</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/picgo/2021/0520210516210411.png"></p>
-<p>Nextcloud 跨平台支持 <code>Windows</code>、<code>Mac</code>、<code>Android</code>、<code>iOS</code>、<code>Linux</code> 等平台，而且还提供了 <code>网页版</code> 以及 <code>WebDAV</code> 形式访问，因此你几乎可以在任何电脑、手机设备上都能轻松获取和访问你的文件文档。</p>
+<p><code>Nextcloud</code> 跨平台支持 <code>Windows</code>、<code>Mac</code>、<code>Android</code>、<code>iOS</code>、<code>Linux</code> 等平台，而且还提供了 <code>网页版</code> 以及 <code>WebDAV</code> 形式访问，因此你几乎可以在任何电脑、手机设备上都能轻松获取和访问你的文件文档。</p>
 <p><code>NextCloud</code> 最强大的是各种应用，包括 <code>Markdown</code> 在线编辑、<code>OnlyOffice</code>（需另外部署服务端）、笔记、思维导图、日历、联系人等，你可以自行选择用以丰富网盘的功能。所以用得好 <code>Nextcloud</code> 绝对是生产力工具。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/picgo/2021/0520210517230219.png"></p>
 <p>老苏建议大家看看『 <span class="exturl" data-url="aHR0cHM6Ly9zc3BhaS5jb20vcG9zdC82MTcxMQ==">Nextcloud 和我的一天（https://sspai.com/post/61711）<i class="fa fa-external-link-alt"></i></span> 』，写的非常棒。</p>
-<p>工具好不好，还要看你怎么用，会不会用。</p>
+<p>工具好不好，还得看你怎么用。</p>
 <h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="远程访问"><a href="#远程访问" class="headerlink" title="远程访问"></a>远程访问</h2><p>反向代理设置</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/picgo/2021/0520210516215003.png"></p>
 <p>但是用域名访问时会显示错误</p>
