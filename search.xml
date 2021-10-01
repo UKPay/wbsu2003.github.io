@@ -1,6 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>在线问卷工具LimeSurvey</title>
+    <url>/2021/10/01/%E5%9C%A8%E7%BA%BF%E9%97%AE%E5%8D%B7%E5%B7%A5%E5%85%B7LimeSurvey/</url>
+    <content><![CDATA[<p><strong>什么是 LimeSurvey ？</strong></p>
+<blockquote>
+<p><code>LimeSurvey</code> 是一款开源的在线问卷管理系统，具有问卷的设计、修改、发布、回收和统计等多项功能。它集成了调查程序开发、调查问卷的发布以及数据收集等功能，网上收集的调查数据可以导出多种文件格式以便分析，例如 <code>spss</code> 数据格式 <code>*.dat</code> 文件。支持 <code>49</code> 种语言/方言版本；</p>
+</blockquote>
+<p>官方体验地址👇，凭据已预先填写好了，只需单击 <code>Log in</code>：<br><span class="exturl" data-url="aHR0cDovL2RlbW8ubGltZXN1cnZleS5vcmcvaW5kZXgucGhwP3I9YWRtaW4vYXV0aGVudGljYXRpb24vc2EvbG9naW4=">http://demo.limesurvey.org/index.php?r=admin/authentication/sa/login<i class="fa fa-external-link-alt"></i></span>,</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>在群晖上以 Docker 方式安装。</p>
+<p>在注册表中搜索 <code>limesurvey</code> ，选择第一个 <code>crramirez/limesurvey</code>，版本选择 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210409134924.png"></p>
+<h2 id="卷"><a href="#卷" class="headerlink" title="卷"></a>卷</h2><p>在 <code>docker</code> 文件夹中，创建一个新文件夹，并将其命名为 <code>limesurvey</code>，然后在 <code>limesurvey</code> 文件夹中再创建两个新的子文件夹，分别命名为 <code>upload</code> 和 <code>mysql</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210409173654.png"></p>
+<table>
+<thead>
+<tr>
+<th align="center">文件夹</th>
+<th align="center">装载路径</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>docker/limesurvey/upload</code></td>
+<td align="center"><code>/app/upload</code></td>
+<td align="center">上传文件夹</td>
+</tr>
+<tr>
+<td align="center"><code>docker/limesurvey/mysql</code></td>
+<td align="center"><code>/var/lib/mysql</code></td>
+<td align="center">数据库文件夹</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210409173841.png"></p>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>默认的端口 <code>80</code> 不能用，所以换成了 <code>8111</code>，不冲突就行<br><code>3306</code> 是 <code>MySQL</code> 的端口，这个和群晖的 <code>MariaDB</code> 冲突，所以也要修改</p>
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">8111</td>
+<td align="center">80</td>
+</tr>
+<tr>
+<td align="center">3307</td>
+<td align="center">3306</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p> 【注意】：如果同时安装了 <code>MariaDB 5</code> 和 <code>MariaDB 10</code>，<code>3307</code> 是 <code>MariaDB 10</code> 默认的端口，所以也是不能使用的</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210409140352.png"></p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><table>
+<thead>
+<tr>
+<th align="center">可变</th>
+<th align="center">值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>HTTP_LOCATION</code></td>
+<td align="center">选填项，如果要在其他 <code>http</code> 位置运行 <code>limesurvey</code></td>
+</tr>
+</tbody></table>
+<p>按现在的设置，访问 <code>limesurvey</code> 的地址是 <code>http://群晖IP:8111</code>;</p>
+<p>当你设置 <code>HTTP_LOCATION=&quot;surveys&quot;</code> 后，访问 <code>limesurvey</code> 的地址就变成了 <code>http://群晖IP:8111/surveys</code>;</p>
+<p>环境直接用的默认</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210409140952.png"></p>
+<h1 id="初始化设置"><a href="#初始化设置" class="headerlink" title="初始化设置"></a>初始化设置</h1><p>在浏览器中输入 <code>http://群晖IP:8111</code>，就能看到主界面了，第一次需要设置</p>
+<ul>
+<li>语言选择：系统支持多种语言</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210409141232.png"></p>
+<p>选择 <code>简体中文</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210409174025.png"></p>
+<ul>
+<li>许可：直接接受就可以了</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210409141352.png"></p>
+<ul>
+<li>环境检测：如果都是绿勾就没问题，下一步</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210409141446.png"></p>
+<ul>
+<li>配置数据库：按下表的值填写</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">数据库类型</td>
+<td align="center">默认为 <code>MySQL</code></td>
+</tr>
+<tr>
+<td align="center">数据库位置</td>
+<td align="center">默认为 <code>localhost</code>，如果前面修改了，要加上端口</td>
+</tr>
+<tr>
+<td align="center">数据库用户</td>
+<td align="center"><code>root</code></td>
+</tr>
+<tr>
+<td align="center">数据库密码</td>
+<td align="center">为空，不需要填</td>
+</tr>
+<tr>
+<td align="center">数据库名</td>
+<td align="center">无要求，建议填 <code>limesurvey</code></td>
+</tr>
+<tr>
+<td align="center">表前缀</td>
+<td align="center">默认为 <code>Lime</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>记得 <code>localhost</code> 后面要加上前面修改过的端口号</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210409142235.png"></p>
+<ul>
+<li>创建数据库</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210409142324.png"></p>
+<ul>
+<li>创建成功</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210409143001.png"></p>
+<ul>
+<li>设置管理员：<strong>记得修改管理员密码，默认语言改简体中文</strong></li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210409143146.png"></p>
+<ul>
+<li>安装完成</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210409174300.png"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>点 <code>管理</code> 会跳转到登录界面</p>
+<blockquote>
+<p>管理员登录地址 <code>http://群晖IP:8111/index.php/admin/</code></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210409174341.png"></p>
+<blockquote>
+<p>用 <code>admin</code> 和前面设置的密码登录</p>
+</blockquote>
+<p>登录成功后</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210409143454.png"></p>
+<p>跳过教程</p>
+<blockquote>
+<p>第一次使用还是建议看看教程，对熟悉系统很有帮助！</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210409143537.png"></p>
+<p>让我们创建一个问卷调查，<code>文字元素</code> 页必填的有 <code>调查标题</code></p>
+<blockquote>
+<p>详细的操作，可以参考 <span class="exturl" data-url="aHR0cHM6Ly90ZWNoLm1pbmRzZWVkLmNuL0xpbWVTdXJ2ZXkvNDk5Lmh0bWw=">LimeSurvey基础教程（三）—— 创建新问卷调查（https://tech.mindseed.cn/LimeSurvey/499.html）<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210409152149.png"></p>
+<p>添加新问题默认创建的问题类型是 <code>长自由文本</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210409151227.png"></p>
+<p>可以更改为其他类型</p>
+<blockquote>
+<p>关于各种问题类型的说明，可以参考 <span class="exturl" data-url="aHR0cHM6Ly90ZWNoLm1pbmRzZWVkLmNuL0xpbWVTdXJ2ZXkvNDUyLmh0bWw=">LimeSurvey基础教程（二）——问题类型（https://tech.mindseed.cn/LimeSurvey/452.html）<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210409151105.png"></p>
+<p>生成预览</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210409172920.png"></p>
+<p>下一页才是题目</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210409170531.png"></p>
+<p>软件的安装很简单，功能也很强大，但是说实话刚开始不太容易上手，需要花时间去实践和熟悉。</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>LimeSurvey/LimeSurvey: The most popular FOSS online survey tool on the web.<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0xpbWVTdXJ2ZXkvTGltZVN1cnZleQ==">https://github.com/LimeSurvey/LimeSurvey<i class="fa fa-external-link-alt"></i></span></p>
+<p>用户手册 - LimeSurvey Manual<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9tYW51YWwubGltZXN1cnZleS5vcmcvTGltZVN1cnZleV9NYW51YWwvemgtY24=">https://manual.limesurvey.org/LimeSurvey_Manual/zh-cn<i class="fa fa-external-link-alt"></i></span></p>
+<p>LimeSurvey教程 - 心站日志—MindSeed技术站<br>地址：<span class="exturl" data-url="aHR0cHM6Ly90ZWNoLm1pbmRzZWVkLmNuL0xpbWVTdXJ2ZXkuaHRtbA==">https://tech.mindseed.cn/LimeSurvey.html<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>问卷</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>开源生产力套件Nextcloud</title>
     <url>/2021/09/29/%E5%BC%80%E6%BA%90%E7%94%9F%E4%BA%A7%E5%8A%9B%E5%A5%97%E4%BB%B6Nextcloud/</url>
     <content><![CDATA[<p><strong>什么是 Nextcloud ？</strong></p>
@@ -13575,7 +13762,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjMTAwOyYjeDZkOyYjMTA1OyYjMTEwOyYjeDQwOyYjMTExOyYjMTEyOyYjeDY1OyYjMTEwOyYjeDczOyYjeDc1OyYjOTg7JiN4NzQ7JiMxMDU7JiMxMTY7JiN4NmM7JiN4NjU7JiN4NzM7JiN4MmU7JiN4NmY7JiMxMTQ7JiMxMDM7">&#x61;&#100;&#x6d;&#105;&#110;&#x40;&#111;&#112;&#x65;&#110;&#x73;&#x75;&#98;&#x74;&#105;&#116;&#x6c;&#x65;&#x73;&#x2e;&#x6f;&#114;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiMxMDA7JiMxMDk7JiN4Njk7JiMxMTA7JiM2NDsmIzExMTsmIzExMjsmIzEwMTsmI3g2ZTsmI3g3MzsmIzExNzsmIzk4OyYjeDc0OyYjeDY5OyYjMTE2OyYjMTA4OyYjMTAxOyYjeDczOyYjeDJlOyYjMTExOyYjMTE0OyYjMTAzOw==">&#97;&#100;&#109;&#x69;&#110;&#64;&#111;&#112;&#101;&#x6e;&#x73;&#117;&#98;&#x74;&#x69;&#116;&#108;&#101;&#x73;&#x2e;&#111;&#114;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
