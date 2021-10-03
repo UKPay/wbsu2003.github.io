@@ -31,6 +31,33 @@
       </tags>
   </entry>
   <entry>
+    <title>加密测试</title>
+    <url>/2021/10/03/%E5%8A%A0%E5%AF%86%E6%A8%A1%E6%9D%BF%EF%BC%88demo%EF%BC%89/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="抱歉，这个密码看着不太对，请再试试。" data-whm="抱歉，这个文章不能被纠正，不过您还是能看看解密后的内容。">
+  <script id="hbeData" type="hbeData" data-hmacdigest="a7d931c9714a0342c492b2b998548288f1cdb2df5d3700102a4a515d19664a99">434910cdc5912267c373ea1ecd0a289b05f6ee241768bb70b80f9b7974fa856807140d14deb98ad3d972b6ffb9fe9ba979ca956493725cc283a819a14490649c7a3dfc78193111a2b4766dd7cb6b4a9340581a2808c901151f9e56564e9d013fe5dfda8ec1d4b1f3dfab7e6ea23aab4e6c7e620e03a9bfaf77355240ae99bfc920adbedee33c5d603f8ab96b8b72aead682bb067fbe189be236e0484848b99a83409d997495c477cef5e144823f3fe90550e8053cb7d7a2359451f27a7e1e46dfd0ae2126a8ebde804d6f5ae454996522e43ba22ece2046657bcac366845671ea26205dc0fc35821881a345347d4fa9394641f07f4695ebfed80420abf7224b534624f6394012eda08d908d33bbfb0ec20f7d41d639864ef4b37e4bc373ac576</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-xray">
+      <input class="hbe hbe-input-field hbe-input-field-xray" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-xray" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-xray">输入密码，查看文章</span>
+      </label>
+      <svg class="hbe hbe-graphic hbe-graphic-xray" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+        <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"></path>
+        <path d="M0,2.5c0,0,298.666,0,399.333,0C448.336,2.5,513.994,13,597,13c77.327,0,135-10.5,200.999-10.5c95.996,0,402.001,0,402.001,0"></path>
+      </svg>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>各种折腾</category>
+        <category>hide</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>在线问卷工具LimeSurvey</title>
     <url>/2021/10/01/%E5%9C%A8%E7%BA%BF%E9%97%AE%E5%8D%B7%E5%B7%A5%E5%85%B7LimeSurvey/</url>
     <content><![CDATA[<p><strong>什么是 LimeSurvey ？</strong></p>
