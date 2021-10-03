@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-10-01T02:11:02.596Z</updated>
+  <updated>2021-10-03T16:24:27.346Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>能在路由器里挂载阿里云盘的aliyundrive-webdav</title>
+    <link href="https://laosu.ml/2021/10/04/%E8%83%BD%E5%9C%A8%E8%B7%AF%E7%94%B1%E5%99%A8%E9%87%8C%E6%8C%82%E8%BD%BD%E9%98%BF%E9%87%8C%E4%BA%91%E7%9B%98%E7%9A%84aliyundrive-webdav/"/>
+    <id>https://laosu.ml/2021/10/04/%E8%83%BD%E5%9C%A8%E8%B7%AF%E7%94%B1%E5%99%A8%E9%87%8C%E6%8C%82%E8%BD%BD%E9%98%BF%E9%87%8C%E4%BA%91%E7%9B%98%E7%9A%84aliyundrive-webdav/</id>
+    <published>2021-10-03T16:30:00.000Z</published>
+    <updated>2021-10-03T16:24:27.346Z</updated>
+    
+    
+    <summary type="html">aliyundrive-webdav 是阿里云盘 WebDAV 服务，支持 OpenWrt 路由器、Koolshare 梅林固件以及主流的操作系统。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="网盘" scheme="https://laosu.ml/tags/%E7%BD%91%E7%9B%98/"/>
+    
+    <category term="路由器" scheme="https://laosu.ml/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/"/>
+    
+    <category term="R6300V2" scheme="https://laosu.ml/tags/R6300V2/"/>
+    
+  </entry>
   
   <entry>
     <title>在线问卷工具LimeSurvey</title>
@@ -445,29 +472,6 @@
     
     
     <summary type="html">CloudDrive 是一款网盘挂载工具，主要支持挂载国产网盘。</summary>
-    
-    
-    
-    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
-    
-    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
-    
-    <category term="网盘" scheme="https://laosu.ml/tags/%E7%BD%91%E7%9B%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>阿里云盘的目录文件列表程序Alist</title>
-    <link href="https://laosu.ml/2021/08/18/%E9%98%BF%E9%87%8C%E4%BA%91%E7%9B%98%E7%9A%84%E7%9B%AE%E5%BD%95%E6%96%87%E4%BB%B6%E5%88%97%E8%A1%A8%E7%A8%8B%E5%BA%8FAlist/"/>
-    <id>https://laosu.ml/2021/08/18/%E9%98%BF%E9%87%8C%E4%BA%91%E7%9B%98%E7%9A%84%E7%9B%AE%E5%BD%95%E6%96%87%E4%BB%B6%E5%88%97%E8%A1%A8%E7%A8%8B%E5%BA%8FAlist/</id>
-    <published>2021-08-18T11:00:00.000Z</published>
-    <updated>2021-08-18T11:09:54.430Z</updated>
-    
-    
-    <summary type="html">Alist 是一款阿里云盘的目录文件列表程序。</summary>
     
     
     
