@@ -1,6 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>在线乐谱协作编辑器composing.studio</title>
+    <url>/2021/10/06/%E5%9C%A8%E7%BA%BF%E4%B9%90%E8%B0%B1%E5%8D%8F%E4%BD%9C%E7%BC%96%E8%BE%91%E5%99%A8composing.studio/</url>
+    <content><![CDATA[<p><strong>什么是 composing.studio ？</strong></p>
+<blockquote>
+<p><code>composing.studio</code> 是使用 <code>Rust</code>、<code>WebAssembly</code> 和 <code>TypeScript</code> 构建的在线实时协作音乐编辑器，采用了 <code>ABC</code> 记谱法，允许任何人创建简单的音乐作品，具有即时乐谱渲染和实时音频播放。任何人都可以通过创建一个新的协作会话，并与其他作曲家共享链接，协同工作。</p>
+</blockquote>
+<p><strong>什么是 ABC 记谱法 ？</strong></p>
+<blockquote>
+<p><code>ABC</code> 记谱法（<code>ABC Music Notation</code>）出现于 19 世纪，由 <code>Chris Walshaw</code> 发明。<code>ABC</code> 记谱法以 <code>A</code> 到 <code>G</code> 的字母记录音高，再用其它符号来记录变化音、音长等。 <code>ABC</code> 记谱法基于 <code>ASCII</code> ，可以用文本编辑器进行编辑，并且有很多音乐软件可以读取 <code>ABC</code> 符号以及处理成 <code>MIDI</code> 格式文件。</p>
+</blockquote>
+<p><strong>什么是 abc.js ?</strong></p>
+<blockquote>
+<p><code>Paul Rosen</code> 和 <code>Gregory Dyke</code> 开发的一个渲染 <code>ABC</code> 乐谱的<code>javascript</code> 库，该库可以在网页上显示标准音乐符号，还可以生成<code>MIDI</code> 文件或直接在浏览器中播放。</p>
+</blockquote>
+<p>官网可以直接体验使用：<span class="exturl" data-url="aHR0cHM6Ly9jb21wb3Npbmcuc3R1ZGlvLw==">https://composing.studio<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h1><p>没有搜索到镜像，可能是老苏搜索的关键词不对，不过官方提供了 <code>Dockerfile</code> ，可以自己构建。</p>
+<p>这个 <code>Dockerfile</code> 采用了多阶段构建，值得学习和进一步研究</p>
+<blockquote>
+<p>如果你不想自己构建，可以跳过，直接阅读下一章节</p>
+</blockquote>
+<p>构建镜像的基本流程如下👇</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 下载代码</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/ekzhang/composing.studio.git cs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入目录</span></span><br><span class="line"><span class="built_in">cd</span> cs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建镜像  </span></span><br><span class="line">docker build -t wbsu2003/composing-studio:v1 .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行容器</span></span><br><span class="line">docker run -d --name composing-studio \</span><br><span class="line">--restart=always \</span><br><span class="line">-p 3030:3030 \</span><br><span class="line">wbsu2003/composing-studio:v1</span><br></pre></td></tr></table></figure>
+
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>在群晖上以 Docker 方式安装。</p>
+<p>在注册表中搜索 <code>wbsu2003</code> ，找到 <code>wbsu2003/composing-studio</code>，版本选择 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109251443492.png"></p>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">3030</td>
+<td align="center">3030</td>
+</tr>
+</tbody></table>
+<p>默认没有映射端口</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109251446797.png"></p>
+<p>需要点 <code>+</code> 号自行添加，直接用了默认的端口 <code>3030</code> </p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109251447532.png"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>在浏览器中输入 <code>http://群晖IP:3030</code> 就能看到主界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109251451054.png"></p>
+<p>点 <code>ENTER</code> 进入音乐编辑器界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109251453594.png"></p>
+<p>默认创建的文件名是随机的，可以通过 <code>http://群晖IP:3030/文件名</code> 的方式指定文件名</p>
+<p>例如在浏览器中输入 <code>http://192.168.0.199:3030/MoneyLost</code>，会在 <code>documents</code> 目录中新建 <code>MoneyLost</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109251517674.png"></p>
+<p>老苏并不懂 <code>ABC</code> 记谱法，下面👇这首是网上找的，可以用于测试，将其复制、并粘贴到中间的编辑区</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">X: 22</span><br><span class="line">T:Money Lost</span><br><span class="line">M:3/4</span><br><span class="line">L:1/8</span><br><span class="line">Q:1/4=100</span><br><span class="line">C:Paul Rosen</span><br><span class="line">S:Copyright 2007, Paul Rosen</span><br><span class="line">R:Klezmer</span><br><span class="line">K:Dm</span><br><span class="line">Ade|:&quot;Dm&quot;(f2d)e gf|&quot;A7&quot;e2^c4|&quot;Gm&quot;B&gt;&gt;^c BA BG|&quot;A&quot;A3Ade|&quot;Dm&quot;(f2d)e gf|&quot;A7&quot;e2^c4|</span><br><span class="line">&quot;Gm&quot;A&gt;&gt;B &quot;A7&quot;AG FE|1&quot;Dm&quot;D3Ade:|2&quot;Dm&quot;D3DEF||:&quot;Gm&quot;(G2D)E FG|&quot;Dm&quot;A2F4|&quot;Gm&quot;B&gt;&gt;c &quot;A7&quot;BA BG|</span><br><span class="line">&quot;Dm&quot;A3 DEF|&quot;Gm&quot;(G2D)EFG|&quot;Dm&quot;A2F4|&quot;E°&quot;E&gt;&gt;Fy &quot;(A7)&quot;ED^C2|1&quot;Dm&quot;D3DEF:|2&quot;Dm&quot;D6||</span><br></pre></td></tr></table></figure>
+
+<p>预览播放区立刻能看到渲染好的标准乐谱</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109251530222.png"></p>
+<p>可以直接播放</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109251500980.png"></p>
+<p>将 <code>Share Link</code> 分享给别人之后，<code>Active Users</code> 多出了一个人</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109251502901.png"></p>
+<p>可以修改自己的名字</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109251506732.png"></p>
+<p>但是需要注意的是，<code>composing.studio</code> 目前还没有保存和下载，但可以通过固定文件名的方式找到编辑过的内容</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109251530808.png"></p>
+<p><strong>除非你重启了容器</strong>，否则只要输入这个链接，都能看到之前编辑、修改的内容</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>ekzhang/composing.studio: Collaborative music composition for everyone.<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2VremhhbmcvY29tcG9zaW5nLnN0dWRpbw==">https://github.com/ekzhang/composing.studio<i class="fa fa-external-link-alt"></i></span></p>
+<p>Composing Studio<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9jb21wb3Npbmcuc3R1ZGlvLw==">https://composing.studio/<i class="fa fa-external-link-alt"></i></span></p>
+<p>abcjs: Quick Editor<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9lZGl0b3IuZHJhd3RoZWRvdHMuY29tLw==">https://editor.drawthedots.com/<i class="fa fa-external-link-alt"></i></span></p>
+<p>abcjs<br>地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWJjanMubmV0Lw==">https://www.abcjs.net/<i class="fa fa-external-link-alt"></i></span></p>
+<p>maiwenan/hexo-tag-abcjs: A hexo tag for rendering abc music notation on your blog posts.<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21haXdlbmFuL2hleG8tdGFnLWFiY2pz">https://github.com/maiwenan/hexo-tag-abcjs<i class="fa fa-external-link-alt"></i></span></p>
+<p>一个渲染ABC乐谱的开源Javascript库abcjs — 1024.COM - 好人一生平安<br>地址：<span class="exturl" data-url="aHR0cHM6Ly8xMDI0LmNvbS9hLzY0Ng==">https://1024.com/a/646<i class="fa fa-external-link-alt"></i></span></p>
+<p>ABC 记谱法教程 - 简书<br>地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9mNDNmOWIyYWViMmQ=">https://www.jianshu.com/p/f43f9b2aeb2d<i class="fa fa-external-link-alt"></i></span></p>
+<p>使用带有 abcjs 支持的 markdown 编辑器编写五线谱 - 初步印象 - 链滴<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9sZDI0Ni5jb20vYXJ0aWNsZS8xNTc5NDI0MDg3Mjg1">https://ld246.com/article/1579424087285<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>音乐</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>能在路由器里挂载阿里云盘的aliyundrive-webdav</title>
     <url>/2021/10/04/%E8%83%BD%E5%9C%A8%E8%B7%AF%E7%94%B1%E5%99%A8%E9%87%8C%E6%8C%82%E8%BD%BD%E9%98%BF%E9%87%8C%E4%BA%91%E7%9B%98%E7%9A%84aliyundrive-webdav/</url>
     <content><![CDATA[<p><strong>什么是 aliyundrive-webdav ？</strong></p>
@@ -13910,7 +13994,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiMxMDA7JiN4NmQ7JiMxMDU7JiMxMTA7JiN4NDA7JiN4NmY7JiMxMTI7JiN4NjU7JiMxMTA7JiN4NzM7JiN4NzU7JiM5ODsmI3g3NDsmI3g2OTsmI3g3NDsmI3g2YzsmI3g2NTsmI3g3MzsmIzQ2OyYjMTExOyYjeDcyOyYjMTAzOw==">&#97;&#100;&#x6d;&#105;&#110;&#x40;&#x6f;&#112;&#x65;&#110;&#x73;&#x75;&#98;&#x74;&#x69;&#x74;&#x6c;&#x65;&#x73;&#46;&#111;&#x72;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiN4NjQ7JiN4NmQ7JiN4Njk7JiMxMTA7JiM2NDsmIzExMTsmI3g3MDsmIzEwMTsmIzExMDsmIzExNTsmI3g3NTsmI3g2MjsmI3g3NDsmI3g2OTsmI3g3NDsmIzEwODsmIzEwMTsmI3g3MzsmI3gyZTsmIzExMTsmIzExNDsmIzEwMzs=">&#97;&#x64;&#x6d;&#x69;&#110;&#64;&#111;&#x70;&#101;&#110;&#115;&#x75;&#x62;&#x74;&#x69;&#x74;&#108;&#101;&#x73;&#x2e;&#111;&#114;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
@@ -19422,11 +19506,11 @@
       </categories>
       <tags>
         <tag>刮削器</tag>
-        <tag>ZogVM</tag>
-        <tag>极影派</tag>
         <tag>Kodi</tag>
         <tag>MediaElch</tag>
         <tag>tinyMediaManager</tag>
+        <tag>ZogVM</tag>
+        <tag>极影派</tag>
       </tags>
   </entry>
   <entry>
@@ -19479,11 +19563,11 @@
         <tag>Emby</tag>
         <tag>jellyfin</tag>
         <tag>刮削器</tag>
-        <tag>Scrapers</tag>
-        <tag>Plex</tag>
+        <tag>Kodi</tag>
         <tag>ZogVM</tag>
         <tag>极影派</tag>
-        <tag>Kodi</tag>
+        <tag>Scrapers</tag>
+        <tag>Plex</tag>
       </tags>
   </entry>
   <entry>
