@@ -1,6 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>文件管理和分发软件ProjectSend</title>
+    <url>/2021/10/08/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%92%8C%E5%88%86%E5%8F%91%E8%BD%AF%E4%BB%B6ProjectSend/</url>
+    <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210416170035.png"></p>
+<blockquote>
+<p>这篇文章起头于今年的 <code>2</code> 月，大概完成于 <code>4</code> 月。老苏已重新验证过，虽然在界面上已经存在细节上的差异，但并不会影响对本文的理解</p>
+</blockquote>
+<p><strong>什么是 ProjectSend ？</strong></p>
+<blockquote>
+<p><code>ProjectSend</code> 是一款免费的开源软件，可让您与客户共享文件，注重易用性和隐私性。它支持客户端组、系统用户角色、统计、多语言、详细日志等等！</p>
+</blockquote>
+<p>简单的说就是有点像发邮件，只有指定的收件人才能收到发件人发送的文件，但又不依赖于邮件</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="建数据库"><a href="#建数据库" class="headerlink" title="建数据库"></a>建数据库</h2><p><code>ProjectSend</code> 需要至少具有 <code>php 7.1</code> 和 <code>MySQL 5</code> 或更高版本才能运行该软件。</p>
+<p>所以数据库这块我直接用的群晖的 <code>MariaDB 5</code>，在 <code>phpMyAdmin</code> 中创建了表名为 <code>projectsend</code> 的空表</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210324152150.png"></p>
+<h2 id="安装镜像"><a href="#安装镜像" class="headerlink" title="安装镜像"></a>安装镜像</h2><p>在群晖上以 Docker 方式安装。</p>
+<p>在注册表中搜索 <code>projectsend</code> ，选择第一个 <code>linuxserver/projectsend</code>，版本选择 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2021/02/24/1614162911589-1614162911598.png" alt="title"></p>
+<h3 id="卷"><a href="#卷" class="headerlink" title="卷"></a>卷</h3><p>在 <code>docker</code> 文件夹中，创建一个新文件夹，并将其命名为 <code>projectsend</code>，然后在 <code>projectsend</code> 文件夹中再创建两个新的子文件夹，分别命名为 <code>config</code> 和 <code>data</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2021/02/24/1614169543833-1614169543841.png" alt="title"></p>
+<table>
+<thead>
+<tr>
+<th align="center">文件夹</th>
+<th align="center">装载路径</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>docker/projectsend/config</code></td>
+<td align="center"><code>/config</code></td>
+<td align="center">存放设置</td>
+</tr>
+<tr>
+<td align="center"><code>docker/projectsend/data</code></td>
+<td align="center"><code>/data</code></td>
+<td align="center">存放数据</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2021/02/24/1614169804820-1614169804822.png" alt="title"></p>
+<h3 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h3><p>默认的端口 <code>80</code> 不能用，换成了不冲突的 <code>8222</code>，<code>443</code> 用不上，所以老苏给删了</p>
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>8222</code></td>
+<td align="center"><code>80</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2021/02/24/1614170366796-1614170366803.png" alt="老版"></p>
+<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><table>
+<thead>
+<tr>
+<th align="center">可变</th>
+<th align="center">值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">TZ</td>
+<td align="center">设置为 <code>Asia/Shanghai</code></td>
+</tr>
+<tr>
+<td align="center">PGID</td>
+<td align="center"><code>&lt;gid&gt;</code> 设为 <code>1000</code></td>
+</tr>
+<tr>
+<td align="center">PUID</td>
+<td align="center"><code>&lt;uid&gt;</code> 设为 <code>1000</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><code>PUID</code> 为什么默认设置为 <code>1000</code>，请看老苏写的『<a href="https://laosu.ml/2021/03/12/%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96PUID%E5%92%8CPGID/?highlight=puid">如何获取PUID和PGID</a>』</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2021/02/24/1614170473254-1614170473262.png" alt="title"></p>
+<h1 id="初始化设置"><a href="#初始化设置" class="headerlink" title="初始化设置"></a>初始化设置</h1><p>在浏览器中输入 <code>http://群晖IP:8222</code>，就能看到主界面了，第一次需要设置</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/picgo/20210224205744.png"></p>
+<p>默认情况下数据库右侧是红色的感叹号，必须全部变绿</p>
+<blockquote>
+<p>注意：下图中密码被我隐藏了，不是为空</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210324160926.png"></p>
+<p>拉到底部，按钮从 <code>check</code> 变成了 <code>Check again</code> 和 <code>Write config file</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210324153612.png"></p>
+<p>点 <code>Write config file</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210324153711.png"></p>
+<p>点 <code>Continue to installation</code></p>
+<blockquote>
+<p>项目地址和数据库地址不同是因为：<code>100</code> 开头的是 <code>tailscale</code> 的地址，对应的局域网 <code>IP</code> 为 <code>192.168.0.199</code>，实际上这两个地址是同一台机器，当然数据库也可以安装在另外一台机器上</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210324153815.png"></p>
+<p>填写站点名称和管理员信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210324154013.png"></p>
+<p>继续 <code>install</code>，到这里就设置完成了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210324161233.png"></p>
+<h1 id="高级设置"><a href="#高级设置" class="headerlink" title="高级设置"></a>高级设置</h1><h2 id="增加上传的文件大小限制"><a href="#增加上传的文件大小限制" class="headerlink" title="增加上传的文件大小限制"></a>增加上传的文件大小限制</h2><p>有三个地方可以修改，第一种是在初始化的时候设置，第二种是设置全局参数，第三种是给每个账户单独设置</p>
+<h3 id="初始化设置-1"><a href="#初始化设置-1" class="headerlink" title="初始化设置"></a>初始化设置</h3><p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210326151017.png"></p>
+<h3 id="全局设置"><a href="#全局设置" class="headerlink" title="全局设置"></a>全局设置</h3><p>找到 <code>sys.config.php</code> 文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210324164743.png"></p>
+<blockquote>
+<p>修改前需要先修改  <code>sys.config.php</code> 文件的权限，增加写入权限</p>
+</blockquote>
+<p>找到 <code>MAX_FILESIZE</code>，默认是 2048MB，也就是2GB，可以将 2048 更改为所需的任何内容。必须是整数。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210324164931.png"></p>
+<h3 id="单独设置"><a href="#单独设置" class="headerlink" title="单独设置"></a>单独设置</h3><p>在新建用户时，单独设置 <code>Max. upload filesize</code>，如果保留为空或将其设置为0，它将使用全局值。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210324165748.png"></p>
+<h2 id="汉化"><a href="#汉化" class="headerlink" title="汉化"></a>汉化</h2><p>目前已经支持 71 种语言，需要在 <span class="exturl" data-url="aHR0cHM6Ly93d3cucHJvamVjdHNlbmQub3JnL3RyYW5zbGF0aW9ucy8=">https://www.projectsend.org/translations/<i class="fa fa-external-link-alt"></i></span> 页面下载</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210326140240.png"></p>
+<p>将下载的 <code>zh_CN.zip</code> 文件解压到 <code>projectsend</code> 目录中</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210326140457.png"></p>
+<p>语言包是扩展名 <code>.mo</code> 的文件，其在容器中的路径为对应下表</p>
+<table>
+<thead>
+<tr>
+<th align="center">模块</th>
+<th align="center">路径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">主程序</td>
+<td align="center"><code>/var/www/localhost/htdocs/lang</code></td>
+</tr>
+<tr>
+<td align="center">模板 <code>Default</code></td>
+<td align="center"><code>/var/www/localhost/htdocs/templates/default/lang</code></td>
+</tr>
+<tr>
+<td align="center">模板 <code>Gallery</code></td>
+<td align="center"><code>/var/www/localhost/htdocs/templates/gallery/lang</code></td>
+</tr>
+<tr>
+<td align="center">模板 <code>Pinboxes</code></td>
+<td align="center"><code>/var/www/localhost/htdocs/templates/pinboxes/lang</code></td>
+</tr>
+</tbody></table>
+<p>SSH 连接到群晖，执行下面的拷贝命令</p>
+<blockquote>
+<p>注意：存在一定的风险，请务必正取理解所执行命令的含义，不要盲目操作，作者不承担汉化失败带来的任何后果~</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 从群晖拷贝到容器linuxserver-projectsend1内</span></span><br><span class="line">docker cp /volume2/docker/projectsend/zh_CN/. linuxserver-projectsend1:/app/projectsend</span><br></pre></td></tr></table></figure>
+
+<p>修改  <code>sys.config.php</code> 文件，将 <code>define（&#39;SITE_LANG&#39;，&#39;en&#39;）</code> 改为 <code>define（&#39;SITE_LANG&#39;，&#39;zh_CN&#39;）</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210326151312.png"></p>
+<p>保存后 <code>logout</code> ，登录界面 <code>语言</code> 默认就是中文了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210326152026.png"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>回到 <code>http://群晖IP:8222</code>，会看到登录页面，用刚才创建的管理员账号和密码登录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210402162830.png"></p>
+<p>使用还是很简单的，简单介绍下流程：</p>
+<p>为了开始上传文件并与客户共享，首先，您需要添加客户</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210402163428.png"></p>
+<p>邮件没设置，而且用户的邮箱地址也是乱填的，报错信息不用管</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210402163534.png"></p>
+<p>然后单击文件栏，然后从下拉菜单中选择“上传”按钮以添加添加，然后上传文件。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210402163212.png"></p>
+<p>上传文件后，您可以选择要共享的特定客户</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210402163726.png"></p>
+<p>分配完成后</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210402163812.png"></p>
+<p>要检查状态并管理上传的文件，请点击文件栏下方的 <code>管理文件</code> 选项</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210402163857.png"></p>
+<p>客户登录后，就能看到分享给自己的文档了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/20210402164022.png"></p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>projectsend/projectsend: ProjectSend is a free, open source software that lets you share files with your clients, focused on ease of use and privacy. It supports clients groups, system users roles, statistics, multiple languages, detailed logs… and much more!<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3Byb2plY3RzZW5kL3Byb2plY3RzZW5k">https://github.com/projectsend/projectsend<i class="fa fa-external-link-alt"></i></span></p>
+<p>ProjectSend - Share files with your clients from your own server. Open source, free software.<br>地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cucHJvamVjdHNlbmQub3JnLw==">https://www.projectsend.org/<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>文件分享</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>在线乐谱协作编辑器composing.studio</title>
     <url>/2021/10/06/%E5%9C%A8%E7%BA%BF%E4%B9%90%E8%B0%B1%E5%8D%8F%E4%BD%9C%E7%BC%96%E8%BE%91%E5%99%A8composing.studio/</url>
     <content><![CDATA[<p><strong>什么是 composing.studio ？</strong></p>
@@ -12042,8 +12221,8 @@
         <tag>群晖</tag>
         <tag>docker</tag>
         <tag>网盘</tag>
-        <tag>onedrive</tag>
         <tag>天翼云盘</tag>
+        <tag>onedrive</tag>
       </tags>
   </entry>
   <entry>
@@ -13994,7 +14173,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiN4NjQ7JiN4NmQ7JiN4Njk7JiMxMTA7JiM2NDsmIzExMTsmI3g3MDsmIzEwMTsmIzExMDsmIzExNTsmI3g3NTsmI3g2MjsmI3g3NDsmI3g2OTsmI3g3NDsmIzEwODsmIzEwMTsmI3g3MzsmI3gyZTsmIzExMTsmIzExNDsmIzEwMzs=">&#97;&#x64;&#x6d;&#x69;&#110;&#64;&#111;&#x70;&#101;&#110;&#115;&#x75;&#x62;&#x74;&#x69;&#x74;&#108;&#101;&#x73;&#x2e;&#111;&#114;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiN4NjQ7JiN4NmQ7JiN4Njk7JiMxMTA7JiM2NDsmI3g2ZjsmI3g3MDsmI3g2NTsmI3g2ZTsmIzExNTsmI3g3NTsmI3g2MjsmIzExNjsmIzEwNTsmIzExNjsmIzEwODsmIzEwMTsmI3g3MzsmIzQ2OyYjeDZmOyYjMTE0OyYjeDY3Ow==">&#97;&#x64;&#x6d;&#x69;&#110;&#64;&#x6f;&#x70;&#x65;&#x6e;&#115;&#x75;&#x62;&#116;&#105;&#116;&#108;&#101;&#x73;&#46;&#x6f;&#114;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
@@ -18610,10 +18789,10 @@
         <tag>路由器</tag>
         <tag>千兆</tag>
         <tag>电力猫</tag>
-        <tag>WDS</tag>
         <tag>Mesh路由</tag>
         <tag>wifi6</tag>
         <tag>光猫</tag>
+        <tag>WDS</tag>
       </tags>
   </entry>
   <entry>
@@ -19506,11 +19685,11 @@
       </categories>
       <tags>
         <tag>刮削器</tag>
+        <tag>ZogVM</tag>
+        <tag>极影派</tag>
         <tag>Kodi</tag>
         <tag>MediaElch</tag>
         <tag>tinyMediaManager</tag>
-        <tag>ZogVM</tag>
-        <tag>极影派</tag>
       </tags>
   </entry>
   <entry>
@@ -19563,11 +19742,11 @@
         <tag>Emby</tag>
         <tag>jellyfin</tag>
         <tag>刮削器</tag>
-        <tag>Kodi</tag>
-        <tag>ZogVM</tag>
-        <tag>极影派</tag>
         <tag>Scrapers</tag>
         <tag>Plex</tag>
+        <tag>ZogVM</tag>
+        <tag>极影派</tag>
+        <tag>Kodi</tag>
       </tags>
   </entry>
   <entry>
@@ -19965,6 +20144,35 @@
       </tags>
   </entry>
   <entry>
+    <title>群晖上的Zerotier GUI一直显示offline的原因</title>
+    <url>/2020/04/28/%E7%BE%A4%E6%99%96%E4%B8%8A%E7%9A%84Zerotier%20GUI%E4%B8%80%E7%9B%B4%E6%98%BE%E7%A4%BAoffline%E7%9A%84%E5%8E%9F%E5%9B%A0/</url>
+    <content><![CDATA[<p>两台黑群晖，因为共用了frps，所以为了避免端口冲突，一台保留了端口：5000，另一台启用了端口：5002。</p>
+<p>其中在局域网一台正常：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-150636-1587366421033.jpg" alt="title"></p>
+<p>之所以强调局域网是因为在用域名访问时，也同样出现了offline</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-150235-1587366203005.jpg" alt="title"></p>
+<p>用ssh登录后发现可以正常使用<br><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/WechatIMG3868-1587366673982.png" alt="title"></p>
+<p>说明我们下载的包是没问题的，有问题的只是WEB GUI而已。</p>
+<p>参考文档：</p>
+<blockquote>
+<p>1、<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3plcm90aWVyL1plcm9UaWVyTkFTL2lzc3Vlcy8xOA==">Zerotier GUI on Synology shows offline #18<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>文档中有一段描述，可以证明其只能连接端口：5000<br><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-151837-1587367148388.jpg" alt="title"></p>
+<p>而在使用frp后，所有域名是不带端口的，所以才会导致局域网正常而使用frp后又显示offline的原因。</p>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>frp</tag>
+        <tag>NAS</tag>
+        <tag>ngrok</tag>
+        <tag>ZeroTier</tag>
+        <tag>GUI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>群晖app访问遇到的端口问题</title>
     <url>/2020/04/28/%E7%BE%A4%E6%99%96app%E8%AE%BF%E9%97%AE%E9%81%87%E5%88%B0%E7%9A%84%E7%AB%AF%E5%8F%A3%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p><strong>什么是 NAS</strong></p>
@@ -20019,39 +20227,10 @@
         <tag>frp</tag>
         <tag>VPS</tag>
         <tag>NAS</tag>
+        <tag>ngrok</tag>
+        <tag>ZeroTier</tag>
         <tag>黑群</tag>
         <tag>QuickConnect</tag>
-        <tag>ngrok</tag>
-        <tag>ZeroTier</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>群晖上的Zerotier GUI一直显示offline的原因</title>
-    <url>/2020/04/28/%E7%BE%A4%E6%99%96%E4%B8%8A%E7%9A%84Zerotier%20GUI%E4%B8%80%E7%9B%B4%E6%98%BE%E7%A4%BAoffline%E7%9A%84%E5%8E%9F%E5%9B%A0/</url>
-    <content><![CDATA[<p>两台黑群晖，因为共用了frps，所以为了避免端口冲突，一台保留了端口：5000，另一台启用了端口：5002。</p>
-<p>其中在局域网一台正常：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-150636-1587366421033.jpg" alt="title"></p>
-<p>之所以强调局域网是因为在用域名访问时，也同样出现了offline</p>
-<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-150235-1587366203005.jpg" alt="title"></p>
-<p>用ssh登录后发现可以正常使用<br><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/WechatIMG3868-1587366673982.png" alt="title"></p>
-<p>说明我们下载的包是没问题的，有问题的只是WEB GUI而已。</p>
-<p>参考文档：</p>
-<blockquote>
-<p>1、<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3plcm90aWVyL1plcm9UaWVyTkFTL2lzc3Vlcy8xOA==">Zerotier GUI on Synology shows offline #18<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<p>文档中有一段描述，可以证明其只能连接端口：5000<br><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-151837-1587367148388.jpg" alt="title"></p>
-<p>而在使用frp后，所有域名是不带端口的，所以才会导致局域网正常而使用frp后又显示offline的原因。</p>
-]]></content>
-      <categories>
-        <category>各种折腾</category>
-      </categories>
-      <tags>
-        <tag>群晖</tag>
-        <tag>frp</tag>
-        <tag>NAS</tag>
-        <tag>ngrok</tag>
-        <tag>ZeroTier</tag>
-        <tag>GUI</tag>
       </tags>
   </entry>
   <entry>
