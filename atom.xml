@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-10-08T06:50:09.054Z</updated>
+  <updated>2021-10-11T10:52:40.766Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>低代码开源框架Appsmith</title>
+    <link href="https://laosu.ml/2021/10/11/%E4%BD%8E%E4%BB%A3%E7%A0%81%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6Appsmith/"/>
+    <id>https://laosu.ml/2021/10/11/%E4%BD%8E%E4%BB%A3%E7%A0%81%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6Appsmith/</id>
+    <published>2021-10-11T11:00:00.000Z</published>
+    <updated>2021-10-11T10:52:40.766Z</updated>
+    
+    
+    <summary type="html">Appsmith 是一个用于构建应用程序的低代码、开源框架。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="表格" scheme="https://laosu.ml/tags/%E8%A1%A8%E6%A0%BC/"/>
+    
+    <category term="低代码" scheme="https://laosu.ml/tags/%E4%BD%8E%E4%BB%A3%E7%A0%81/"/>
+    
+  </entry>
   
   <entry>
     <title>文件管理和分发软件ProjectSend</title>
@@ -273,9 +298,9 @@
     
     <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
     
-    <category term="网络" scheme="https://laosu.ml/tags/%E7%BD%91%E7%BB%9C/"/>
-    
     <category term="测速" scheme="https://laosu.ml/tags/%E6%B5%8B%E9%80%9F/"/>
+    
+    <category term="网络" scheme="https://laosu.ml/tags/%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   
@@ -460,29 +485,6 @@
     <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
     
     <category term="表格" scheme="https://laosu.ml/tags/%E8%A1%A8%E6%A0%BC/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>数据可视化平台Superset（踩坑篇）</title>
-    <link href="https://laosu.ml/2021/08/25/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B9%B3%E5%8F%B0Superset%EF%BC%88%E8%B8%A9%E5%9D%91%E7%AF%87%EF%BC%89/"/>
-    <id>https://laosu.ml/2021/08/25/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B9%B3%E5%8F%B0Superset%EF%BC%88%E8%B8%A9%E5%9D%91%E7%AF%87%EF%BC%89/</id>
-    <published>2021-08-25T11:00:00.000Z</published>
-    <updated>2021-08-25T05:52:32.829Z</updated>
-    
-    
-    <summary type="html">superset 是由 Airbnb （知名在线短租赁公司）开源的数据分析与可视化平台（曾用名 Caravel 、 Panoramix ）。</summary>
-    
-    
-    
-    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
-    
-    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
-    
-    <category term="BI" scheme="https://laosu.ml/tags/BI/"/>
     
   </entry>
   
