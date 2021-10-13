@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-10-11T11:18:12.419Z</updated>
+  <updated>2021-10-13T04:26:18.032Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>体验重构版的可道云Kodbox</title>
+    <link href="https://laosu.ml/2021/10/13/%E4%BD%93%E9%AA%8C%E9%87%8D%E6%9E%84%E7%89%88%E7%9A%84%E5%8F%AF%E9%81%93%E4%BA%91Kodbox/"/>
+    <id>https://laosu.ml/2021/10/13/%E4%BD%93%E9%AA%8C%E9%87%8D%E6%9E%84%E7%89%88%E7%9A%84%E5%8F%AF%E9%81%93%E4%BA%91Kodbox/</id>
+    <published>2021-10-13T04:30:00.000Z</published>
+    <updated>2021-10-13T04:26:18.032Z</updated>
+    
+    
+    <summary type="html">KodBox 是在 KodExplorer 基础上进行了系统重构的全新产品。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="网盘" scheme="https://laosu.ml/tags/%E7%BD%91%E7%9B%98/"/>
+    
+  </entry>
   
   <entry>
     <title>低代码开源框架Appsmith</title>
@@ -462,29 +485,6 @@
     <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
     
     <category term="网络" scheme="https://laosu.ml/tags/%E7%BD%91%E7%BB%9C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Airtable的开源替代方案NocoDB</title>
-    <link href="https://laosu.ml/2021/08/27/Airtable%E7%9A%84%E5%BC%80%E6%BA%90%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88NocoDB/"/>
-    <id>https://laosu.ml/2021/08/27/Airtable%E7%9A%84%E5%BC%80%E6%BA%90%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88NocoDB/</id>
-    <published>2021-08-27T04:00:00.000Z</published>
-    <updated>2021-08-27T04:37:05.968Z</updated>
-    
-    
-    <summary type="html">NocoDB 是一个开源 NoCode 平台，可将任何 MySQL、PostgreSQL、SQL Server、SQLite 和 MariaDB 转换为智能电子表格。</summary>
-    
-    
-    
-    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
-    
-    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
-    
-    <category term="表格" scheme="https://laosu.ml/tags/%E8%A1%A8%E6%A0%BC/"/>
     
   </entry>
   

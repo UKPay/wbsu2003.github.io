@@ -1,6 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>体验重构版的可道云Kodbox</title>
+    <url>/2021/10/13/%E4%BD%93%E9%AA%8C%E9%87%8D%E6%9E%84%E7%89%88%E7%9A%84%E5%8F%AF%E9%81%93%E4%BA%91Kodbox/</url>
+    <content><![CDATA[<p>在『 <a href="https://laosu.ml/2021/05/03/Web%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8KodExplorer">Web资源文件管理器KodExplorer</a>  』中我们提到了 <code>KodExplorer</code> 的升级换代产品 <code>Kodbox</code>；</p>
+<p>官方的说法是 <code>KodBox 是在 KodExplorer 基础上进行了系统重构的全新产品。为满足系统更强性能、更安全、更多特性的拓展需求，Kodbox 对底层架构、存储方式、权限机制等进行了重构，同时继承并升级了 KodExplorer 优秀前端体验。整体而言，KodExplorer 适用于个人用户或小型团队和企业；KodBox 更多针对企业级的应用需求，可支撑高并发、更多用户数、更高协作和安全要求。</code></p>
+<p>对老苏而言，两者有很多相似的部分，比如都使用了图像化的界面，类似操作系统的文件管理器。但是不同的是 <code>kodbox</code> 把自己定位在 <code>像 Windows 操作一样的企业网盘</code>，另一个差别就是 <code>kodbox</code> 不仅加入了数据库的支持，而且支持配置第三方云存储。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>在群晖上以 Docker 方式安装。</p>
+<p>在注册表中搜索 <code>kodbox</code> ，选择第一个 <code>kodcloud/kodbox</code> ，版本选择 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/05/20210506161821.png"></p>
+<h2 id="卷"><a href="#卷" class="headerlink" title="卷"></a>卷</h2><p>在 <code>docker</code> 文件夹中，创建一个新文件夹，并将其命名为 <code>kodbox</code></p>
+<table>
+<thead>
+<tr>
+<th align="center">文件夹</th>
+<th align="center">装载路径</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>docker/kodbox</code></td>
+<td align="center"><code>/var/www/html</code></td>
+<td align="center">数据目录</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/05/20210506162822.png"></p>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><blockquote>
+<p> 注意：这里有个坑，容器端口应该是 <code>80</code>，而不是 <code>9000</code>；</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110121152001.png"></p>
+<p>默认的端口 <code>9000</code> 分给了 <code>portainer</code> ，所以换成了 <code>9100</code></p>
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>9100</code></td>
+<td align="center"><code>80</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/05/20210507095836.png"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>在浏览器中输入 <code>http://群晖IP:9100</code>，就能看到主界面了，第一次需要设置</p>
+<p>第一步是环境检测</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/05/20210507100443.png"></p>
+<p>第二步是数据库设置，全部默认就行</p>
+<blockquote>
+<p>老苏偷了一回懒，这次没有用 <code>MariaDB</code>，而是直接用了 <code>SQLite</code></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/05/20210507100716.png"></p>
+<p>第三步账号设置，只要设置密码即可</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/05/20210507100807.png"></p>
+<p>设置完成</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/05/20210507100858.png"></p>
+<p>登录界面和 <code>kodexplorer</code> 是一样的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/05/20210507101003.png"></p>
+<p>登录成功后发现左侧多了一栏菜单</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/05/20210507101124.png"></p>
+<p>可以方便的切换<code>桌面</code>和<code>文件管理</code>，还是那熟悉的味道。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/05/20210507101238.png"></p>
+<h1 id="新增特性"><a href="#新增特性" class="headerlink" title="新增特性"></a>新增特性</h1><h2 id="第三方存储"><a href="#第三方存储" class="headerlink" title="第三方存储"></a>第三方存储</h2><p> 桌面 <code>系统设置</code> –&gt; <code>存储/文件</code> –&gt; <code>存储管理</code> –&gt; <code>新增</code></p>
+<p> <img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/05/20210507103904.png"></p>
+<p> 最新版本界面变得更好看了</p>
+<p> <img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110121200535.png"></p>
+<p> 非常遗憾，<code>kodbox</code> 支持的我都没有，所以没办法测试，要是能像 <code>Cloudreve</code> 一样支持 <code>OneDrive</code> 做存储就好了。</p>
+<blockquote>
+<p>关于<code>Cloudreve</code> 可以看：『 <a href="https://laosu.ml/2020/07/30/%E5%88%A9%E7%94%A8Cloudreve%E6%90%AD%E5%BB%BA%E8%87%AA%E7%94%A8%E7%BD%91%E7%9B%98">利用Cloudreve搭建自用网盘</a> 』</p>
+</blockquote>
+<h2 id="分享"><a href="#分享" class="headerlink" title="分享"></a>分享</h2><p> 任何文件都支持 <code>外链分享</code></p>
+<p> <img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/05/20210507105040.png"></p>
+<p> 而外链的管理在桌面 <code>系统设置</code> –&gt; <code>存储/文件</code> –&gt; <code>分享管理</code> </p>
+<p> <img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/05/20210507105138.png"></p>
+<h2 id="WebDAV"><a href="#WebDAV" class="headerlink" title="WebDAV"></a>WebDAV</h2><p>WebDAV 默认是没有开启的，需要在桌面找到 <code>系统设置</code> –&gt; <code>存储/文件</code> –&gt; <code>WebDAV 挂载</code> 中开启 <code>WebDAV</code> 服务</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/05/20210507101641.png"></p>
+<p>保存后，点 <code>立即连接使用</code> ，会显示 <code>WebDAV</code> 地址</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/05/20210507102704.png"></p>
+<p>以 <code>Expandrive</code> 为例</p>
+<blockquote>
+<p>账号、密码就是登录 <code>Kodbox</code>的账号、密码</p>
+</blockquote>
+<p> <img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/05/20210507103004.png"></p>
+<p> 挂载成功后</p>
+<p> <img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/05/20210507103323.png"></p>
+<p> 和网页 <code>文件管理</code> 是完全一致的</p>
+<p> <img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/05/20210507103503.png"></p>
+<h2 id="丰富的app"><a href="#丰富的app" class="headerlink" title="丰富的app"></a>丰富的app</h2><p><code>kodbox</code> 具有丰富的客户端，这是 <code>kodexplrer</code> 不具备的。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/05/20210507105537.png"></p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p><code>kodexplorer</code> 作为服务器文件管理器来说是一款很成熟又好用的程序，<code>kodbox</code> 则是走向类似 <code>Cloudreve</code> 的支持外链云存储的云盘程序，并且更易于操作和使用，同时还支持桌面和手机客户端。</p>
+<p>要说缺点，那就是第三方存储支持的有点少，或者说我老苏想要的没有吧。</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>kodcloud/kodbox<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9odWIuZG9ja2VyLmNvbS9yL2tvZGNsb3VkL2tvZGJveA==">https://hub.docker.com/r/kodcloud/kodbox<i class="fa fa-external-link-alt"></i></span></p>
+<p>KodCloud-dev/docker: docker for kodbox<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0tvZENsb3VkLWRldi9kb2NrZXI=">https://github.com/KodCloud-dev/docker<i class="fa fa-external-link-alt"></i></span></p>
+<p>使用docker-compose快速部署kodbox（测试) - 可道云社区<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9iYnMua29kY2xvdWQuY29tL2QvNzU4">https://bbs.kodcloud.com/d/758<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>网盘</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>低代码开源框架Appsmith</title>
     <url>/2021/10/11/%E4%BD%8E%E4%BB%A3%E7%A0%81%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6Appsmith/</url>
     <content><![CDATA[<p><strong>什么是 Appsmith ？</strong></p>
@@ -14335,7 +14440,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiMxMDA7JiN4NmQ7JiMxMDU7JiN4NmU7JiM2NDsmI3g2ZjsmI3g3MDsmI3g2NTsmI3g2ZTsmIzExNTsmI3g3NTsmIzk4OyYjMTE2OyYjMTA1OyYjeDc0OyYjeDZjOyYjeDY1OyYjMTE1OyYjNDY7JiMxMTE7JiN4NzI7JiMxMDM7">&#97;&#100;&#x6d;&#105;&#x6e;&#64;&#x6f;&#x70;&#x65;&#x6e;&#115;&#x75;&#98;&#116;&#105;&#x74;&#x6c;&#x65;&#115;&#46;&#111;&#x72;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjMTAwOyYjMTA5OyYjMTA1OyYjMTEwOyYjeDQwOyYjMTExOyYjMTEyOyYjeDY1OyYjeDZlOyYjMTE1OyYjeDc1OyYjOTg7JiN4NzQ7JiMxMDU7JiN4NzQ7JiN4NmM7JiMxMDE7JiMxMTU7JiM0NjsmI3g2ZjsmIzExNDsmI3g2Nzs=">&#x61;&#100;&#109;&#105;&#110;&#x40;&#111;&#112;&#x65;&#x6e;&#115;&#x75;&#98;&#x74;&#105;&#x74;&#x6c;&#101;&#115;&#46;&#x6f;&#114;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
