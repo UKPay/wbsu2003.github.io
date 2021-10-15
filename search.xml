@@ -96,7 +96,7 @@
 </ul>
 </blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110151235865.png"></p>
-<h3 id="运行-1"><a href="#运行-1" class="headerlink" title="运行"></a>运行</h3><p>在浏览器中输入 <code>http://群晖IP:3310</code> 就能看到主界面</p>
+<h1 id="运行-1"><a href="#运行-1" class="headerlink" title="运行"></a>运行</h1><h2 id="PC端"><a href="#PC端" class="headerlink" title="PC端"></a>PC端</h2><p>在浏览器中输入 <code>http://群晖IP:3310</code> 就能看到主界面</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110101809314.png"></p>
 <p>切到 <code>发现</code></p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110101822624.png"></p>
@@ -105,7 +105,7 @@
 <p>登录成功后就能看到你的音乐库了</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110101924364.png"></p>
 <p>直接点图片就可以开始播放音乐了，更多的功能等大家慢慢研究和挖掘。</p>
-<h1 id="移动端"><a href="#移动端" class="headerlink" title="移动端"></a>移动端</h1><p>应该主要是针对桌面的，所以没有为移动端优化</p>
+<h2 id="移动端"><a href="#移动端" class="headerlink" title="移动端"></a>移动端</h2><p>应该主要是针对桌面的，所以没有为移动端优化</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110102026892.jpg"></p>
 <p>缩放后使用没问题，就是字体太小</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110102027255.jpg"></p>
