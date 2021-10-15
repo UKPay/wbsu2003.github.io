@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-10-13T05:57:31.690Z</updated>
+  <updated>2021-10-15T04:48:14.781Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>高颜值的第三方网易云播放器YesPlayMusic</title>
+    <link href="https://laosu.ml/2021/10/15/%E9%AB%98%E9%A2%9C%E5%80%BC%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BD%91%E6%98%93%E4%BA%91%E6%92%AD%E6%94%BE%E5%99%A8YesPlayMusic/"/>
+    <id>https://laosu.ml/2021/10/15/%E9%AB%98%E9%A2%9C%E5%80%BC%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BD%91%E6%98%93%E4%BA%91%E6%92%AD%E6%94%BE%E5%99%A8YesPlayMusic/</id>
+    <published>2021-10-15T04:30:00.000Z</published>
+    <updated>2021-10-15T04:48:14.781Z</updated>
+    
+    
+    <summary type="html">YesPlayMusic 是一款高颜值的第三方网易云播放器。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="音乐" scheme="https://laosu.ml/tags/%E9%9F%B3%E4%B9%90/"/>
+    
+  </entry>
   
   <entry>
     <title>体验重构版的可道云Kodbox</title>
@@ -462,29 +485,6 @@
     <category term="vps" scheme="https://laosu.ml/tags/vps/"/>
     
     <category term="EUserv" scheme="https://laosu.ml/tags/EUserv/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>告别excel，用phpIPAM来管理家庭网络</title>
-    <link href="https://laosu.ml/2021/08/30/%E5%91%8A%E5%88%ABexcel%EF%BC%8C%E7%94%A8phpIPAM%E6%9D%A5%E7%AE%A1%E7%90%86%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C/"/>
-    <id>https://laosu.ml/2021/08/30/%E5%91%8A%E5%88%ABexcel%EF%BC%8C%E7%94%A8phpIPAM%E6%9D%A5%E7%AE%A1%E7%90%86%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C/</id>
-    <published>2021-08-30T11:00:00.000Z</published>
-    <updated>2021-08-30T10:48:57.614Z</updated>
-    
-    
-    <summary type="html">phpIPAM 是一个开源、高效的 IP 地址管理应用软件。</summary>
-    
-    
-    
-    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
-    
-    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
-    
-    <category term="网络" scheme="https://laosu.ml/tags/%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   

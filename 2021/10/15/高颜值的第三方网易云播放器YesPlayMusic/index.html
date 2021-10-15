@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/latte_social_su_32px.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/latte_social_su_16px.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="NBzRmGkIEf2N-KtEpgbtZyLYN1upTKpKC-lGzMsR9Q0">
+  <meta name="msvalidate.01" content="57B6B7FD8CF2E061F464E9FF87D7EEF4">
+  <meta name="baidu-site-verification" content="code-CJomTbekyI">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"laosu.ml","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"changyan","storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="YesPlayMusic 是一款高颜值的第三方网易云播放器。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高颜值的第三方网易云播放器YesPlayMusic">
+<meta property="og:url" content="https://laosu.ml/2021/10/15/%E9%AB%98%E9%A2%9C%E5%80%BC%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BD%91%E6%98%93%E4%BA%91%E6%92%AD%E6%94%BE%E5%99%A8YesPlayMusic/index.html">
+<meta property="og:site_name" content="老苏的blog">
+<meta property="og:description" content="YesPlayMusic 是一款高颜值的第三方网易云播放器。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110101913485.png">
+<meta property="article:published_time" content="2021-10-15T04:30:00.000Z">
+<meta property="article:modified_time" content="2021-10-15T04:48:14.781Z">
+<meta property="article:author" content="杨浦老苏">
+<meta property="article:tag" content="群晖">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="音乐">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110101913485.png">
+
+
+<link rel="canonical" href="https://laosu.ml/2021/10/15/%E9%AB%98%E9%A2%9C%E5%80%BC%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BD%91%E6%98%93%E4%BA%91%E6%92%AD%E6%94%BE%E5%99%A8YesPlayMusic/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://laosu.ml/2021/10/15/%E9%AB%98%E9%A2%9C%E5%80%BC%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BD%91%E6%98%93%E4%BA%91%E6%92%AD%E6%94%BE%E5%99%A8YesPlayMusic/","path":"2021/10/15/高颜值的第三方网易云播放器YesPlayMusic/","title":"高颜值的第三方网易云播放器YesPlayMusic"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>高颜值的第三方网易云播放器YesPlayMusic | 老苏的blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-165372529-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-165372529-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?0d167cc966795fca90236e7478677373"></script>
+
+
+<link rel="dns-prefetch" href="https://0x404.ml"><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.css"><style>
+#needsharebutton-postbottom {
+  cursor: pointer;
+  height: 26px;
+  margin-top: 10px;
+  position: relative;
+}
+#needsharebutton-postbottom .btn {
+  border: 1px solid $btn-default-border-color;
+  border-radius: 3px;
+  display: initial;
+  padding: 1px 4px;
+}
+</style><script data-ad-client="ca-pub-2307783158392222" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="老苏的blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">老苏的blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">聚沙成塔，集腋成裘</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-top"><a href="/top/" rel="section"><i class="fa fa-signal fa-fw"></i>阅读排行</a></li>
+        <li class="menu-item menu-item-waline"><span class="exturl" data-url="aHR0cHM6Ly8weDQwNC5tbC91aQ=="><i class="fa fa-comment fa-fw"></i>评论管理</span></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F"><span class="nav-number">1.</span> <span class="nav-text">构建镜像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90-API"><span class="nav-number">2.1.</span> <span class="nav-text">网易云音乐 API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3"><span class="nav-number">2.1.1.</span> <span class="nav-text">端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C"><span class="nav-number">2.1.2.</span> <span class="nav-text">运行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8"><span class="nav-number">2.2.</span> <span class="nav-text">网易云音乐播放器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">2.2.2.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C-1"><span class="nav-number">2.2.3.</span> <span class="nav-text">运行</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E7%AB%AF"><span class="nav-number">3.</span> <span class="nav-text">移动端</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%81%97%E7%95%99%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">遗留问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">5.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="杨浦老苏"
+      src="/images/laosu_wx.jpg">
+  <p class="site-author-name" itemprop="name">杨浦老苏</p>
+  <div class="site-description" itemprop="description">折腾各种好玩的东西</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">253</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3dic3UyMDAz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wbsu2003"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOndic3UyMDAzQGdtYWlsLmNvbQ==" title="E-Mail → mailto:wbsu2003@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vMjg4NTI2NjU1NA==" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;2885266554"><i class="fab fa-weibo fa-fw"></i>Weibo</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dic3UyMDA0" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;wbsu2004"><i class="fab fa-cuttlefish fa-fw"></i>CSDN</span>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      本站其他站点
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://laosu.ml/" title="https:&#x2F;&#x2F;laosu.ml">主站（Vercel）</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93YnN1MjAwMy5naXRlZS5pbw==" title="https:&#x2F;&#x2F;wbsu2003.gitee.io">国内推荐（Gitee）</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9sYW9zdS5nYQ==" title="https:&#x2F;&#x2F;laosu.ga">备站（Github）</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9sYW9zdS50aw==" title="https:&#x2F;&#x2F;laosu.tk">备站（Netlify）</span>
+        </li>
+    </ul>
+  </div>
+<!--2021.10.13新增访客地图-->
+<br>
+<script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=EWTGbXHZX6xu3OvoHmCNfu1XyUopVnfkgF-99dlb9SE"></script>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+    
+    <div class="post-gallery-image">
+      <img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110101913485.png" itemprop="contentUrl">
+    </div>
+    </div>
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laosu.ml/2021/10/15/%E9%AB%98%E9%A2%9C%E5%80%BC%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BD%91%E6%98%93%E4%BA%91%E6%92%AD%E6%94%BE%E5%99%A8YesPlayMusic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/laosu_wx.jpg">
+      <meta itemprop="name" content="杨浦老苏">
+      <meta itemprop="description" content="折腾各种好玩的东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="老苏的blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          高颜值的第三方网易云播放器YesPlayMusic
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-10-15 12:30:00 / 修改时间：12:48:14" itemprop="dateCreated datePublished" datetime="2021-10-15T12:30:00+08:00">2021-10-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/" itemprop="url" rel="index"><span itemprop="name">各种折腾</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2021/10/15/%E9%AB%98%E9%A2%9C%E5%80%BC%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BD%91%E6%98%93%E4%BA%91%E6%92%AD%E6%94%BE%E5%99%A8YesPlayMusic/#waline-comments" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" id="/2021/10/15/%E9%AB%98%E9%A2%9C%E5%80%BC%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BD%91%E6%98%93%E4%BA%91%E6%92%AD%E6%94%BE%E5%99%A8YesPlayMusic/" data-xid="/2021/10/15/%E9%AB%98%E9%A2%9C%E5%80%BC%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BD%91%E6%98%93%E4%BA%91%E6%92%AD%E6%94%BE%E5%99%A8YesPlayMusic/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span id="/2021/10/15/%E9%AB%98%E9%A2%9C%E5%80%BC%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BD%91%E6%98%93%E4%BA%91%E6%92%AD%E6%94%BE%E5%99%A8YesPlayMusic/" class="post-meta-item leancloud_visitors" data-flag-title="高颜值的第三方网易云播放器YesPlayMusic" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+<!--2021.08.21新增置顶标志-->
+<!--来自：https://www.itfanr.cc/2019/09/05/hexo-top-optimize/ -->
+
+ 
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">YesPlayMusic 是一款高颜值的第三方网易云播放器。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><strong>什么是 YesPlayMusic ？</strong></p>
+<blockquote>
+<p><code>YesPlayMusic</code> 是一款高颜值的第三方网易云播放器，设计精美，播放体验优秀。使用 <code>Vue.js</code> 全家桶和 <code>Electron</code> 框架开发，支持 <code>Windows</code> 、 <code>macOS</code> 、 <code>Linux</code>。</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110101857675.png"></p>
+<p>先上张图给大家看看</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110101920238.png"></p>
+<p>不愿意折腾的话可以直接去 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3FpZXIyMjIvWWVzUGxheU11c2ljL3JlbGVhc2Vz">https://github.com/qier222/YesPlayMusic/releases<i class="fa fa-external-link-alt"></i></span> 下载对应平台的客户端，也可以去官方的  <code>Demo</code> 站点在线体验：<span class="exturl" data-url="aHR0cHM6Ly9tdXNpYy5xaWVyMjIyLmNvbS8=">https://music.qier222.com/<i class="fa fa-external-link-alt"></i></span></p>
+<p>当然现在还有一个选择，跟随老苏一起折腾 <code>Docker</code> 版，搭建私有化的在线音乐库，一方面安全上可能更放心，另一方面也不需要到处安装客户端</p>
+<h1 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h1><blockquote>
+<p>如果你不想自己构建，可以跳过，直接阅读下一章节</p>
+</blockquote>
+<p>官方只提供了 <code>Windows</code> 、 <code>MacOS</code> 、 <code>Linux</code> 平台的客户端，所以 <code>Docker</code> 只能我们自己来构建</p>
+<ul>
+<li><code>YesPlayMusic</code> 依赖于另一个开源项目 <code>Binaryify/NeteaseCloudMusicApi（网易云 API）</code> 的部署， 因此 <code>API URL</code> 是不能预先设定的。老苏按照参考文档，采用了占位符的方式</li>
+<li>最近在学习多阶段构建方式，正好拿这个项目实践一下</li>
+</ul>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:<span class="number">16.5</span> as build-deps</span><br><span class="line"><span class="keyword">MAINTAINER</span> laosu&lt;wbsu2003@gmail.com&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># environment</span></span><br><span class="line"><span class="keyword">ENV</span> VUE_APP_NETEASE_API_URL netease_vanau</span><br><span class="line"><span class="keyword">ENV</span> VUE_APP_ELECTRON_API_URL netease_vaeau</span><br><span class="line"><span class="keyword">ENV</span> VUE_APP_ELECTRON_API_URL_DEV netease_vaeaud</span><br><span class="line"><span class="keyword">ENV</span> VUE_APP_LASTFM_API_KEY netease_valak</span><br><span class="line"><span class="keyword">ENV</span> VUE_APP_LASTFM_API_SHARED_SECRET netease_valass</span><br><span class="line"><span class="keyword">ENV</span> DEV_SERVER_PORT netease_dsp</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /app</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> package.json yarn.lock ./</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> yarn</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> . ./</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> yarn build</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> nginx:<span class="number">1.12</span>-alpine</span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> --from=build-deps /app/dist /usr/share/nginx/html</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> --from=build-deps /app/replace_api_url.sh /  </span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">&quot;sh&quot;</span>, <span class="string">&quot;replace_api_url.sh&quot;</span>]</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+
+<p><code>replace_api_url.sh</code> 用于替换 <code>ENV</code> 设置的占位符</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env sh</span><br><span class="line"></span><br><span class="line">find <span class="string">&#x27;/usr/share/nginx/html&#x27;</span> -name <span class="string">&#x27;*.js&#x27;</span> -exec sed -i -e <span class="string">&#x27;s,netease_vanau,&#x27;</span><span class="string">&quot;$VUE_APP_NETEASE_API_URL&quot;</span><span class="string">&#x27;,g&#x27;</span> &#123;&#125; \;</span><br><span class="line"></span><br><span class="line">find <span class="string">&#x27;/usr/share/nginx/html&#x27;</span> -name <span class="string">&#x27;*.js&#x27;</span> -exec sed -i -e <span class="string">&#x27;s,netease_vaeau,&#x27;</span><span class="string">&quot;$VUE_APP_ELECTRON_API_URL&quot;</span><span class="string">&#x27;,g&#x27;</span> &#123;&#125; \;</span><br><span class="line"></span><br><span class="line">find <span class="string">&#x27;/usr/share/nginx/html&#x27;</span> -name <span class="string">&#x27;*.js&#x27;</span> -exec sed -i -e <span class="string">&#x27;s,netease_vaeaud,&#x27;</span><span class="string">&quot;$VUE_APP_ELECTRON_API_URL_DEV&quot;</span><span class="string">&#x27;,g&#x27;</span> &#123;&#125; \;</span><br><span class="line"></span><br><span class="line">find <span class="string">&#x27;/usr/share/nginx/html&#x27;</span> -name <span class="string">&#x27;*.js&#x27;</span> -exec sed -i -e <span class="string">&#x27;s,netease_valak,&#x27;</span><span class="string">&quot;$VUE_APP_LASTFM_API_KEY&quot;</span><span class="string">&#x27;,g&#x27;</span> &#123;&#125; \;</span><br><span class="line"></span><br><span class="line">find <span class="string">&#x27;/usr/share/nginx/html&#x27;</span> -name <span class="string">&#x27;*.js&#x27;</span> -exec sed -i -e <span class="string">&#x27;s,netease_valass,&#x27;</span><span class="string">&quot;$VUE_APP_LASTFM_API_SHARED_SECRET&quot;</span><span class="string">&#x27;,g&#x27;</span> &#123;&#125; \;</span><br><span class="line"></span><br><span class="line">find <span class="string">&#x27;/usr/share/nginx/html&#x27;</span> -name <span class="string">&#x27;*.js&#x27;</span> -exec sed -i -e <span class="string">&#x27;s,netease_dsp,&#x27;</span><span class="string">&quot;$DEV_SERVER_PORT&quot;</span><span class="string">&#x27;,g&#x27;</span> &#123;&#125; \;</span><br><span class="line"></span><br><span class="line">nginx -g <span class="string">&quot;daemon off;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>构建镜像和容器运行的基本命令如下👇</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载代码,当前对应的是 0.4.1</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/qier222/YesPlayMusic.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者镜像站点</span></span><br><span class="line">git <span class="built_in">clone</span> https://hub.fastgit.org/qier222/YesPlayMusic.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入目录</span></span><br><span class="line"><span class="built_in">cd</span> YesPlayMusic</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将 Dockerfile 和 replace_api_url.sh 放进代码目录中</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建镜像</span></span><br><span class="line">docker build -t wbsu2003/yesplaymusic:v1 .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成容器</span></span><br><span class="line">docker run -d \</span><br><span class="line">--name=yesplaymusic \</span><br><span class="line">-p 3310:80 \</span><br><span class="line">-e VUE_APP_NETEASE_API_URL=http://192.168.0.114:3000 \ <span class="comment"># 网易云 API 地址</span></span><br><span class="line">wbsu2003/yesplaymusic:v1</span><br><span class="line"></span><br><span class="line"><span class="comment"># --------调试-------------</span></span><br><span class="line"><span class="comment"># 将生成的静态文件拷贝到容器外</span></span><br><span class="line">docker cp yesplaymusic:/usr/share/nginx/html/. ./dist</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将生成的静态文件拷贝到容器内</span></span><br><span class="line">docker cp /dist/. yesplaymusic:/usr/share/nginx/html</span><br><span class="line"><span class="comment"># ------------------------</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>在群晖上以 Docker 方式安装。播放器依赖于 <code>网易云音乐 Node.js API service</code>， 所以要先部署 <code>API</code></p>
+<h2 id="网易云音乐-API"><a href="#网易云音乐-API" class="headerlink" title="网易云音乐 API"></a>网易云音乐 API</h2><p>在注册表中搜索 <code>binaryify</code> ，选择第一个 <code>binaryify/netease_cloud_music_api</code>，双击直接下载。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110100007405.png"></p>
+<h3 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h3><p>端口不冲突就行</p>
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>3300</code></td>
+<td align="center"><code>3000</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110100012925.png"></p>
+<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><p>在浏览器中输入 <code>http://群晖IP:3300</code> 就能看到主界面，看到界面表示服务已经运行成功了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110100013252.png"></p>
+<h2 id="网易云音乐播放器"><a href="#网易云音乐播放器" class="headerlink" title="网易云音乐播放器"></a>网易云音乐播放器</h2><p>注册表中搜索 <code>wbsu2003</code> ，找到 <code>wbsu2003/yesplaymusic</code>，版本选 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110101744458.png"></p>
+<h3 id="端口-1"><a href="#端口-1" class="headerlink" title="端口"></a>端口</h3><p>端口不冲突就行</p>
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>3310</code></td>
+<td align="center"><code>80</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110101750027.png"></p>
+<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><table>
+<thead>
+<tr>
+<th align="center">可变</th>
+<th align="center">值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>VUE_APP_NETEASE_API_URL</code></td>
+<td align="center">网易云 <code>API</code> 地址</td>
+</tr>
+<tr>
+<td align="center"><code>VUE_APP_LASTFM_API_KEY</code></td>
+<td align="center"><code>Last.fm</code> 获取的 <code>API Key</code></td>
+</tr>
+<tr>
+<td align="center"><code>VUE_APP_LASTFM_API_SHARED_SECRET</code></td>
+<td align="center"><code>Last.fm</code> 获取的 <code>Shared Secret</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<ul>
+<li>如果你还没有 <code>Last.fm</code> 账号，可以去 <span class="exturl" data-url="aHR0cHM6Ly93d3cubGFzdC5mbS9hcGkvYWNjb3VudC9jcmVhdGU=">https://www.last.fm/api/account/create<i class="fa fa-external-link-alt"></i></span> 创建一个 <code>API</code> 帐户。</li>
+</ul>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110101806493.png"></p>
+<p>目前情况下只设置 <code>VUE_APP_NETEASE_API_URL</code> 即可</p>
+<blockquote>
+<ul>
+<li><code>VUE_APP_NETEASE_API_URL</code> 是必须要的，后两项为可选项，不填也不影响使用，而且老苏也没设置成功，<code>Issues</code> 中也有人提，<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3FpZXIyMjIvWWVzUGxheU11c2ljL2lzc3Vlcy83MTI=">https://github.com/qier222/YesPlayMusic/issues/712<i class="fa fa-external-link-alt"></i></span>，但没看到解决办法。</li>
+</ul>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110151235865.png"></p>
+<h3 id="运行-1"><a href="#运行-1" class="headerlink" title="运行"></a>运行</h3><p>在浏览器中输入 <code>http://群晖IP:3310</code> 就能看到主界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110101809314.png"></p>
+<p>切到 <code>发现</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110101822624.png"></p>
+<p><code>音乐库</code> 需要登录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110101922766.png"></p>
+<p>登录成功后就能看到你的音乐库了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110101924364.png"></p>
+<p>直接点图片就可以开始播放音乐了，更多的功能等大家慢慢研究和挖掘。</p>
+<h1 id="移动端"><a href="#移动端" class="headerlink" title="移动端"></a>移动端</h1><p>应该主要是针对桌面的，所以没有为移动端优化</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110102026892.jpg"></p>
+<p>缩放后使用没问题，就是字体太小</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110102027255.jpg"></p>
+<p>所以在移动端使用的话，老苏建议还是用官方的客户端吧</p>
+<h1 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h1><ol>
+<li>不能修改环境变量</li>
+</ol>
+<p><code>YesPlayMusic</code> 镜像采用了占位符方式编译，只有第一次容器创建的时候会发生变量替换，所以如果你中途修改了环境变量，比如先用了内网地址，之后又想用域名，只能删除了重建，暂时没有想到好的办法，也许把前一次的环境变量作为变量再替换一次？容老苏再想想</p>
+<ol start="2">
+<li>前面的部署方式只适合局域网</li>
+</ol>
+<p>如果想要在公网运行，这种方式还不行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110112156796.png"></p>
+<p>老苏先将 <code>网易云 API</code> 反代到了 <code>https://api.laosu.ml</code>，然后将 <code>YesPlayMusic</code> 反代到了 <code>https://mplayer.laosu.ml</code></p>
+<p>然后就遇到了这样的问题👇</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mixed Content: The page at &#39;&lt;URL&gt;&#39; was loaded over HTTPS, but requested an insecure XMLHttpRequest endpoint &#39;&lt;URL&gt;&#39;. This request has been blocked; the content must be served over HTTPS.</span><br></pre></td></tr></table></figure>
+
+<p>更具体一点👇就是在代码运行过程中，<code>https://api.laosu.ml</code> 会被解析到局域网地址 <code>http://192.168.0.197:3300</code>，导致了 <code>https</code> 协议和 <code>http</code> 协议混用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content: The page at &#39;https:&#x2F;&#x2F;mplayer.laosu.ml&#x2F;&#39; was loaded over HTTPS, but requested an insecure XMLHttpRequest endpoint &#39;http:&#x2F;&#x2F;192.168.0.197:3300&#x2F;personal_fm?timestamp&#x3D;1633960861058&amp;cookie&#x3D;MUSIC_U%3Dnull%3B&amp;realIP&#x3D;211.161.244.70&#39;. This request has been blocked; the content must be served over HTTPS.</span><br></pre></td></tr></table></figure>
+
+<p>群晖的反代不支持直接将 <code>网易云 API</code> 反代成 <code>https://mplayer.laosu.ml/api</code> ，折腾了一下群晖的 <code>nginx</code> 设置文件，但是没搞定</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110121115973.png"></p>
+<p>老苏现在在公网使用的办法是：</p>
+<ol>
+<li>将 <code>网易云 API</code> 反代到了 <code>https://api.laosu.ml</code></li>
+<li>公网直接用 <code>tailscale</code> 的 <code>IP</code> 访问 <code>YesPlayMusic</code>，相当于还是局域网访问，规避了可能造成的问题</li>
+<li>局域网还可以继续使用 <code>http://192.168.0.197:3310</code> 访问 <code>YesPlayMusic</code></li>
+</ol>
+<blockquote>
+<p>如果你还没用过 <code>tailscale</code> 可以去看看： 『 <a href="https://laosu.ml/2020/11/04/%E5%A4%96%E7%BD%91%E8%AE%BF%E9%97%AE%E7%BE%A4%E6%99%96%E7%9A%84%E6%96%B0%E6%96%B9%E6%A1%88Tailscale/">外网访问群晖的新方案Tailscale</a> 』</p>
+</blockquote>
+<p>遗留问题老苏会继续研究，争取下一版能解决，不说了，老苏去听歌🎧了，周末愉快~</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110131434828.png"></p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>qier222/YesPlayMusic: 高颜值的第三方网易云播放器，支持 Windows / macOS / Linux<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3FpZXIyMjIvWWVzUGxheU11c2lj">https://github.com/qier222/YesPlayMusic<i class="fa fa-external-link-alt"></i></span></p>
+<p>Binaryify/NeteaseCloudMusicApi: 网易云音乐 Node.js API service<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0JpbmFyeWlmeS9OZXRlYXNlQ2xvdWRNdXNpY0FwaQ==">https://github.com/Binaryify/NeteaseCloudMusicApi<i class="fa fa-external-link-alt"></i></span></p>
+<p>网易云音乐 NodeJS 版 API<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9iaW5hcnlpZnkuZ2l0aHViLmlvL05ldGVhc2VDbG91ZE11c2ljQXBpLyMvP2lkPSVlNSVhZSU4OSVlOCVhMyU4NQ==">https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=%e5%ae%89%e8%a3%85<i class="fa fa-external-link-alt"></i></span></p>
+<p>前端如何调用后端接口_前后端分离，如何在前端项目中动态插入后端API基地址？…_weixin_39876282的博客-CSDN博客<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTg3NjI4Mi9hcnRpY2xlL2RldGFpbHMvMTExMjg5MTYz">https://blog.csdn.net/weixin_39876282/article/details/111289163<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer"><div class="post-widgets">
+      <div id="needsharebutton-postbottom">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    </div><div>
+    
+        <br>
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------扫一扫，关注本站的微信公众号-------------</div>
+        <br>
+        <img src="/uploads/wechat-qcode.jpg">
+        <br>
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+<!--2021.08.13新增广告单元-->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2307783158392222"
+      crossorigin="anonymous"></script>
+    <ins class="adsbygoogle"
+      style="display:block; text-align:center;"
+      data-ad-layout="in-article"
+      data-ad-format="fluid"
+      data-ad-client="ca-pub-2307783158392222"
+      data-ad-slot="3142196442"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+  
+          <div class="reward-container">
+  <div>万水千山总是情，打赏一下行不行？</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/uploads/wechatpay.jpg" alt="杨浦老苏 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/uploads/alipay.jpg" alt="杨浦老苏 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>杨浦老苏
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://laosu.ml/2021/10/15/%E9%AB%98%E9%A2%9C%E5%80%BC%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BD%91%E6%98%93%E4%BA%91%E6%92%AD%E6%94%BE%E5%99%A8YesPlayMusic/" title="高颜值的第三方网易云播放器YesPlayMusic">https://laosu.ml/2021/10/15/高颜值的第三方网易云播放器YesPlayMusic/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/uploads/wechat-qcode_430.jpg">
+          <span class="icon">
+            <i class="fab fa-weixin"></i>
+          </span>
+
+          <span class="label">微信</span>
+        </a>
+      </div>
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/atom.xml">
+          <span class="icon">
+            <i class="fa fa-rss"></i>
+          </span>
+
+          <span class="label">RSS</span>
+        </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%BE%A4%E6%99%96/" rel="tag"><i class="fa fa-tag"></i> 群晖</a>
+              <a href="/tags/docker/" rel="tag"><i class="fa fa-tag"></i> docker</a>
+              <a href="/tags/%E9%9F%B3%E4%B9%90/" rel="tag"><i class="fa fa-tag"></i> 音乐</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/13/%E4%BD%93%E9%AA%8C%E9%87%8D%E6%9E%84%E7%89%88%E7%9A%84%E5%8F%AF%E9%81%93%E4%BA%91Kodbox/" rel="prev" title="体验重构版的可道云Kodbox">
+                  <i class="fa fa-chevron-left"></i> 体验重构版的可道云Kodbox
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨浦老苏</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">394k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:58</span>
+  </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  </div><!--2020.05.03新增flagconuter计数-->
+<div>
+  <a target="_blank" rel="noopener" href="https://info.flagcounter.com/BEXu"><img src="https://s11.flagcounter.com/count2/BEXu/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0"></a>
+</div>
+
+<br>
+
+<!--2021.02.22新增网站运行时间-->
+<div>
+  <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+  <script>
+      var now = new Date();
+      function createtime() {
+          var grt= new Date("04/28/2020 00:00:00");
+          now.setTime(now.getTime()+250);
+          days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+          hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+          if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+          mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+          seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+          snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+          document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+          document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+      }
+  setInterval("createtime()",250);
+  </script>
+</div>
+
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://0x404.ml","placeholder":"有什么想法和需求，可以留个言","avatar":"monsterid","meta":["nick","mail","link"],"pageSize":10,"visitor":true,"comment_count":true,"requiredFields":[],"path":"/2021/10/15/%E9%AB%98%E9%A2%9C%E5%80%BC%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BD%91%E6%98%93%E4%BA%91%E6%92%AD%E6%94%BE%E5%99%A8YesPlayMusic/","requiredMeta":["nick","mail"],"emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili"],"libUrl":"https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js","dark":"auto","el":"#waline-comments"}</script>
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() => 
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => {
+    new Waline(CONFIG.waline);
+  });
+});
+</script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.js"></script>
+  <script>
+      pbOptions = {};
+        pbOptions.iconStyle = "box";
+        pbOptions.boxForm = "horizontal";
+        pbOptions.position = "bottomCenter";
+        pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+  </script>
+</body>
+</html>
