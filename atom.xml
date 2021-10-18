@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-10-15T04:59:28.408Z</updated>
+  <updated>2021-10-18T10:54:26.339Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>开源即时通讯平台Tinode</title>
+    <link href="https://laosu.ml/2021/10/18/%E5%BC%80%E6%BA%90%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF%E5%B9%B3%E5%8F%B0Tinode/"/>
+    <id>https://laosu.ml/2021/10/18/%E5%BC%80%E6%BA%90%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF%E5%B9%B3%E5%8F%B0Tinode/</id>
+    <published>2021-10-18T11:00:00.000Z</published>
+    <updated>2021-10-18T10:54:26.339Z</updated>
+    
+    
+    <summary type="html">Tinode 是一个免费、无限制且灵活的开源消息传递平台，以移动端为主。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="IM" scheme="https://laosu.ml/tags/IM/"/>
+    
+    <category term="即时通讯" scheme="https://laosu.ml/tags/%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF/"/>
+    
+  </entry>
   
   <entry>
     <title>高颜值的第三方网易云播放器YesPlayMusic</title>
@@ -464,27 +489,6 @@
     <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
     
     <category term="网页监控" scheme="https://laosu.ml/tags/%E7%BD%91%E9%A1%B5%E7%9B%91%E6%8E%A7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>用来打发时间的EUserv</title>
-    <link href="https://laosu.ml/2021/08/31/%E7%94%A8%E6%9D%A5%E6%89%93%E5%8F%91%E6%97%B6%E9%97%B4%E7%9A%84EUserv/"/>
-    <id>https://laosu.ml/2021/08/31/%E7%94%A8%E6%9D%A5%E6%89%93%E5%8F%91%E6%97%B6%E9%97%B4%E7%9A%84EUserv/</id>
-    <published>2021-08-31T11:00:00.000Z</published>
-    <updated>2021-09-01T10:49:16.945Z</updated>
-    
-    
-    <summary type="html">EUserv 是只有 IPv6 地址的免费 VPS 。</summary>
-    
-    
-    
-    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-    <category term="vps" scheme="https://laosu.ml/tags/vps/"/>
-    
-    <category term="EUserv" scheme="https://laosu.ml/tags/EUserv/"/>
     
   </entry>
   
