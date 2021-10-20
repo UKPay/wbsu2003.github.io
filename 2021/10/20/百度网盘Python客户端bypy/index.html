@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/latte_social_su_32px.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/latte_social_su_16px.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="NBzRmGkIEf2N-KtEpgbtZyLYN1upTKpKC-lGzMsR9Q0">
+  <meta name="msvalidate.01" content="57B6B7FD8CF2E061F464E9FF87D7EEF4">
+  <meta name="baidu-site-verification" content="code-CJomTbekyI">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"laosu.ml","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"changyan","storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="bypy 是一个百度网盘的 Python 客户端，可以通过命令行来使用百度云盘。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="百度网盘Python客户端bypy">
+<meta property="og:url" content="https://laosu.ml/2021/10/20/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98Python%E5%AE%A2%E6%88%B7%E7%AB%AFbypy/index.html">
+<meta property="og:site_name" content="老苏的blog">
+<meta property="og:description" content="bypy 是一个百度网盘的 Python 客户端，可以通过命令行来使用百度云盘。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241734382.png">
+<meta property="article:published_time" content="2021-10-20T11:00:00.000Z">
+<meta property="article:modified_time" content="2021-10-20T11:02:34.538Z">
+<meta property="article:author" content="杨浦老苏">
+<meta property="article:tag" content="群晖">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="网盘">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241734382.png">
+
+
+<link rel="canonical" href="https://laosu.ml/2021/10/20/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98Python%E5%AE%A2%E6%88%B7%E7%AB%AFbypy/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://laosu.ml/2021/10/20/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98Python%E5%AE%A2%E6%88%B7%E7%AB%AFbypy/","path":"2021/10/20/百度网盘Python客户端bypy/","title":"百度网盘Python客户端bypy"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>百度网盘Python客户端bypy | 老苏的blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-165372529-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-165372529-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?0d167cc966795fca90236e7478677373"></script>
+
+
+<link rel="dns-prefetch" href="https://0x404.ml"><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.css"><style>
+#needsharebutton-postbottom {
+  cursor: pointer;
+  height: 26px;
+  margin-top: 10px;
+  position: relative;
+}
+#needsharebutton-postbottom .btn {
+  border: 1px solid $btn-default-border-color;
+  border-radius: 3px;
+  display: initial;
+  padding: 1px 4px;
+}
+</style><script data-ad-client="ca-pub-2307783158392222" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="老苏的blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">老苏的blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">聚沙成塔，集腋成裘</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-top"><a href="/top/" rel="section"><i class="fa fa-signal fa-fw"></i>阅读排行</a></li>
+        <li class="menu-item menu-item-waline"><span class="exturl" data-url="aHR0cHM6Ly8weDQwNC5tbC91aQ=="><i class="fa fa-comment fa-fw"></i>评论管理</span></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F"><span class="nav-number">1.</span> <span class="nav-text">构建镜像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%B7"><span class="nav-number">2.1.</span> <span class="nav-text">卷</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C"><span class="nav-number">3.</span> <span class="nav-text">运行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">4.</span> <span class="nav-text">常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%AE%E5%8A%A9"><span class="nav-number">4.1.</span> <span class="nav-text">帮助</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%88%97%E8%A1%A8"><span class="nav-number">4.2.</span> <span class="nav-text">文件列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD"><span class="nav-number">4.3.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0"><span class="nav-number">4.4.</span> <span class="nav-text">上传</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%94%E8%BE%83"><span class="nav-number">4.5.</span> <span class="nav-text">比较</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">5.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="杨浦老苏"
+      src="/images/laosu_wx.jpg">
+  <p class="site-author-name" itemprop="name">杨浦老苏</p>
+  <div class="site-description" itemprop="description">折腾各种好玩的东西</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">253</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3dic3UyMDAz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wbsu2003"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOndic3UyMDAzQGdtYWlsLmNvbQ==" title="E-Mail → mailto:wbsu2003@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vMjg4NTI2NjU1NA==" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;2885266554"><i class="fab fa-weibo fa-fw"></i>Weibo</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dic3UyMDA0" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;wbsu2004"><i class="fab fa-cuttlefish fa-fw"></i>CSDN</span>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      本站其他站点
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://laosu.ml/" title="https:&#x2F;&#x2F;laosu.ml">主站（Vercel）</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93YnN1MjAwMy5naXRlZS5pbw==" title="https:&#x2F;&#x2F;wbsu2003.gitee.io">国内推荐（Gitee）</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9sYW9zdS5nYQ==" title="https:&#x2F;&#x2F;laosu.ga">备站（Github）</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9sYW9zdS50aw==" title="https:&#x2F;&#x2F;laosu.tk">备站（Netlify）</span>
+        </li>
+    </ul>
+  </div>
+<!--2021.10.13新增访客地图-->
+<br>
+<script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=EWTGbXHZX6xu3OvoHmCNfu1XyUopVnfkgF-99dlb9SE"></script>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+    
+    <div class="post-gallery-image">
+      <img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241734382.png" itemprop="contentUrl">
+    </div>
+    </div>
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laosu.ml/2021/10/20/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98Python%E5%AE%A2%E6%88%B7%E7%AB%AFbypy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/laosu_wx.jpg">
+      <meta itemprop="name" content="杨浦老苏">
+      <meta itemprop="description" content="折腾各种好玩的东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="老苏的blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          百度网盘Python客户端bypy
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-10-20 19:00:00 / 修改时间：19:02:34" itemprop="dateCreated datePublished" datetime="2021-10-20T19:00:00+08:00">2021-10-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/" itemprop="url" rel="index"><span itemprop="name">各种折腾</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2021/10/20/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98Python%E5%AE%A2%E6%88%B7%E7%AB%AFbypy/#waline-comments" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" id="/2021/10/20/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98Python%E5%AE%A2%E6%88%B7%E7%AB%AFbypy/" data-xid="/2021/10/20/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98Python%E5%AE%A2%E6%88%B7%E7%AB%AFbypy/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span id="/2021/10/20/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98Python%E5%AE%A2%E6%88%B7%E7%AB%AFbypy/" class="post-meta-item leancloud_visitors" data-flag-title="百度网盘Python客户端bypy" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+<!--2021.08.21新增置顶标志-->
+<!--来自：https://www.itfanr.cc/2019/09/05/hexo-top-optimize/ -->
+
+ 
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">bypy 是一个百度网盘的 Python 客户端，可以通过命令行来使用百度云盘。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>简单说明：</p>
+<ol>
+<li>由于百度 <code>PCS API</code> 权限限制，<code>bypy</code> 只能存取百度云端<code>/apps/bypy</code>目录下面的文件和目录</li>
+<li><code>bypy</code> 没有提速效果，想要下载不限速，需要自行购买 <code>SVIP</code></li>
+</ol>
+<blockquote>
+<p>之前老苏写过 『 <a href="https://laosu.ml/2020/12/31/Docker%E4%B8%AD%E8%BF%90%E8%A1%8C%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98%E5%AE%A2%E6%88%B7%E7%AB%AF/">Docker中运行百度网盘客户端</a> 』，那是带图形界面的官方客户端，而 <code>bypy</code> 则是第三方的命令行工具</p>
+</blockquote>
+<h1 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h1><blockquote>
+<p>如果你不想自己构建，可以跳过，直接阅读下一章节</p>
+</blockquote>
+<p><code>bypy</code> 官方没有提供  <code>Dockerfile</code> 或者镜像，但第三方的还是很多的，只是都有些年代久远，所以老苏还是准备自己构建</p>
+<ul>
+<li><code>v1</code> 版 <code>Dockerfile</code></li>
+</ul>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> python:<span class="number">3.6</span>-slim</span><br><span class="line"><span class="keyword">MAINTAINER</span> laosu&lt;wbsu2003@gmail.com&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /baidupy</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> . /baidupy/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Environment</span></span><br><span class="line"><span class="keyword">ENV</span> TERM=xterm</span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> pip install bypy </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Application</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></span><br><span class="line"><span class="keyword">ENV</span> NAME Python_client_for_Baidu_Yun</span><br><span class="line"></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> bypy info</span></span><br></pre></td></tr></table></figure>
+
+<p>但是老苏发现 <code>v1</code> 版的容器停止后会无法启动，因为 <code>bypy info</code> 在获取到云盘容量后会退出，导致 <code>exited with code 0</code>，因此老苏引入了 <code>Supervisor</code> 来做进程管理</p>
+<ul>
+<li><code>v2</code> 版 <code>Dockerfile</code></li>
+</ul>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> python:<span class="number">3.6</span>-slim</span><br><span class="line"><span class="keyword">MAINTAINER</span> laosu&lt;wbsu2003@gmail.com&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /baidupy</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Application</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update -y &amp;&amp; \</span></span><br><span class="line"><span class="bash">    apt-get install -y supervisor</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">RUN</span><span class="bash">	pip install bypy</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># supervisord</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> supervisord.conf /etc/supervisord.conf</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Environment</span></span><br><span class="line"><span class="keyword">ENV</span> TERM=xterm</span><br><span class="line"><span class="keyword">ENV</span> NAME=Python_client_for_Baidu_Yun</span><br><span class="line"></span><br><span class="line"><span class="comment">#定义时区参数（非必须）</span></span><br><span class="line"><span class="keyword">ENV</span> TZ=Asia/Shanghai</span><br><span class="line"><span class="comment">#设置时区（非必须）</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> ln -snf /usr/share/zoneinfo/<span class="variable">$TZ</span> /etc/localtime &amp;&amp; <span class="built_in">echo</span> <span class="string">&#x27;$TZ&#x27;</span> &gt; /etc/timezone</span></span><br><span class="line"><span class="comment">#设置编码（非必须）</span></span><br><span class="line"><span class="keyword">ENV</span> LANG C.UTF-<span class="number">8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">&quot;supervisord&quot;</span>,<span class="string">&quot;-c&quot;</span>,<span class="string">&quot;/etc/supervisord.conf&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p><code>v2</code> 版除了 <code>Dockerfile</code>，还需要准备 <code>supervisord.conf</code> 文件</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[include]</span></span><br><span class="line"><span class="attr">files</span> = /etc/supervisor/conf.d/*.conf</span><br><span class="line"></span><br><span class="line"><span class="section">[program:bypy]</span></span><br><span class="line"><span class="attr">command</span>=bypy info</span><br><span class="line"></span><br><span class="line"><span class="comment">#directory will be any folder where you wnat supervisor to cd before executing.</span></span><br><span class="line"><span class="comment">#directory=/project </span></span><br><span class="line"><span class="attr">autostart</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">autorestart</span>=<span class="literal">false</span></span><br><span class="line"><span class="attr">startretries</span>=<span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#user will be anyone you want but make sure that user will have the enough privilage.</span></span><br><span class="line"><span class="attr">user</span>=root</span><br><span class="line"></span><br><span class="line"><span class="section">[supervisord]</span></span><br><span class="line"><span class="attr">nodaemon</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">logfile</span>=/tmp/supervisord.log</span><br><span class="line"><span class="attr">pidfile</span>=/tmp/supervisord.pid</span><br><span class="line"><span class="attr">loglevel</span>=debug</span><br><span class="line"><span class="attr">logfile_maxbytes</span>=<span class="number">10</span>MB</span><br><span class="line"></span><br><span class="line"><span class="section">[supervisorctl]</span></span><br></pre></td></tr></table></figure>
+
+<p>构建镜像和容器运行的基本命令如下👇</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将 Dockerfile 和 supervisord.conf 放在同一个目录</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建镜像</span></span><br><span class="line">docker build -t wbsu2003/bypy:v2 .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成容器</span></span><br><span class="line">docker run -it --name=bypy \</span><br><span class="line">-v /volume2/docker/bypy:/baidupy \</span><br><span class="line">wbsu2003/bypy:v2</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 运行容器</span></span><br><span class="line">docker start bypy</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入容器</span></span><br><span class="line">docker <span class="built_in">exec</span> --user root -it bypy /bin/sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 退出容器</span></span><br><span class="line"><span class="built_in">exit</span> 或者 ctrl+D</span><br></pre></td></tr></table></figure>
+
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>在群晖上以 Docker 方式安装。</p>
+<p>在注册表中搜索 <code>wbsu2003</code> ，找到 <code>wbsu2003/bypy</code>，版本选择 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241502126.png"></p>
+<h2 id="卷"><a href="#卷" class="headerlink" title="卷"></a>卷</h2><p>在 <code>docker</code> 文件夹中，创建一个新文件夹，并将其命名为 <code>bypy</code></p>
+<table>
+<thead>
+<tr>
+<th align="center">文件夹</th>
+<th align="center">装载路径</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>docker/bypy</code></td>
+<td align="center"><code>/baidupy</code></td>
+<td align="center">文件存放目录</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241506742.png"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>和 <code>cloud189-cli</code> 一样，<code>bypy</code> 也是命令行方式的，所以要么在 <code>SSH</code> 客户端上运行，要么进 『终端机』 运行。</p>
+<blockquote>
+<p>老苏建议还是在 <code>SSH</code> 客户端上运行比较方便，关于 <code>cloud189-cli</code> 请看：『<a href="https://laosu.ml/2021/06/25/%E5%9C%A8%E7%BE%A4%E6%99%96%E4%B8%8A%E4%BD%BF%E7%94%A8%E5%A4%A9%E7%BF%BC%E4%BA%91%E7%9B%98">在群晖上使用天翼云盘</a>』</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241531416.png"></p>
+<p><code>终端机</code> –&gt; <code>新增</code> –&gt; <code>通过命令启动</code> –&gt; <code>bash</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241532414.png"></p>
+<p>第一次需要授权，执行 <code>bypy info</code>，然后复制红框部分的内容，在浏览器中打开</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241535277.png"></p>
+<p>复制生成的授权码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241536627.png"></p>
+<p>粘贴到红框位置，然后回车</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241538171.png"></p>
+<p>程序会利用不同的服务器进行认证，认证成功会显示百度网盘的容量，如果一次没成功，可以多试几次。</p>
+<blockquote>
+<p>过程有点长，而且失败的概率还挺高的，要有耐心~~~</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241542207.png"></p>
+<p>有的网站直接报错</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241543838.png"></p>
+<p>有的访问不到</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241545325.gif"></p>
+<p>极端情况下会认证失败，只能重新再来一遍了，因为这个授权码有时间限制</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109252255031.png"></p>
+<p>认证成功后，会显示空间的大小</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241548737.png"></p>
+<p>授权只需一次，一旦成功，以后就不会再出现授权提示</p>
+<blockquote>
+<p> <code>access_token</code> 和 <code>refresh_token</code> 保存在 <code>/~/.bypy/bypy.json</code> 中</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109252300520.png"></p>
+<h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><h2 id="帮助"><a href="#帮助" class="headerlink" title="帮助"></a>帮助</h2><p>执行 <code>bypy</code> 或者 <code>bypy help</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241550449.png"></p>
+<p>更详细的可以运行 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bypy <span class="built_in">help</span> &lt;<span class="built_in">command</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>例如： <code>bypy help list</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241555948.png"></p>
+<h2 id="文件列表"><a href="#文件列表" class="headerlink" title="文件列表"></a>文件列表</h2><p>执行 <code>bypy list</code> 可以列出云盘的文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241556200.png"></p>
+<p>在百度盘中的 <code>/apps/bypy</code>目录中</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241557749.png"></p>
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>也就是将云盘内容同步到本地，可以执行 <code>bypy syncdown</code> 或者 <code>bypy downdir /</code>，不是会员的话，下载速度就比较慢</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241643282.png"></p>
+<p>下载完成后，可以在 <code>File Station</code> 中看到下载的文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241644007.png"></p>
+<h2 id="上传"><a href="#上传" class="headerlink" title="上传"></a>上传</h2><p>也就是将当前目录同步到云盘，可以执行 <code>bypy syncup</code> 或者 <code>bypy upload</code></p>
+<p>先在 <code>File Station</code> 增加一个将近百兆的 <code>exe</code> 文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241649487.png"></p>
+<p>上传速度比下载要快一点</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241652911.png"></p>
+<p>同步完成</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241654480.png"></p>
+<p>刷新网盘</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241655842.png"></p>
+<h2 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h2><p>要比较本地当前目录和云盘（程序的）根目录，可以执行 <code>bypy compare</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202109241659445.png"></p>
+<p>为啥会 <code>Different:2</code> ，老苏也没闹明白，很可能是因为下载中断过的缘故</p>
+<p>更多命令和详细解释请看运行 <code>bypy</code> 的输出，或者阅读官方的文档。</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>houtianze/bypy: Python client for Baidu Yun (Personal Cloud Storage) 百度云/百度网盘Python客户端<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hvdXRpYW56ZS9ieXB5Lw==">https://github.com/houtianze/bypy/<i class="fa fa-external-link-alt"></i></span> </p>
+<p>bypy-百度网盘Python客户端 linux - 简书<br>地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9jOTQ2N2RhZjcwMWYv">https://www.jianshu.com/p/c9467daf701f/<i class="fa fa-external-link-alt"></i></span> </p>
+<p>exited with code 0 docker - Stack Overflow<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvNDQ4ODQ3MTkvZXhpdGVkLXdpdGgtY29kZS0wLWRvY2tlcg==">https://stackoverflow.com/questions/44884719/exited-with-code-0-docker<i class="fa fa-external-link-alt"></i></span></p>
+<p>Understanding Docker Container Exit Codes | by Sandeep Madamanchi | Better Programming<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9iZXR0ZXJwcm9ncmFtbWluZy5wdWIvdW5kZXJzdGFuZGluZy1kb2NrZXItY29udGFpbmVyLWV4aXQtY29kZXMtNWVlNzlhMWQ1OGY2">https://betterprogramming.pub/understanding-docker-container-exit-codes-5ee79a1d58f6<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer"><div class="post-widgets">
+      <div id="needsharebutton-postbottom">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    </div><div>
+    
+        <br>
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------扫一扫，关注本站的微信公众号-------------</div>
+        <br>
+        <img src="/uploads/wechat-qcode.jpg">
+        <br>
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+<!--2021.08.13新增广告单元-->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2307783158392222"
+      crossorigin="anonymous"></script>
+    <ins class="adsbygoogle"
+      style="display:block; text-align:center;"
+      data-ad-layout="in-article"
+      data-ad-format="fluid"
+      data-ad-client="ca-pub-2307783158392222"
+      data-ad-slot="3142196442"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+  
+          <div class="reward-container">
+  <div>万水千山总是情，打赏一下行不行？</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/uploads/wechatpay.jpg" alt="杨浦老苏 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/uploads/alipay.jpg" alt="杨浦老苏 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>杨浦老苏
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://laosu.ml/2021/10/20/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98Python%E5%AE%A2%E6%88%B7%E7%AB%AFbypy/" title="百度网盘Python客户端bypy">https://laosu.ml/2021/10/20/百度网盘Python客户端bypy/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/uploads/wechat-qcode_430.jpg">
+          <span class="icon">
+            <i class="fab fa-weixin"></i>
+          </span>
+
+          <span class="label">微信</span>
+        </a>
+      </div>
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/atom.xml">
+          <span class="icon">
+            <i class="fa fa-rss"></i>
+          </span>
+
+          <span class="label">RSS</span>
+        </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%BE%A4%E6%99%96/" rel="tag"><i class="fa fa-tag"></i> 群晖</a>
+              <a href="/tags/docker/" rel="tag"><i class="fa fa-tag"></i> docker</a>
+              <a href="/tags/%E7%BD%91%E7%9B%98/" rel="tag"><i class="fa fa-tag"></i> 网盘</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/18/%E5%BC%80%E6%BA%90%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF%E5%B9%B3%E5%8F%B0Tinode/" rel="prev" title="开源即时通讯平台Tinode">
+                  <i class="fa fa-chevron-left"></i> 开源即时通讯平台Tinode
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨浦老苏</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">400k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">6:04</span>
+  </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  </div><!--2020.05.03新增flagconuter计数-->
+<div>
+  <a target="_blank" rel="noopener" href="https://info.flagcounter.com/BEXu"><img src="https://s11.flagcounter.com/count2/BEXu/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0"></a>
+</div>
+
+<br>
+
+<!--2021.02.22新增网站运行时间-->
+<div>
+  <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+  <script>
+      var now = new Date();
+      function createtime() {
+          var grt= new Date("04/28/2020 00:00:00");
+          now.setTime(now.getTime()+250);
+          days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+          hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+          if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+          mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+          seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+          snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+          document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+          document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+      }
+  setInterval("createtime()",250);
+  </script>
+</div>
+
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://0x404.ml","placeholder":"有什么想法和需求，可以留个言","avatar":"monsterid","meta":["nick","mail","link"],"pageSize":10,"visitor":true,"comment_count":true,"requiredFields":[],"path":"/2021/10/20/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98Python%E5%AE%A2%E6%88%B7%E7%AB%AFbypy/","requiredMeta":["nick","mail"],"emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili"],"libUrl":"https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js","dark":"auto","el":"#waline-comments"}</script>
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() => 
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => {
+    new Waline(CONFIG.waline);
+  });
+});
+</script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.js"></script>
+  <script>
+      pbOptions = {};
+        pbOptions.iconStyle = "box";
+        pbOptions.boxForm = "horizontal";
+        pbOptions.position = "bottomCenter";
+        pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+  </script>
+</body>
+</html>
