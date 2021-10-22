@@ -1,6 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>高颜值的第三方网易云播放器YesPlayMusic（续）</title>
+    <url>/2021/10/22/%E9%AB%98%E9%A2%9C%E5%80%BC%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BD%91%E6%98%93%E4%BA%91%E6%92%AD%E6%94%BE%E5%99%A8YesPlayMusic%EF%BC%88%E7%BB%AD%EF%BC%89/</url>
+    <content><![CDATA[<p><code>“把麻烦留给自己，把方便留给别人”</code>，这才是我们折腾的终极目标。在上一篇中 <code>YesPlayMusic</code> 虽然能用，但是需要安装两个镜像，总归还是不算方便，更何况还有不完美的公网访问。经过老苏的不懈努力，<code>v2</code> 版实现了将播放器和 <code>API</code> 集成在一个镜像中，成功解决了：</p>
+<ul>
+<li><code>v1</code> 版不能刷新页面的问题</li>
+<li>公网反代的问题</li>
+<li>可以连接到 <code>Last.me</code></li>
+<li>支持上传云盘</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110211733768.png"></p>
+<h1 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h1><blockquote>
+<p>如果你不想自己构建，可以跳过，直接阅读下一章节</p>
+</blockquote>
+<p>折腾 <code>bypy</code> 时学习的 <code>supervisor</code> 让老苏有了新的想法，那就是把前端播放器、后端 <code>API</code> 、<code>nginx</code> 整到一个容器中，把群晖上没完成的事情尝试在容器中搞定，所以就有了本文</p>
+<ul>
+<li>前端继续还是采用占位符的方式，老苏还是保留了变量，原本是可以将 <code>VUE_APP_NETEASE_API_URL</code> 写死为 <code>/api</code> 的</li>
+<li>参考了 <code>网易 API</code> 官方的 <code>Dockerfile</code> ，所以没有像第一版使用 <code>nginx:1.12-alpine</code> 做基础镜像，而是用了 <code>node:lts-alpine</code>，并在其中安装了一个 <code>nginx</code></li>
+</ul>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:<span class="number">16.5</span> as build-deps</span><br><span class="line"><span class="keyword">LABEL</span><span class="bash"> maintainer=laosu&lt;wbsu2003@gmail.com&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># environment</span></span><br><span class="line"><span class="keyword">ENV</span> VUE_APP_NETEASE_API_URL netease_vanau</span><br><span class="line"><span class="keyword">ENV</span> VUE_APP_ELECTRON_API_URL netease_vaeaux</span><br><span class="line"><span class="keyword">ENV</span> VUE_APP_ELECTRON_API_URL_DEV netease_vaeaud</span><br><span class="line"><span class="keyword">ENV</span> VUE_APP_LASTFM_API_KEY netease_valak</span><br><span class="line"><span class="keyword">ENV</span> VUE_APP_LASTFM_API_SHARED_SECRET netease_valass</span><br><span class="line"><span class="keyword">ENV</span> DEV_SERVER_PORT netease_dsp</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /app</span></span><br><span class="line"><span class="comment">#COPY package.json yarn.lock ./</span></span><br><span class="line"><span class="comment">#RUN yarn</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> TMPDIR=/tmp yarn install</span></span><br><span class="line"><span class="comment">#RUN yarn config set registry &quot;https://registry.npm.taobao.org/&quot; \</span></span><br><span class="line"><span class="comment">#    &amp;&amp; TMPDIR=/tmp yarn install</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> . ./</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> yarn build</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> node:lts-alpine</span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apk update \</span></span><br><span class="line"><span class="bash">    &amp;&amp; apk add --no-cache supervisor openssh nginx</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> --from=build-deps /app/dist /usr/share/nginx/html</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> --from=build-deps /app/supervisord.conf /etc/supervisord.conf</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># nginx</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> --from=build-deps /app/default.conf /etc/nginx/conf.d/default.conf</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> --from=build-deps /app/nginx.conf /etc/nginx/nginx.conf</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> mkdir -p /usr/<span class="built_in">local</span>/nginx/logs</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># api server</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /api</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> --from=build-deps /app/netease_api/. /api</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> --from=build-deps /app/replace_api_url.sh /api</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> chmod +x replace_api_url.sh</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> npm config <span class="built_in">set</span> registry <span class="string">&quot;https://registry.npm.taobao.org/&quot;</span> \</span></span><br><span class="line"><span class="bash">    &amp;&amp; npm install --production</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># CMD [&quot;sh&quot;, &quot;replace_api_url.sh&quot;]</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">&quot;supervisord&quot;</span>,<span class="string">&quot;-c&quot;</span>,<span class="string">&quot;/etc/supervisord.conf&quot;</span>]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+
+<p><code>replace_api_url.sh</code> 用于替换 <code>ENV</code> 设置的占位符</p>
+<blockquote>
+<p>这个和第一版是一样的</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">#!/usr/bin/env sh</span><br><span class="line"></span><br><span class="line">find <span class="string">&#x27;/usr/share/nginx/html&#x27;</span> -name <span class="string">&#x27;*.js&#x27;</span> -exec sed -i -e <span class="string">&#x27;s,netease_vanau,&#x27;</span><span class="string">&quot;$VUE_APP_NETEASE_API_URL&quot;</span><span class="string">&#x27;,g&#x27;</span> &#123;&#125; \;</span><br><span class="line"></span><br><span class="line">find <span class="string">&#x27;/usr/share/nginx/html&#x27;</span> -name <span class="string">&#x27;*.js&#x27;</span> -exec sed -i -e <span class="string">&#x27;s,netease_vaeaux,&#x27;</span><span class="string">&quot;$VUE_APP_ELECTRON_API_URL&quot;</span><span class="string">&#x27;,g&#x27;</span> &#123;&#125; \;</span><br><span class="line"></span><br><span class="line">find <span class="string">&#x27;/usr/share/nginx/html&#x27;</span> -name <span class="string">&#x27;*.js&#x27;</span> -exec sed -i -e <span class="string">&#x27;s,netease_vaeaud,&#x27;</span><span class="string">&quot;$VUE_APP_ELECTRON_API_URL_DEV&quot;</span><span class="string">&#x27;,g&#x27;</span> &#123;&#125; \;</span><br><span class="line"></span><br><span class="line">find <span class="string">&#x27;/usr/share/nginx/html&#x27;</span> -name <span class="string">&#x27;*.js&#x27;</span> -exec sed -i -e <span class="string">&#x27;s,netease_valak,&#x27;</span><span class="string">&quot;$VUE_APP_LASTFM_API_KEY&quot;</span><span class="string">&#x27;,g&#x27;</span> &#123;&#125; \;</span><br><span class="line"></span><br><span class="line">find <span class="string">&#x27;/usr/share/nginx/html&#x27;</span> -name <span class="string">&#x27;*.js&#x27;</span> -exec sed -i -e <span class="string">&#x27;s,netease_valass,&#x27;</span><span class="string">&quot;$VUE_APP_LASTFM_API_SHARED_SECRET&quot;</span><span class="string">&#x27;,g&#x27;</span> &#123;&#125; \;</span><br><span class="line"></span><br><span class="line">find <span class="string">&#x27;/usr/share/nginx/html&#x27;</span> -name <span class="string">&#x27;*.js&#x27;</span> -exec sed -i -e <span class="string">&#x27;s,netease_dsp,&#x27;</span><span class="string">&quot;$DEV_SERVER_PORT&quot;</span><span class="string">&#x27;,g&#x27;</span> &#123;&#125; \;</span><br><span class="line"></span><br><span class="line">nginx -g <span class="string">&quot;daemon off;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>supervisord.conf</code> 文件是新增用来控制进程的，前端 <code>app</code> 是运行在 <code>nginx</code> 上的静态页面，后端 <code>api</code> 基于 <code>node.js</code>  </p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[include]</span></span><br><span class="line"><span class="attr">files</span> = /etc/supervisor/conf.d/*.conf</span><br><span class="line"></span><br><span class="line"><span class="section">[program:app]</span></span><br><span class="line"><span class="attr">command</span>=./replace_api_url.sh</span><br><span class="line"></span><br><span class="line"><span class="section">[program:api]</span></span><br><span class="line"><span class="attr">command</span>=node app.js</span><br><span class="line"></span><br><span class="line"><span class="comment">#directory will be any folder where you wnat supervisor to cd before executing.</span></span><br><span class="line"><span class="comment">#directory=/project </span></span><br><span class="line"><span class="attr">autostart</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">autorestart</span>=<span class="literal">false</span></span><br><span class="line"><span class="attr">startretries</span>=<span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#user will be anyone you want but make sure that user will have the enough privilage.</span></span><br><span class="line"><span class="attr">user</span>=root</span><br><span class="line"></span><br><span class="line"><span class="section">[supervisord]</span></span><br><span class="line"><span class="attr">nodaemon</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">logfile</span>=/tmp/supervisord.log</span><br><span class="line"><span class="attr">pidfile</span>=/tmp/supervisord.pid</span><br><span class="line"><span class="attr">loglevel</span>=debug</span><br><span class="line"><span class="attr">logfile_maxbytes</span>=<span class="number">10</span>MB</span><br><span class="line"></span><br><span class="line"><span class="section">[supervisorctl]</span></span><br></pre></td></tr></table></figure>
+
+<p><code>nginx</code> 设置文件 <code>nginx.conf</code> </p>
+<blockquote>
+<p>镜像中的位置 <code>/etc/nginx/nginx.conf</code>，比默认的 <code>nginx.conf</code>  文件多一行 <code>pid /usr/local/nginx/logs/nginx.pid;</code>，如果没有会出现错误： <code>nginx: [emerg] open() &quot;/run/nginx/nginx.pid&quot; failed (2: No such file or directory)</code></p>
+</blockquote>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="comment"># /etc/nginx/nginx.conf</span></span><br><span class="line"></span><br><span class="line">user nginx;</span><br><span class="line"></span><br><span class="line">pid /usr/local/nginx/logs/nginx.pid; </span><br><span class="line"></span><br><span class="line"><span class="comment"># Set number of worker processes automatically based on number of CPU cores.</span></span><br><span class="line">worker_processes auto;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Enables the use of JIT for regular expressions to speed-up their processing.</span></span><br><span class="line">pcre_jit on;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Configures default error logger.</span></span><br><span class="line">error_log /var/log/nginx/error.log warn;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Includes files with directives to load dynamic modules.</span></span><br><span class="line">include /etc/nginx/modules/*.conf;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">	<span class="comment"># The maximum number of simultaneous connections that can be opened by</span></span><br><span class="line">	<span class="comment"># a worker process.</span></span><br><span class="line">	worker_connections 1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">	<span class="comment"># Includes mapping of file name extensions to MIME types of responses</span></span><br><span class="line">	<span class="comment"># and defines the default type.</span></span><br><span class="line">	include /etc/nginx/mime.types;</span><br><span class="line">	default_type application/octet-stream;</span><br><span class="line"></span><br><span class="line">	<span class="comment"># Name servers used to resolve names of upstream servers into addresses.</span></span><br><span class="line">	<span class="comment"># It&#x27;s also needed when using tcpsocket and udpsocket in Lua modules.</span></span><br><span class="line">	<span class="comment">#resolver 208.67.222.222 208.67.220.220;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># Don&#x27;t tell nginx version to clients.</span></span><br><span class="line">	server_tokens off;</span><br><span class="line"></span><br><span class="line">	<span class="comment"># Specifies the maximum accepted body size of a client request, as</span></span><br><span class="line">	<span class="comment"># indicated by the request header Content-Length. If the stated content</span></span><br><span class="line">	<span class="comment"># length is greater than this size, then the client receives the HTTP</span></span><br><span class="line">	<span class="comment"># error code 413. Set to 0 to disable.</span></span><br><span class="line">	client_max_body_size 1m;</span><br><span class="line"></span><br><span class="line">	<span class="comment"># Timeout for keep-alive connections. Server will close connections after</span></span><br><span class="line">	<span class="comment"># this time.</span></span><br><span class="line">	keepalive_timeout 65;</span><br><span class="line"></span><br><span class="line">	<span class="comment"># Sendfile copies data between one FD and other from within the kernel,</span></span><br><span class="line">	<span class="comment"># which is more efficient than read() + write().</span></span><br><span class="line">	sendfile on;</span><br><span class="line"></span><br><span class="line">	<span class="comment"># Don&#x27;t buffer data-sends (disable Nagle algorithm).</span></span><br><span class="line">	<span class="comment"># Good for sending frequent small bursts of data in real time.</span></span><br><span class="line">	tcp_nodelay on;</span><br><span class="line"></span><br><span class="line">	<span class="comment"># Causes nginx to attempt to send its HTTP response head in one packet,</span></span><br><span class="line">	<span class="comment"># instead of using partial frames.</span></span><br><span class="line">	<span class="comment">#tcp_nopush on;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment"># Path of the file with Diffie-Hellman parameters for EDH ciphers.</span></span><br><span class="line">	<span class="comment">#ssl_dhparam /etc/ssl/nginx/dh2048.pem;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># Specifies that our cipher suits should be preferred over client ciphers.</span></span><br><span class="line">	ssl_prefer_server_ciphers on;</span><br><span class="line"></span><br><span class="line">	<span class="comment"># Enables a shared SSL cache with size that can hold around 8000 sessions.</span></span><br><span class="line">	ssl_session_cache shared:SSL:2m;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment"># Enable gzipping of responses.</span></span><br><span class="line">	<span class="comment">#gzip on;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># Set the Vary HTTP header as defined in the RFC 2616.</span></span><br><span class="line">	gzip_vary on;</span><br><span class="line"></span><br><span class="line">	<span class="comment"># Enable checking the existence of precompressed files.</span></span><br><span class="line">	<span class="comment">#gzip_static on;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment"># Specifies the main log format.</span></span><br><span class="line">	log_format main &#x27;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#x27;</span><br><span class="line">			&#x27;$status $body_bytes_sent &quot;$http_referer&quot; &#x27;</span><br><span class="line">			&#x27;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#x27;;</span><br><span class="line"></span><br><span class="line">	<span class="comment"># Sets the path, format, and configuration for a buffered log write.</span></span><br><span class="line">	access_log /var/log/nginx/access.log main;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment"># Includes virtual hosts configs.</span></span><br><span class="line">	include /etc/nginx/conf.d/*.conf;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><code>nginx</code> 设置文件 <code>default.conf</code></p>
+<blockquote>
+<p>镜像中的位置<code>/etc/nginx/conf.d/default.conf</code>，将 <code>/api</code> 转发给后端处理 </p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">server</span><br><span class="line">    &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name default_serve; # 配置项目域名</span><br><span class="line">    root /usr/share/nginx/html;</span><br><span class="line">    index index.html index.htm;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 1.转给前端处理</span></span><br><span class="line">    location / &#123;</span><br><span class="line">	    <span class="comment"># 前端打包后的静态目录</span></span><br><span class="line">        alias /usr/share/nginx/html/;</span><br><span class="line">        <span class="comment"># 解决页面刷新404问题</span></span><br><span class="line">        try_files $uri $uri/ /index.html;</span><br><span class="line">		<span class="comment"># 处理上传文件大小</span></span><br><span class="line">		client_max_body_size 1000m;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 2.转给后端处理</span></span><br><span class="line">    location ^~ /api/ &#123;</span><br><span class="line">	    proxy_pass http://127.0.0.1:3000/;</span><br><span class="line">	    <span class="comment"># 处理上传文件大小</span></span><br><span class="line">	    client_max_body_size 1000m;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>构建镜像和容器运行的基本命令如下👇</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 下载代码,当前对应的是 0.4.1</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/qier222/YesPlayMusic.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者镜像站点</span></span><br><span class="line">git <span class="built_in">clone</span> https://hub.fastgit.org/qier222/YesPlayMusic.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入目录</span></span><br><span class="line"><span class="built_in">cd</span> YesPlayMusic</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将 Dockerfile 、 replace_api_url.sh 、supervisord.conf、nginx.conf 、default.conf 五个文件放进代码目录中</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建镜像</span></span><br><span class="line">docker build -t wbsu2003/yesplaymusic:v2 .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成容器</span></span><br><span class="line">docker run -d \</span><br><span class="line">--name=yesplaymusic \</span><br><span class="line">-p 3310:80 \</span><br><span class="line">-e VUE_APP_NETEASE_API_URL=/api \</span><br><span class="line">-e VUE_APP_LASTFM_API_KEY=&lt;your Last.fm API KEY&gt; \</span><br><span class="line">-e VUE_APP_LASTFM_API_SHARED_SECRET=&lt;your Last.fm API SHARED SECRET&gt; \</span><br><span class="line">wbsu2003/yesplaymusic:v2</span><br><span class="line"></span><br><span class="line"><span class="comment"># --------调试-------------</span></span><br><span class="line"><span class="comment"># 进入容器</span></span><br><span class="line">docker <span class="built_in">exec</span> --user root -it yesplaymusic /bin/sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将生成的静态文件拷贝到容器外</span></span><br><span class="line">docker cp yesplaymusic:/usr/share/nginx/html/. ./dist</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将生成的静态文件拷贝到容器内</span></span><br><span class="line">docker cp /dist/. yesplaymusic:/usr/share/nginx/html</span><br><span class="line"><span class="comment"># ------------------------</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>注册表中搜索 <code>wbsu2003</code> ，找到 <code>wbsu2003/yesplaymusic</code>，版本选 <code>latest</code>。</p>
+<blockquote>
+<p>如果你之前已经安装过 <code>YesPlayMusic</code>，建议先删除老版本的容器和镜像再进行安装</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110101744458.png"></p>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>端口不冲突就行</p>
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>3310</code></td>
+<td align="center"><code>80</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110101750027.png"></p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><table>
+<thead>
+<tr>
+<th align="center">可变</th>
+<th align="center">值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>VUE_APP_NETEASE_API_URL</code></td>
+<td align="center">使用 <code>/api</code> 不要修改</td>
+</tr>
+<tr>
+<td align="center"><code>VUE_APP_LASTFM_API_KEY</code></td>
+<td align="center"><code>Last.fm</code> 获取的 <code>API Key</code></td>
+</tr>
+<tr>
+<td align="center"><code>VUE_APP_LASTFM_API_SHARED_SECRET</code></td>
+<td align="center"><code>Last.fm</code> 获取的 <code>Shared Secret</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110142345020.png"></p>
+<blockquote>
+<p> 如果你还没有 <code>Last.fm</code> 账号，可以去 <span class="exturl" data-url="aHR0cHM6Ly93d3cubGFzdC5mbS9hcGkvYWNjb3VudC9jcmVhdGU=">https://www.last.fm/api/account/create<i class="fa fa-external-link-alt"></i></span> 创建一个 <code>API</code> 帐户。</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110150856996.png"></p>
+<p>老苏没有填 <code>Callback URL</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110150857895.png"></p>
+<blockquote>
+<p>如果你已经创建好了，需要查询可以去 <span class="exturl" data-url="aHR0cHM6Ly93d3cubGFzdC5mbS9hcGkvYWNjb3VudHM=">https://www.last.fm/api/accounts<i class="fa fa-external-link-alt"></i></span> 找到你的 <code>API Applications</code></p>
+</blockquote>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>在浏览器中输入 <code>http://群晖IP:3310</code> 就能看到主界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110142354283.png"></p>
+<h2 id="第三方授权"><a href="#第三方授权" class="headerlink" title="第三方授权"></a>第三方授权</h2><p>在 <code>设置</code> –&gt; <code>第三方</code> –&gt; <code>连接 Last.fm</code> –&gt; <code>授权连接</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110150919240.png"></p>
+<p>在跳转页面选择 <code>YES ALLOW ACCESS</code> 进行授权</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110150928043.png"></p>
+<p>授权之后会显示成功</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110182035231.png"></p>
+<p>点 <code>完成</code>，能看到连接的 <code>Last.fm</code> 账号 </p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110190914990.png"></p>
+<h2 id="反代"><a href="#反代" class="headerlink" title="反代"></a>反代</h2><p>反代已经没问题了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110142355857.png"></p>
+<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><p>文中提到的文件，都可以在 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3dic3UyMDAzL0RvY2tlcmZpbGU=">https://github.com/wbsu2003/Dockerfile<i class="fa fa-external-link-alt"></i></span> 找到</p>
+<p>个人精力有限，很难做全面的测试，如果你发现有什么问题，请反馈给老苏，反馈方式：</p>
+<ul>
+<li>  给公众号发消息。虽然老苏的公众号并不支持留言，并且还有很多限制，但聊胜于无</li>
+<li>  点『 阅读原文 』 去老苏的博客 （<a href="https://laosu.ml/">https://laosu.ml</a>） 留言</li>
+<li>  发邮件：<span class="exturl" data-url="bWFpbHRvOndic3UyMDAzQGdtYWlsLmNvbQ==">wbsu2003@gmail.com<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="bWFpbHRvOndic3UyMDAzQGhvdG1haWwuY29t">wbsu2003@hotmail.com<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>qier222/YesPlayMusic: 高颜值的第三方网易云播放器，支持 Windows / macOS / Linux<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3FpZXIyMjIvWWVzUGxheU11c2lj">https://github.com/qier222/YesPlayMusic<i class="fa fa-external-link-alt"></i></span></p>
+<p>Binaryify/NeteaseCloudMusicApi: 网易云音乐 Node.js API service<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0JpbmFyeWlmeS9OZXRlYXNlQ2xvdWRNdXNpY0FwaQ==">https://github.com/Binaryify/NeteaseCloudMusicApi<i class="fa fa-external-link-alt"></i></span></p>
+<p>Bug. Yarn couldn’t build package phantomjs. npm could. · Issue #1016 · yarnpkg/yarn<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3lhcm5wa2cveWFybi9pc3N1ZXMvMTAxNg==">https://github.com/yarnpkg/yarn/issues/1016<i class="fa fa-external-link-alt"></i></span></p>
+<p>单机，前后端分离，Nginx反向代理 - 简书<br>地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC8zYzJjM2Y2NGYxYWQ=">https://www.jianshu.com/p/3c2c3f64f1ad<i class="fa fa-external-link-alt"></i></span></p>
+<p>Nginx代理同域名前后端分离项目 | Laravel China 社区<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9sZWFybmt1LmNvbS9hcnRpY2xlcy81MDY2OA==">https://learnku.com/articles/50668<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>音乐</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>百度网盘Python客户端bypy</title>
     <url>/2021/10/20/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98Python%E5%AE%A2%E6%88%B7%E7%AB%AFbypy/</url>
     <content><![CDATA[<p>简单说明：</p>
@@ -14937,7 +15067,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiN4NjQ7JiMxMDk7JiN4Njk7JiN4NmU7JiM2NDsmIzExMTsmIzExMjsmIzEwMTsmI3g2ZTsmIzExNTsmIzExNzsmIzk4OyYjMTE2OyYjeDY5OyYjMTE2OyYjMTA4OyYjeDY1OyYjeDczOyYjeDJlOyYjeDZmOyYjMTE0OyYjeDY3Ow==">&#97;&#x64;&#109;&#x69;&#x6e;&#64;&#111;&#112;&#101;&#x6e;&#115;&#117;&#98;&#116;&#x69;&#116;&#108;&#x65;&#x73;&#x2e;&#x6f;&#114;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjeDY0OyYjMTA5OyYjeDY5OyYjeDZlOyYjNjQ7JiN4NmY7JiMxMTI7JiN4NjU7JiN4NmU7JiN4NzM7JiMxMTc7JiM5ODsmI3g3NDsmIzEwNTsmI3g3NDsmI3g2YzsmI3g2NTsmI3g3MzsmIzQ2OyYjeDZmOyYjMTE0OyYjMTAzOw==">&#x61;&#x64;&#109;&#x69;&#x6e;&#64;&#x6f;&#112;&#x65;&#x6e;&#x73;&#117;&#98;&#x74;&#105;&#x74;&#x6c;&#x65;&#x73;&#46;&#x6f;&#114;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
@@ -20449,11 +20579,11 @@
       </categories>
       <tags>
         <tag>刮削器</tag>
-        <tag>ZogVM</tag>
-        <tag>极影派</tag>
         <tag>Kodi</tag>
         <tag>MediaElch</tag>
         <tag>tinyMediaManager</tag>
+        <tag>ZogVM</tag>
+        <tag>极影派</tag>
       </tags>
   </entry>
   <entry>
@@ -20506,11 +20636,11 @@
         <tag>Emby</tag>
         <tag>jellyfin</tag>
         <tag>刮削器</tag>
-        <tag>Scrapers</tag>
-        <tag>Plex</tag>
+        <tag>Kodi</tag>
         <tag>ZogVM</tag>
         <tag>极影派</tag>
-        <tag>Kodi</tag>
+        <tag>Scrapers</tag>
+        <tag>Plex</tag>
       </tags>
   </entry>
   <entry>
