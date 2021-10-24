@@ -1,6 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>MiroTalk基于浏览器的实时视频通话程序</title>
+    <url>/2021/10/25/MiroTalk%E5%9F%BA%E4%BA%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%AE%9E%E6%97%B6%E8%A7%86%E9%A2%91%E9%80%9A%E8%AF%9D%E7%A8%8B%E5%BA%8F/</url>
+    <content><![CDATA[<p><strong>什么是 MiroTalk ？</strong></p>
+<blockquote>
+<p><code>MiroTalk</code> 是基于浏览器 <code>WebRTC</code> 技术实现的实时视频通话、聊天室和屏幕共享软件，是 <code>100%</code> 免费和开源的 <code>github</code> 项目。</p>
+</blockquote>
+<p><strong>什么是 WebRTC ？</strong></p>
+<blockquote>
+<p><code>WebRTC</code> 名称源自网页即时通信（英语：<code>Web Real-Time Communication</code>）的缩写，是一个支持网页浏览器进行实时语音对话或视频对话的 <code>API</code> 。它于 2011 年 6 月 1 日开源并在 <code>Google</code>、<code>Mozilla</code>、<code>Opera</code> 支持下被纳入万维网联盟的 <code>W3C</code> 推荐标准。【百度百科】</p>
+</blockquote>
+<p><strong>什么是 Ngrok ？</strong></p>
+<blockquote>
+<p><code>ngrok</code> 是一个反向代理，通过在公共的端点和本地运行的 <code>Web</code> 服务器之间建立一个安全的通道。服务器根据客户端的请求，从其关系的一组或多组后端服务器（如 <code>Web</code> 服务器）上获取资源，然后再将这些资源返回给客户端，客户端只会得知反向代理的 <code>IP</code> 地址，而不知道在代理服务器后面的服务器集群的存在。【百度百科】</p>
+</blockquote>
+<h1 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h1><blockquote>
+<p>如果你不想自己构建，可以跳过，直接阅读下一章节</p>
+</blockquote>
+<p>官网提供了 <code>Dockerfile</code> 和 <code>docker-compose.yml</code>，从 <code>docker-compose.yml</code> 看是可以直接运行而不用预先构建</p>
+<p><code>Dockerfile</code> 在构建过程中各种报错，应该是跟网络有关</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061108868.png"></p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:<span class="number">14</span>-alpine </span><br><span class="line"><span class="comment"># https://hub.docker.com/_/node</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /usr/src/app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 尝试使用 https 而不是 http</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> sed -i -e <span class="string">&#x27;s/http:/https:/&#x27;</span> /etc/apk/repositories</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用阿里镜像 https://mirrors.aliyun.com</span></span><br><span class="line"><span class="comment">#RUN sed -i &#x27;s/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g&#x27; /etc/apk/repositories</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apk add --no-cache \</span></span><br><span class="line"><span class="bash">bash \</span></span><br><span class="line"><span class="bash">vim</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> package*.json ./</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> .env.template ./.env</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> npm install</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> . .</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">3000</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [ <span class="string">&quot;npm&quot;</span>, <span class="string">&quot;start&quot;</span> ]</span></span><br></pre></td></tr></table></figure>
+
+<p>解决报错经历的过程：</p>
+<ol>
+<li><code>Dockerfile</code> 中增加 <code>RUN sed -i -e &#39;s/http:/https:/&#39; /etc/apk/repositories</code>，尝试使用 <code>https</code> 而不是 <code>http</code>，问题依旧；</li>
+<li><code>Dockerfile</code> 中增加 <code>RUN sed -i &#39;s/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g&#39; /etc/apk/repositories</code>，将源更换为阿里，问题依旧；</li>
+<li>构建时增加 <code>--network=host</code>，变成 <code>docker build -t wbsu2003/mirotalk:v1 . --network=host</code>，不再报错，顺利完成构建</li>
+</ol>
+<p>构建镜像和容器运行的基本命令如下👇</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 下载原代码</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/miroslavpejic85/mirotalk.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果 github 慢或者访问不了</span></span><br><span class="line">git <span class="built_in">clone</span> https://hub.fastgit.org/miroslavpejic85/mirotalk.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入目录</span></span><br><span class="line"><span class="built_in">cd</span> mirotalk</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建镜像</span></span><br><span class="line">docker build -t wbsu2003/mirotalk:v1 . --network=host</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成容器(使用ngrok)</span></span><br><span class="line">docker run -it --name=mirotalk \</span><br><span class="line">-p 3330:3000 \</span><br><span class="line">-e NGROK_ENABLED=<span class="literal">true</span> \</span><br><span class="line">-e NGROK_AUTH_TOKEN=&lt;Your ngrok Authtoken&gt; \ <span class="comment"># 你的 ngrok Authtoken</span></span><br><span class="line">wbsu2003/mirotalk:v1</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061700582.png" alt="ngrok"></p>
+<h1 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h1><p>镜像中内置了 <code>ngrok</code>，打开 <span class="exturl" data-url="aHR0cHM6Ly9uZ3Jvay5jb20v">https://ngrok.com<i class="fa fa-external-link-alt"></i></span> ，如果没有账号可以注册一个，然后点 <code>Get started for free</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061458613.png"></p>
+<p>获取你的 <code>Authtoken</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061500703.png"></p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>在群晖上以 Docker 方式安装。</p>
+<p>在注册表中搜索 <code>mirotalk</code> ，选择第二个 <code>wbsu2003/mirotalk</code>，版本选择 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061243168.png"></p>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>端口不冲突就行</p>
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>3330</code></td>
+<td align="center"><code>3000</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061248528.png"></p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><table>
+<thead>
+<tr>
+<th align="center">可变</th>
+<th align="center">值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>NGROK_ENABLED</code></td>
+<td align="center">是否启用 <code>ngrok</code></td>
+</tr>
+<tr>
+<td align="center"><code>NGROK_AUTH_TOKEN</code></td>
+<td align="center"><code>ngrok</code> 获取的 <code>Authtoken</code></td>
+</tr>
+<tr>
+<td align="center"><code>API_KEY_SECRET</code></td>
+<td align="center">默认为 <code>mirotalk_default_secret</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061507006.png"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>打开日志，找到 <code>server_tunnel</code> 后面的地址</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061512164.png"></p>
+<p>在浏览器中打开这个地址就能看到主界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061252363.png"></p>
+<p>点 <code>TRY NOW</code> 新建一个呼叫</p>
+<blockquote>
+<p>默认房间号是随机生成的，你可以自己起名字</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061309766.png"></p>
+<blockquote>
+<p>需要 <code>https</code> 协议才能让浏览器使用音视频设备，如果你用 <code>http://群晖IP:3330</code> 访问会一直卡在 <code>Loading</code>，浏览器中的错误是 <code>net::ERR_CERT_COMMON_NAME_INVALID</code></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061257745.png"></p>
+<p>选 <code>允许</code>，否则不会有图像和声音</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061519908.png"></p>
+<p>给自己取个名字，然后 <code>Join meeting</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061521117.png"></p>
+<p>接下来就可以邀请别人入会了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061522281.png"></p>
+<p>用另外一台机器打开发送的链接</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061534311.png"></p>
+<p>分享支持 <code>整个屏幕</code>、<code>窗口</code> 和 <code>Chrome 标签页</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061544299.png"></p>
+<p>屏幕共享</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061538899.png"></p>
+<p>白板</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061539244.png"></p>
+<p>录像成功</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061558240.png"></p>
+<p>停止时会自动下载，格式是 <code>webm</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061601472.png"></p>
+<p>会议需要的常用功能都能在 <code>MiroTalk</code> 找到，让老苏很意外的是居然还有游戏</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061541761.png"></p>
+<p>大家可以自己安装体验一下，如果不想安装又想体验，可以去官方提供的地址👇</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9taXJvdGFsay5oZXJva3VhcHAuY29tLw==">https://mirotalk.herokuapp.com<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9taXJvdGFsay51cC5yYWlsd2F5LmFwcC8=">https://mirotalk.up.railway.app<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h1 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h1><p><code>ngrok</code> 免费版在 <code>docker</code> 每次重启之后，生成的域名是变化的，所以老苏尝试用 <code>frp</code> 来做反代，但是非常奇怪的卡死在 <code>Loading</code></p>
+<blockquote>
+<p>其实老苏在用 <code>frp</code> 之前一直用的就是 <code>ngrok</code></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061332907.png"></p>
+<p>看了一下浏览器中的错误是 <code>net::ERR_CONNECTION_REFUSED</code></p>
+<blockquote>
+<p>老苏的域名没有备案，所以是需要 <code>域名+端口</code> 访问的</p>
+</blockquote>
+<p>但是 <code>MiroTalk</code> 会吃掉后面的端口，不清楚导致的原因，所以只能先这么地了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110061847877.png"></p>
+<p>可以考虑一键部署到 <code>Heroku</code> 或者 <code>Railway</code></p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>miroslavpejic85/mirotalk: 🚀 Powered by WebRTC, Real-time video call, chat room and screen sharing entirely browser based 🚀<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pcm9zbGF2cGVqaWM4NS9taXJvdGFsaw==">https://github.com/miroslavpejic85/mirotalk<i class="fa fa-external-link-alt"></i></span></p>
+<p>Numb STUN/TURN Server<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9udW1iLnZpYWdlbmllLmNhLw==">https://numb.viagenie.ca/<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>WebRTC</tag>
+        <tag>ngrok</tag>
+        <tag>视频会议</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>高颜值的第三方网易云播放器YesPlayMusic（续）</title>
     <url>/2021/10/22/%E9%AB%98%E9%A2%9C%E5%80%BC%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BD%91%E6%98%93%E4%BA%91%E6%92%AD%E6%94%BE%E5%99%A8YesPlayMusic%EF%BC%88%E7%BB%AD%EF%BC%89/</url>
     <content><![CDATA[<p><code>“把麻烦留给自己，把方便留给别人”</code>，这才是我们折腾的终极目标。在上一篇中 <code>YesPlayMusic</code> 虽然能用，但是需要安装两个镜像，总归还是不算方便，更何况还有不完美的公网访问。经过老苏的不懈努力，<code>v2</code> 版实现了将播放器和 <code>API</code> 集成在一个镜像中，成功解决了：</p>
@@ -15067,7 +15208,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjeDY0OyYjMTA5OyYjeDY5OyYjeDZlOyYjNjQ7JiN4NmY7JiMxMTI7JiN4NjU7JiN4NmU7JiN4NzM7JiMxMTc7JiM5ODsmI3g3NDsmIzEwNTsmI3g3NDsmI3g2YzsmI3g2NTsmI3g3MzsmIzQ2OyYjeDZmOyYjMTE0OyYjMTAzOw==">&#x61;&#x64;&#109;&#x69;&#x6e;&#64;&#x6f;&#112;&#x65;&#x6e;&#x73;&#117;&#98;&#x74;&#105;&#x74;&#x6c;&#x65;&#x73;&#46;&#x6f;&#114;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiN4NjQ7JiMxMDk7JiMxMDU7JiN4NmU7JiM2NDsmI3g2ZjsmIzExMjsmI3g2NTsmI3g2ZTsmI3g3MzsmI3g3NTsmI3g2MjsmI3g3NDsmIzEwNTsmI3g3NDsmIzEwODsmIzEwMTsmIzExNTsmIzQ2OyYjeDZmOyYjeDcyOyYjMTAzOw==">&#97;&#x64;&#109;&#105;&#x6e;&#64;&#x6f;&#112;&#x65;&#x6e;&#x73;&#x75;&#x62;&#x74;&#105;&#x74;&#108;&#101;&#115;&#46;&#x6f;&#x72;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
@@ -20579,11 +20720,11 @@
       </categories>
       <tags>
         <tag>刮削器</tag>
+        <tag>ZogVM</tag>
+        <tag>极影派</tag>
         <tag>Kodi</tag>
         <tag>MediaElch</tag>
         <tag>tinyMediaManager</tag>
-        <tag>ZogVM</tag>
-        <tag>极影派</tag>
       </tags>
   </entry>
   <entry>
@@ -20636,11 +20777,11 @@
         <tag>Emby</tag>
         <tag>jellyfin</tag>
         <tag>刮削器</tag>
-        <tag>Kodi</tag>
-        <tag>ZogVM</tag>
-        <tag>极影派</tag>
         <tag>Scrapers</tag>
         <tag>Plex</tag>
+        <tag>ZogVM</tag>
+        <tag>极影派</tag>
+        <tag>Kodi</tag>
       </tags>
   </entry>
   <entry>
@@ -21089,12 +21230,12 @@
       </categories>
       <tags>
         <tag>群晖</tag>
+        <tag>ngrok</tag>
         <tag>frp</tag>
         <tag>VPS</tag>
         <tag>NAS</tag>
         <tag>黑群</tag>
         <tag>QuickConnect</tag>
-        <tag>ngrok</tag>
         <tag>ZeroTier</tag>
       </tags>
   </entry>
@@ -21120,9 +21261,9 @@
       </categories>
       <tags>
         <tag>群晖</tag>
+        <tag>ngrok</tag>
         <tag>frp</tag>
         <tag>NAS</tag>
-        <tag>ngrok</tag>
         <tag>ZeroTier</tag>
         <tag>GUI</tag>
       </tags>
