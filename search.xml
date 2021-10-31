@@ -1,6 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>在线表单收集系统Tduck（docker篇）</title>
+    <url>/2021/11/01/%E5%9C%A8%E7%BA%BF%E8%A1%A8%E5%8D%95%E6%94%B6%E9%9B%86%E7%B3%BB%E7%BB%9FTduck%EF%BC%88docker%E7%AF%87%EF%BC%89/</url>
+    <content><![CDATA[<p>不止一个人在微信公众号给我发送 <code>tduck</code> ，所以老苏决定再研究下 <code>docker</code> 版</p>
+<blockquote>
+<p>之前老苏已写过基于 <code>CentOS</code> 的安装方法</p>
+<ul>
+<li><a href="https://laosu.ml/2021/06/11/%E5%9C%A8%E7%BA%BF%E8%A1%A8%E5%8D%95%E6%94%B6%E9%9B%86%E7%B3%BB%E7%BB%9FTduck%EF%BC%88%E4%B8%8A%E7%AF%87%EF%BC%89/">在线表单收集系统Tduck（上篇）</a></li>
+<li><a href="https://laosu.ml/2021/06/14/%E5%9C%A8%E7%BA%BF%E8%A1%A8%E5%8D%95%E6%94%B6%E9%9B%86%E7%B3%BB%E7%BB%9FTduck%EF%BC%88%E4%B8%8B%E7%AF%87%EF%BC%89/">在线表单收集系统Tduck（下篇）</a></li>
+</ul>
+</blockquote>
+<p>没有找到官方的镜像，不过你可以试试👇</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110202135401.png"></p>
+<p>这是一个多合一的镜像，用于体验还是可以的，安装说明可以在参考文档部分找到，但是似乎并不支持设置自己的邮箱、微信公众号等，所以也就没办法用自己的账号登录了。</p>
+<h1 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h1><blockquote>
+<p>如果你不想自己构建，可以跳过，直接阅读下一章节</p>
+</blockquote>
+<p>管方提供的 <code>dockerfile</code> 需要用户自己将后端编译的 <code>tduck-api.jar</code> 拷贝到 <code>docker</code> 目录，将前端打包后的 <code>dist</code> 里的文件拷贝到 <code>docker/front</code> 目录，这得把老苏之前写的搭建的环境操作再重做一遍，着实有点麻烦，老苏更希望实现从源代码直接编译打包镜像，总体思路继承了 <code>YesPlayMusic</code>，把前后端打进一个镜像，这样比较方便 <code>nginx</code> 做前后端分流处理</p>
+<p><code>Dockerfile</code> 分为了三个部分，其中 <code>前端构建</code> 和 <code>后端构建</code> 是可以独立使用的，<code>前端构建</code> 可以生成  <code>dist</code>，而 <code>后端构建</code>能生成 <code>tduck-api.jar</code> </p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前端构建</span></span><br><span class="line"><span class="keyword">FROM</span> node:<span class="number">16.5</span> as build-front</span><br><span class="line"><span class="keyword">LABEL</span><span class="bash"> maintainer=laosu&lt;wbsu2003@gmail.com&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /app</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> /tduck-front/package.json ./</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> npm install -g cnpm --registry=https://registry.npm.taobao.org</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> /tduck-front/. ./</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> cnpm install</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> cnpm run build</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 后端构建</span></span><br><span class="line"><span class="keyword">FROM</span> maven:<span class="number">3.6</span>.<span class="number">0</span>-jdk-<span class="number">11</span>-slim AS build_end</span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> . ./</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> mvn -f /tduck-platform/pom.xml clean package -DskipTests</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 整体打包</span></span><br><span class="line"><span class="keyword">FROM</span> openjdk:<span class="number">11</span>-jre-slim</span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> sed -i s@/deb.debian.org/@/mirrors.aliyun.com/@g /etc/apt/sources.list \</span></span><br><span class="line"><span class="bash">    &amp;&amp; apt-get clean \</span></span><br><span class="line"><span class="bash">    &amp;&amp; apt-get update \</span></span><br><span class="line"><span class="bash">    &amp;&amp; apt-get install -y supervisor nginx</span></span><br><span class="line">	</span><br><span class="line"><span class="comment">## nginx</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> --from=build_end ./nginx.conf /etc/nginx/nginx.conf</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## supervisor</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> --from=build_end ./supervisord.conf /etc/supervisord.conf</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 前端静态文件	</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> --from=build-front /app/dist/ /usr/share/nginx/html</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 后端jar包</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> --from=build_end /tduck-platform/tduck-api/target/tduck-api.jar /usr/<span class="built_in">local</span>/lib/tduck-api.jar</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">&quot;supervisord&quot;</span>,<span class="string">&quot;-c&quot;</span>,<span class="string">&quot;/etc/supervisord.conf&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p><code>nginx</code> 设置文件 <code>nginx.conf</code> 用的是官方的，只修改了 <code>proxy_pass</code></p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">worker_processes</span>  <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="section">events</span> &#123;</span><br><span class="line">    <span class="attribute">worker_connections</span>  <span class="number">1024</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    <span class="attribute">include</span>       mime.types;</span><br><span class="line">    <span class="attribute">default_type</span>  application/octet-stream;</span><br><span class="line">    <span class="attribute">sendfile</span>        <span class="literal">on</span>;</span><br><span class="line">    <span class="attribute">keepalive_timeout</span>  <span class="number">65</span>;</span><br><span class="line"></span><br><span class="line">    <span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span>       <span class="number">80</span>;</span><br><span class="line">        <span class="attribute">server_name</span>  form.tec-do.com;</span><br><span class="line">        <span class="attribute">root</span> /usr/share/nginx/html;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">location</span> / &#123;</span><br><span class="line">          <span class="comment"># 静态文件地址 root访问路径会把请求的路径带上</span></span><br><span class="line">            <span class="attribute">root</span>   /usr/share/nginx/html;</span><br><span class="line">	        <span class="attribute">try_files</span> $uri$args $uri$args/ /index.html;</span><br><span class="line">            <span class="attribute">index</span>  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">location</span> /tduck-api/ &#123;</span><br><span class="line">            <span class="attribute">proxy_set_header</span> Host $http_host;</span><br><span class="line">            <span class="attribute">proxy_set_header</span> X-Real-IP $remote_addr;</span><br><span class="line">            <span class="attribute">proxy_set_header</span> REMOTE-HOST $remote_addr;</span><br><span class="line">            <span class="attribute">proxy_set_header</span> X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">            <span class="attribute">proxy_pass</span> http://127.0.0.1:8999/tduck-api/;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">#error_page   500 502 503 504  /50x.html;</span></span><br><span class="line">        <span class="comment">#location = /50x.html &#123;</span></span><br><span class="line">        <span class="comment">#    root   html;</span></span><br><span class="line">        <span class="comment">#&#125;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>supervisord.conf</code> 文件是新增用来控制进程的，前端 <code>app</code> 是运行在 <code>nginx</code> 上的静态页面，后端 <code>tduck_api</code> 基于 <code>jar</code> 包</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[include]</span></span><br><span class="line"><span class="attr">files</span> = /etc/supervisor/conf.d/*.conf</span><br><span class="line"></span><br><span class="line"><span class="section">[program:app]</span></span><br><span class="line"><span class="attr">command</span>=nginx -g <span class="string">&quot;daemon off;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="section">[program:api]</span></span><br><span class="line"><span class="attr">command</span>=java -Dfile.encoding=UTF-<span class="number">8</span> -jar /usr/local/lib/tduck-api.jar</span><br><span class="line"></span><br><span class="line"><span class="comment">#directory will be any folder where you wnat supervisor to cd before executing.</span></span><br><span class="line"><span class="comment">#directory=/project </span></span><br><span class="line"><span class="attr">autostart</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">autorestart</span>=<span class="literal">false</span></span><br><span class="line"><span class="attr">startretries</span>=<span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#user will be anyone you want but make sure that user will have the enough privilage.</span></span><br><span class="line"><span class="attr">user</span>=root</span><br><span class="line"></span><br><span class="line"><span class="section">[supervisord]</span></span><br><span class="line"><span class="attr">nodaemon</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">logfile</span>=/tmp/supervisord.log</span><br><span class="line"><span class="attr">pidfile</span>=/tmp/supervisord.pid</span><br><span class="line"><span class="attr">loglevel</span>=debug</span><br><span class="line"><span class="attr">logfile_maxbytes</span>=<span class="number">10</span>MB</span><br><span class="line"></span><br><span class="line"><span class="section">[supervisorctl]</span></span><br></pre></td></tr></table></figure>
+
+<p><code>docker-compose.yaml</code> 基于官方的修改而成，因为做了前后端二合一，所以去掉了 <code>tduck-front</code>，但是新增了邮件环境变量，只是默认并没有启用</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3.6&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">tduck-app:</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="comment">#      - SPRING_DATASOURCE_DRIVER-CLASS-NAME=com.mysql.cj.jdbc.driver</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SPRING_DATASOURCE_URL=$SPRING_DATASOURCE_URL</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SPRING_DATASOURCE_USERNAME=$SPRING_DATASOURCE_NAME</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SPRING_DATASOURCE_PASSWORD=$MYSQL_ROOT_PASSWORD</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SPRING_REDIS_DATABASE=0</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SPRING_REDIS_HOST=$REDIS_HOST</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SPRING_REDIS_PORT=$REDIS_PORT</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">AJ_CAPTCHA_ENABLE=false</span></span><br><span class="line">	<span class="comment"># 老苏新增邮件设置</span></span><br><span class="line">    <span class="comment">#  - SPRING_MAIL_HOST=$MAIL_HOST</span></span><br><span class="line">    <span class="comment">#  - SPRING_MAIL_USERNAME=$MAIL_USERNAME</span></span><br><span class="line">    <span class="comment">#  - SPRING_MAIL_PASSWORD=$MAIL_PASSWORD</span></span><br><span class="line">    <span class="comment">#      - SPRING_REDIS_PASSWORD=</span></span><br><span class="line">    <span class="comment">#      - WX_MP_CONFIGS_APPID=</span></span><br><span class="line">    <span class="comment">#      - WX_MP_CONFIGS_SECRET=</span></span><br><span class="line">    <span class="comment">#      - WX_MP_CONFIGS_TOKEN=</span></span><br><span class="line">    <span class="comment">#      - WX_MP_CONFIGS_AESKEY=</span></span><br><span class="line">    <span class="comment">#      - OSS_OSSTYPE=</span></span><br><span class="line">    <span class="comment">#      - OSS_ENDPOINT=</span></span><br><span class="line">    <span class="comment">#      - OSS_ACCESSKEYID=</span></span><br><span class="line">    <span class="comment">#      - OSS_ACCESSKEYSECRET=</span></span><br><span class="line">    <span class="comment">#      - OSS_BUCKETNAME=</span></span><br><span class="line">    <span class="comment">#      - OSS_DOMAIN=</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">image:</span> <span class="string">&quot;wbsu2003/tduck&quot;</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">23569</span><span class="string">:80</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">tduck-redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis:6.2.1</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">36379</span><span class="string">:6379</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">redis_data:/data</span></span><br><span class="line">  <span class="attr">redis-commander:</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">redis-commander</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">redis-commander</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">rediscommander/redis-commander:latest</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">REDIS_HOSTS=local:$REDIS_HOST:$REDIS_PORT</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;28083:8081&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">tduck-mysql:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mysql:8</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_DATABASE=$MYSQL_DATABASE</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">43033</span><span class="string">:3306</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mysql_data3:/var/lib/mysql</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./tduck-platform/docker/init-db:/docker-entrypoint-initdb.d:ro</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">--default-authentication-plugin=mysql_native_password</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">mysql_data3:</span></span><br><span class="line">  <span class="attr">nginx_log:</span></span><br><span class="line">  <span class="attr">redis_data:</span></span><br></pre></td></tr></table></figure>
+
+<p><code>.env</code> 文件，用的官方标准的，只配置了 <code>mysql</code> 和 <code>redis</code></p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">MYSQL_DATABASE</span>=tduck</span><br><span class="line"><span class="attr">MYSQL_ROOT_PASSWORD</span>=abc123123</span><br><span class="line"><span class="attr">SPRING_DATASOURCE_URL</span>=jdbc:mysql://tduck-mysql/tduck?serverTimezone=Asia/Shanghai</span><br><span class="line"><span class="attr">SPRING_DATASOURCE_NAME</span>=root</span><br><span class="line"><span class="attr">REDIS_HOST</span>=tduck-redis</span><br><span class="line"><span class="attr">REDIS_PORT</span>=<span class="number">6379</span></span><br></pre></td></tr></table></figure>
+
+<p>构建镜像和容器运行的基本命令如下👇</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 新建目录</span></span><br><span class="line">mkdir tduck</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入目录</span></span><br><span class="line"><span class="built_in">cd</span> tduck</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拉取后端代码</span></span><br><span class="line">git <span class="built_in">clone</span> https://gitee.com/TDuckApp/tduck-platform.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拉取前端代码</span></span><br><span class="line">git <span class="built_in">clone</span> https://gitee.com/TDuckApp/tduck-front.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将 Dockerfile 、supervisord.conf、nginx.conf、docker-compose.yaml、.env 五个文件放进 tduck 目录中</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建镜像</span></span><br><span class="line">docker build -t wbsu2003/tduck:v1 .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入容器</span></span><br><span class="line">docker <span class="built_in">exec</span> --user root -it tduck /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一键启动</span></span><br><span class="line">docker-compose up -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一键删除</span></span><br><span class="line">docker-compose down</span><br></pre></td></tr></table></figure>
+
+<p>目录结构👇</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110201537211.png"></p>
+<h1 id="安装运行"><a href="#安装运行" class="headerlink" title="安装运行"></a>安装运行</h1><ul>
+<li>在群晖 <code>docker</code> 目录中新建子目录 <code>tduck</code></li>
+<li>下载 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3dic3UyMDAzL0RvY2tlcmZpbGUvcmF3L21haW4vdGR1Y2svdGR1Y2suemlw">https://github.com/wbsu2003/Dockerfile/raw/main/tduck/tduck.zip<i class="fa fa-external-link-alt"></i></span> 文件，如果 <code>github</code> 抽风了，可以从镜像站点下载 <span class="exturl" data-url="aHR0cHM6Ly9odWIuZmFzdGdpdC5vcmcvd2JzdTIwMDMvRG9ja2VyZmlsZS9yYXcvbWFpbi90ZHVjay90ZHVjay56aXA=">https://hub.fastgit.org/wbsu2003/Dockerfile/raw/main/tduck/tduck.zip<i class="fa fa-external-link-alt"></i></span></li>
+<li>将 <code>tduck.zip</code> 上传到 <code>tduck</code> 目录再解压<blockquote>
+<p>尽量不要在电脑上先解压再上传，因为 <code>.env</code> 默认是看不到的，需要打开显示隐藏文件，需避免拷贝文件丢失导致一键启动出错</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110291014341.png"></p>
+<p><code>__MACOSX</code> 和 <code>tduck.zip</code> 可以删掉，不删也无所谓的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110211055017.png"></p>
+<ul>
+<li><p>根据需要修改 <code>docker-compose.yaml</code> 文件，主要应该就是端口，如果你要修改数据库可以编辑 <code>.env</code> 文件，理论上通过修改 <code>jdbc</code> 可以直接使用群晖自带的 <code>mariadb</code></p>
+</li>
+<li><p>用 <code>SSH</code> 客户端登录到群晖，在 <code>tduck</code> 目录中执行一键启动</p>
+</li>
+</ul>
+<blockquote>
+<p>老苏常用的<code>SSH</code> 客户端主要是 <code>Finalshell</code> 和 <code>PuTTY</code></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 进入 docker 目录</span></span><br><span class="line"><span class="built_in">cd</span> /volume2/docker/tduck</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一键启动</span></span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>第一次执行会有拉取镜像的动作</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110210933002.png"></p>
+<blockquote>
+<p>如果最终 <code>4</code> 个容器都是 <code>done</code> ，表示创建成功！</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110211101211.png"></p>
+<p>在 <code>docker</code> 容器中能看到👇下面 <code>4</code> 个容器正在运行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110211033466.png"></p>
+<p>在浏览器中输入 <code>http://群晖IP:23569</code>，就能看到主界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110201748398.png"></p>
+<p>点右上角的 <code>登录</code>，因为没设置微信扫码，所以一直是转圈的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110201751969.png"></p>
+<p>系统有个默认的账号 <code>test@tduck.com</code>，密码：<code>12345678</code></p>
+<blockquote>
+<p>官网有点坑，写的默认账号是 <code>test@tduckapp.com</code></p>
+</blockquote>
+<h2 id="邮件注册"><a href="#邮件注册" class="headerlink" title="邮件注册"></a>邮件注册</h2><p>如果你需要自己注册账号，比较简单的方法是增加邮件的支持。</p>
+<ul>
+<li>需要去掉 <code>docker-compose.yaml</code> 中红框中 3 行前面的 <code>#</code> 号注释</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110201755671.png"></p>
+<ul>
+<li>在 <code>.env</code> 最后面增加下面 <code>3</code> 行</li>
+</ul>
+<blockquote>
+<p>请按你自己的邮箱设置进行填写</p>
+</blockquote>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">MAIL_HOST</span>=smtp.<span class="number">88</span>.com</span><br><span class="line"><span class="attr">MAIL_USERNAME</span>=wbsu2003@<span class="number">88</span>.com</span><br><span class="line"><span class="attr">MAIL_PASSWORD</span>=&lt;用于登录第三方邮件客户端的专用密码&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>先一键删除再一键启动</li>
+</ul>
+<blockquote>
+<p>任何时候，删除操作还是要慎重</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 一键删除</span></span><br><span class="line">docker-compose down</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一键启动</span></span><br><span class="line">docker-compose up -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一键停止</span></span><br><span class="line">docker-compose stop</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一键重启</span></span><br><span class="line">docker-compose restart</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110211059987.png"></p>
+<p>选择用邮箱注册</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110210903781.png"></p>
+<p>顺利的话很快就会收到注册验证码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110201736293.png"></p>
+<p>填入验证码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110201736673.png"></p>
+<p>登录成功后的主界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110201759335.png"></p>
+<p>进入模板中心，创建空白模板</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110201759067.png"></p>
+<p>可以拖拽进行设计</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110201800130.png"></p>
+<p>如果你拖不动，是因为组件在线的上方</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110201802640.png"></p>
+<p>拖到下方才行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110201803344.png"></p>
+<p>预览一下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110201803742.png"> </p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>tduck-platform: Tduck-填鸭收集器是一款开源的表单在线收集系统，后台基于SpringBoot+MybatisPlus+MySql+Redis，前端基于Vue ElementUI开发，功能强大，界面美观。keywords：问卷/表单/信息收集<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vVER1Y2tBcHAvdGR1Y2stcGxhdGZvcm0=">https://gitee.com/TDuckApp/tduck-platform<i class="fa fa-external-link-alt"></i></span></p>
+<p>Tduck填鸭<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9kb2MudGR1Y2thcHAuY29tLw==">https://doc.tduckapp.com/<i class="fa fa-external-link-alt"></i></span></p>
+<p>java - How to dockerize maven project? and how many ways to accomplish it? - Stack Overflow<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMjc3NjcyNjQvaG93LXRvLWRvY2tlcml6ZS1tYXZlbi1wcm9qZWN0LWFuZC1ob3ctbWFueS13YXlzLXRvLWFjY29tcGxpc2gtaXQ=">https://stackoverflow.com/questions/27767264/how-to-dockerize-maven-project-and-how-many-ways-to-accomplish-it<i class="fa fa-external-link-alt"></i></span></p>
+<p>使用Docker运行Tduck | 戴戴的Linux<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9kYWlzaGVuZ2h1aS5jbHViLzIwMjEvMDYvMzAvY2F0ZWdvcmllcy9MaW51eC8lRTQlQkQlQkYlRTclOTQlQThEb2NrZXIlRTglQkYlOTAlRTglQTElOENUZHVjay8jJUU1JThEJThBJUU1JUIwJThGJUU3JTk5JUJEJUU3JUFGJTg3">https://daishenghui.club/2021/06/30/categories/Linux/%E4%BD%BF%E7%94%A8Docker%E8%BF%90%E8%A1%8CTduck/#%E5%8D%8A%E5%B0%8F%E7%99%BD%E7%AF%87<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>表格</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>音乐流媒体服务器Navidrome</title>
     <url>/2021/10/29/%E9%9F%B3%E4%B9%90%E6%B5%81%E5%AA%92%E4%BD%93%E6%9C%8D%E5%8A%A1%E5%99%A8Navidrome/</url>
     <content><![CDATA[<p><strong>什么是 Navidrome ？</strong></p>
@@ -15545,7 +15679,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjeDY0OyYjeDZkOyYjMTA1OyYjMTEwOyYjNjQ7JiN4NmY7JiN4NzA7JiN4NjU7JiN4NmU7JiN4NzM7JiN4NzU7JiN4NjI7JiMxMTY7JiN4Njk7JiN4NzQ7JiMxMDg7JiN4NjU7JiN4NzM7JiM0NjsmI3g2ZjsmIzExNDsmIzEwMzs=">&#x61;&#x64;&#x6d;&#105;&#110;&#64;&#x6f;&#x70;&#x65;&#x6e;&#x73;&#x75;&#x62;&#116;&#x69;&#x74;&#108;&#x65;&#x73;&#46;&#x6f;&#114;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjeDY0OyYjeDZkOyYjMTA1OyYjeDZlOyYjNjQ7JiN4NmY7JiMxMTI7JiN4NjU7JiN4NmU7JiMxMTU7JiN4NzU7JiN4NjI7JiMxMTY7JiMxMDU7JiN4NzQ7JiMxMDg7JiMxMDE7JiN4NzM7JiM0NjsmI3g2ZjsmIzExNDsmIzEwMzs=">&#x61;&#x64;&#x6d;&#105;&#x6e;&#64;&#x6f;&#112;&#x65;&#x6e;&#115;&#x75;&#x62;&#116;&#105;&#x74;&#108;&#101;&#x73;&#46;&#x6f;&#114;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
@@ -15866,8 +16000,8 @@
         <category>各种折腾</category>
       </categories>
       <tags>
-        <tag>Markdown</tag>
         <tag>图床</tag>
+        <tag>Markdown</tag>
         <tag>CDN</tag>
       </tags>
   </entry>
@@ -21057,11 +21191,11 @@
       </categories>
       <tags>
         <tag>刮削器</tag>
-        <tag>ZogVM</tag>
-        <tag>极影派</tag>
         <tag>Kodi</tag>
         <tag>MediaElch</tag>
         <tag>tinyMediaManager</tag>
+        <tag>ZogVM</tag>
+        <tag>极影派</tag>
       </tags>
   </entry>
   <entry>
@@ -21114,11 +21248,11 @@
         <tag>Emby</tag>
         <tag>jellyfin</tag>
         <tag>刮削器</tag>
-        <tag>Scrapers</tag>
-        <tag>Plex</tag>
+        <tag>Kodi</tag>
         <tag>ZogVM</tag>
         <tag>极影派</tag>
-        <tag>Kodi</tag>
+        <tag>Scrapers</tag>
+        <tag>Plex</tag>
       </tags>
   </entry>
   <entry>
@@ -21516,6 +21650,35 @@
       </tags>
   </entry>
   <entry>
+    <title>群晖上的Zerotier GUI一直显示offline的原因</title>
+    <url>/2020/04/28/%E7%BE%A4%E6%99%96%E4%B8%8A%E7%9A%84Zerotier%20GUI%E4%B8%80%E7%9B%B4%E6%98%BE%E7%A4%BAoffline%E7%9A%84%E5%8E%9F%E5%9B%A0/</url>
+    <content><![CDATA[<p>两台黑群晖，因为共用了frps，所以为了避免端口冲突，一台保留了端口：5000，另一台启用了端口：5002。</p>
+<p>其中在局域网一台正常：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-150636-1587366421033.jpg" alt="title"></p>
+<p>之所以强调局域网是因为在用域名访问时，也同样出现了offline</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-150235-1587366203005.jpg" alt="title"></p>
+<p>用ssh登录后发现可以正常使用<br><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/WechatIMG3868-1587366673982.png" alt="title"></p>
+<p>说明我们下载的包是没问题的，有问题的只是WEB GUI而已。</p>
+<p>参考文档：</p>
+<blockquote>
+<p>1、<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3plcm90aWVyL1plcm9UaWVyTkFTL2lzc3Vlcy8xOA==">Zerotier GUI on Synology shows offline #18<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>文档中有一段描述，可以证明其只能连接端口：5000<br><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-151837-1587367148388.jpg" alt="title"></p>
+<p>而在使用frp后，所有域名是不带端口的，所以才会导致局域网正常而使用frp后又显示offline的原因。</p>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>ngrok</tag>
+        <tag>frp</tag>
+        <tag>NAS</tag>
+        <tag>ZeroTier</tag>
+        <tag>GUI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>群晖app访问遇到的端口问题</title>
     <url>/2020/04/28/%E7%BE%A4%E6%99%96app%E8%AE%BF%E9%97%AE%E9%81%87%E5%88%B0%E7%9A%84%E7%AB%AF%E5%8F%A3%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p><strong>什么是 NAS</strong></p>
@@ -21571,38 +21734,9 @@
         <tag>frp</tag>
         <tag>VPS</tag>
         <tag>NAS</tag>
+        <tag>ZeroTier</tag>
         <tag>黑群</tag>
         <tag>QuickConnect</tag>
-        <tag>ZeroTier</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>群晖上的Zerotier GUI一直显示offline的原因</title>
-    <url>/2020/04/28/%E7%BE%A4%E6%99%96%E4%B8%8A%E7%9A%84Zerotier%20GUI%E4%B8%80%E7%9B%B4%E6%98%BE%E7%A4%BAoffline%E7%9A%84%E5%8E%9F%E5%9B%A0/</url>
-    <content><![CDATA[<p>两台黑群晖，因为共用了frps，所以为了避免端口冲突，一台保留了端口：5000，另一台启用了端口：5002。</p>
-<p>其中在局域网一台正常：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-150636-1587366421033.jpg" alt="title"></p>
-<p>之所以强调局域网是因为在用域名访问时，也同样出现了offline</p>
-<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-150235-1587366203005.jpg" alt="title"></p>
-<p>用ssh登录后发现可以正常使用<br><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/WechatIMG3868-1587366673982.png" alt="title"></p>
-<p>说明我们下载的包是没问题的，有问题的只是WEB GUI而已。</p>
-<p>参考文档：</p>
-<blockquote>
-<p>1、<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3plcm90aWVyL1plcm9UaWVyTkFTL2lzc3Vlcy8xOA==">Zerotier GUI on Synology shows offline #18<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<p>文档中有一段描述，可以证明其只能连接端口：5000<br><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/mynote/2020/04/20/Jietu20200420-151837-1587367148388.jpg" alt="title"></p>
-<p>而在使用frp后，所有域名是不带端口的，所以才会导致局域网正常而使用frp后又显示offline的原因。</p>
-]]></content>
-      <categories>
-        <category>各种折腾</category>
-      </categories>
-      <tags>
-        <tag>群晖</tag>
-        <tag>ngrok</tag>
-        <tag>frp</tag>
-        <tag>NAS</tag>
-        <tag>ZeroTier</tag>
-        <tag>GUI</tag>
       </tags>
   </entry>
   <entry>
