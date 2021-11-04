@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>免费的GitHub图床PicX</title>
-    <url>/2021/11/04/%E5%85%8D%E8%B4%B9%E7%9A%84GitHub%E5%9B%BE%E5%BA%8APicX/</url>
+    <url>/2021/11/05/%E5%85%8D%E8%B4%B9%E7%9A%84GitHub%E5%9B%BE%E5%BA%8APicX/</url>
     <content><![CDATA[<p><strong>什么是 PicX ？</strong></p>
 <blockquote>
 <p><code>PicX</code> 是基于 <code>GitHub API</code> 开发的图床神器，图片外链使用 <code>jsDelivr</code> 进行 <code>CDN</code> 加速。免下载、免安装，打开网站即可直接使用。免费、稳定、高效。</p>
