@@ -1,6 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>免费的GitHub图床PicX</title>
+    <url>/2021/11/04/%E5%85%8D%E8%B4%B9%E7%9A%84GitHub%E5%9B%BE%E5%BA%8APicX/</url>
+    <content><![CDATA[<p><strong>什么是 PicX ？</strong></p>
+<blockquote>
+<p><code>PicX</code> 是基于 <code>GitHub API</code> 开发的图床神器，图片外链使用 <code>jsDelivr</code> 进行 <code>CDN</code> 加速。免下载、免安装，打开网站即可直接使用。免费、稳定、高效。</p>
+</blockquote>
+<p><code>PicX</code> 是基于 <code>GitHub</code> 实现的图床，从原理上说和 <code>PicGo</code> 是一样的，只是 <code>PicGo</code> 是以客户端方式呈现，而 <code>PicX</code> 是以网站方式呈现</p>
+<blockquote>
+<p>想进一步了解 <code>PicGo</code>，请看：『 <a href="https://laosu.ml/2020/10/13/Markdown%E7%9A%84%E5%9B%BE%E7%89%87%E4%BC%B4%E4%BE%A3PicGo/">Markdown的图片伴侣PicGo</a> 』</p>
+</blockquote>
+<p><code>PicX</code> 官方网站：<span class="exturl" data-url="aHR0cHM6Ly9waWN4Lnhwb2V0LmNuLw==">https://picx.xpoet.cn/<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h1><p>官方虽然有很详细的使用方法，但没有提供安装方法，只有一个网站，所以想要私有化部署，需要我们自己打包镜像</p>
+<blockquote>
+<p>如果你不想自己构建，可以跳过，直接阅读下一章节</p>
+</blockquote>
+<p><code>Dockerfile</code> 是按照 <code>Vue</code>官方提供的例子实现的，据说这是目前性能最好、久经考验的解决方案之一，采用了多阶段构建的方法，最终的镜像不到 <code>30M</code></p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="comment"># build stage</span></span><br><span class="line"><span class="keyword">FROM</span> node:lts-alpine as build-stage</span><br><span class="line"><span class="keyword">LABEL</span><span class="bash"> maintainer=laosu&lt;wbsu2003@gmail.com&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /app</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> package*.json ./</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> npm install</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> . .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> npm run build</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># production stage</span></span><br><span class="line"><span class="keyword">FROM</span> nginx:stable-alpine as production-stage</span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> --from=build-stage /app/dist /usr/share/nginx/html</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">&quot;nginx&quot;</span>, <span class="string">&quot;-g&quot;</span>, <span class="string">&quot;daemon off;&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p>构建镜像和容器运行的基本命令如下👇</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 下载代码,当前对应的是 1.4.1</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/XPoet/picx.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者镜像站点</span></span><br><span class="line">git <span class="built_in">clone</span> https://hub.fastgit.org/XPoet/picx.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入目录</span></span><br><span class="line"><span class="built_in">cd</span> picx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将 Dockerfile 放进代码目录中</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建镜像</span></span><br><span class="line">docker build -t wbsu2003/picx:v1 .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成容器</span></span><br><span class="line">docker run -d \</span><br><span class="line">--name=picx \</span><br><span class="line">-p 3480:80 \</span><br><span class="line">wbsu2003/picx:v1</span><br></pre></td></tr></table></figure>
+
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>在群晖上以 Docker 方式安装。</p>
+<p>在注册表中搜索 <code>picx</code> ，选择 <code>wbsu2003/picx</code>，版本选择 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110161023871.png"></p>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>端口不冲突就行</p>
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>3480</code></td>
+<td align="center"><code>80</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110161036729.png"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>在浏览器中输入 <code>http://群晖IP:3480</code> 就能看到主界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110161038565.png"></p>
+<p>先别忙着上传图片，请先看 <code>使用教程</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110161039723.png"></p>
+<p>请按照教程，创建好 <code>GitHub</code> 仓库，并获取到 <code>GitHub Token</code>，然后配置图床</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110161047031.png"></p>
+<p>选取放图片的仓库</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110161050356.png"></p>
+<p>选取放图片的目录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110161051319.png"></p>
+<p>现在可以开始上传图片了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110161055576.png"></p>
+<p>粘贴了一张截图</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110161101320.png"></p>
+<p>开始上传</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110161102475.png"></p>
+<p>上传完成</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110161103214.png"></p>
+<p>除了上传外还支持简单的管理</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110161107488.png"></p>
+<p>老苏主要用 <code>Markdown</code> 写文档，所以启用了 <code>上传后默认开启 Markdown 格式的外链</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110161111972.png"></p>
+<p>建议用 <code>CDN</code> 外链，因为 <code>GitHub</code> 经常会中断</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110161114714.png"></p>
+<ul>
+<li><p><code>CND</code> 外链地址：<code>https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picx/image.1eo9b9tu34sg.png</code></p>
+</li>
+<li><p><code>GitHub</code> 外链地址：<code>https://raw.githubusercontent.com/wbsu2003/gitnote-images/master/picx/image.1eo9b9tu34sg.png</code></p>
+</li>
+</ul>
+<p>使用就是这么简单，没有任何多余的功能，毕竟软件的特点在于：</p>
+<ul>
+<li>🆓 完全免费</li>
+<li>🏆 无比稳定</li>
+<li>🚀 极速高效</li>
+<li>🔒 十分安全</li>
+</ul>
+<p>老苏觉得 <code>PicX</code> 做到了</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>XPoet/picx: 基于 GitHub API 开发的图床神器，图片外链使用 jsDelivr 进行 CDN 加速。免下载、免安装，打开网站即可直接使用。免费、稳定、高效。<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1hQb2V0L3BpY3g=">https://github.com/XPoet/picx<i class="fa fa-external-link-alt"></i></span></p>
+<p>Dockerize Vue.js App — Vue.js<br>地址：<span class="exturl" data-url="aHR0cHM6Ly92dWVqcy5vcmcvdjIvY29va2Jvb2svZG9ja2VyaXplLXZ1ZWpzLWFwcC5odG1s">https://vuejs.org/v2/cookbook/dockerize-vuejs-app.html<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>图床</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>个人知识管理系统思源笔记</title>
     <url>/2021/11/03/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%80%9D%E6%BA%90%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<p><strong>什么是思源笔记 ？</strong></p>
@@ -15844,7 +15935,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiMxMDA7JiMxMDk7JiMxMDU7JiN4NmU7JiN4NDA7JiN4NmY7JiN4NzA7JiMxMDE7JiMxMTA7JiN4NzM7JiN4NzU7JiM5ODsmI3g3NDsmIzEwNTsmIzExNjsmIzEwODsmI3g2NTsmIzExNTsmIzQ2OyYjMTExOyYjeDcyOyYjMTAzOw==">&#97;&#100;&#109;&#105;&#x6e;&#x40;&#x6f;&#x70;&#101;&#110;&#x73;&#x75;&#98;&#x74;&#105;&#116;&#108;&#x65;&#115;&#46;&#111;&#x72;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjeDY0OyYjMTA5OyYjeDY5OyYjeDZlOyYjNjQ7JiN4NmY7JiN4NzA7JiMxMDE7JiMxMTA7JiMxMTU7JiN4NzU7JiM5ODsmIzExNjsmIzEwNTsmI3g3NDsmI3g2YzsmI3g2NTsmI3g3MzsmIzQ2OyYjMTExOyYjeDcyOyYjMTAzOw==">&#x61;&#x64;&#109;&#x69;&#x6e;&#64;&#x6f;&#x70;&#101;&#110;&#115;&#x75;&#98;&#116;&#105;&#x74;&#x6c;&#x65;&#x73;&#46;&#111;&#x72;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>

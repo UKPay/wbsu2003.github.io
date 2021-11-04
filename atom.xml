@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-11-02T16:08:17.754Z</updated>
+  <updated>2021-11-04T16:00:24.892Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>免费的GitHub图床PicX</title>
+    <link href="https://laosu.ml/2021/11/04/%E5%85%8D%E8%B4%B9%E7%9A%84GitHub%E5%9B%BE%E5%BA%8APicX/"/>
+    <id>https://laosu.ml/2021/11/04/%E5%85%8D%E8%B4%B9%E7%9A%84GitHub%E5%9B%BE%E5%BA%8APicX/</id>
+    <published>2021-11-03T16:10:00.000Z</published>
+    <updated>2021-11-04T16:00:24.892Z</updated>
+    
+    
+    <summary type="html">PicX 是基于 GitHub API 开发的图床神器，图片外链使用 jsDelivr 进行 CDN 加速。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="图床" scheme="https://laosu.ml/tags/%E5%9B%BE%E5%BA%8A/"/>
+    
+  </entry>
   
   <entry>
     <title>个人知识管理系统思源笔记</title>
@@ -464,29 +487,6 @@
     <category term="音乐" scheme="https://laosu.ml/tags/%E9%9F%B3%E4%B9%90/"/>
     
     <category term="MIDI" scheme="https://laosu.ml/tags/MIDI/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>开源的SNMP网管系统LibreNMS</title>
-    <link href="https://laosu.ml/2021/09/20/%E5%BC%80%E6%BA%90%E7%9A%84SNMP%E7%BD%91%E7%AE%A1%E7%B3%BB%E7%BB%9FLibreNMS/"/>
-    <id>https://laosu.ml/2021/09/20/%E5%BC%80%E6%BA%90%E7%9A%84SNMP%E7%BD%91%E7%AE%A1%E7%B3%BB%E7%BB%9FLibreNMS/</id>
-    <published>2021-09-20T11:00:00.000Z</published>
-    <updated>2021-09-20T10:43:16.664Z</updated>
-    
-    
-    <summary type="html">LibreNMS 是一个使用 SNMP 协议，开源且功能强大的网络监控系统。</summary>
-    
-    
-    
-    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
-    
-    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
-    
-    <category term="网络" scheme="https://laosu.ml/tags/%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   
