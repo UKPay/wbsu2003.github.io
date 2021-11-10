@@ -1,6 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>将webdav挂载成为群晖的本地盘</title>
+    <url>/2021/11/10/%E5%B0%86webdav%E6%8C%82%E8%BD%BD%E6%88%90%E4%B8%BA%E7%BE%A4%E6%99%96%E7%9A%84%E6%9C%AC%E5%9C%B0%E7%9B%98/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>本文记录的是国庆节期间在家做的一个研究和探索的过程，之所以没有提 <code>CloudDrive</code>，是老苏最终想实现的是一个通用的 <code>WebDAV</code> 客户端，而不仅仅是挂载阿里云盘。</p>
+<blockquote>
+<p>关于 <code>CloudDrive</code> 可以看老苏之前写的 『 <a href="https://laosu.ml/2021/08/20/%E9%80%82%E5%90%88%E5%9B%BD%E5%86%85%E7%BD%91%E7%9B%98%E7%9A%84%E5%85%8D%E8%B4%B9%E6%8C%82%E8%BD%BD%E5%B7%A5%E5%85%B7CloudDrive/">适合国内网盘的免费挂载工具CloudDrive</a> 』</p>
+</blockquote>
+<h1 id="提出问题"><a href="#提出问题" class="headerlink" title="提出问题"></a>提出问题</h1><p>老苏的无损音乐放在了阿里云盘，阿里云盘又通过 <code>Docker</code> 支持了 <code>WebDAV</code>，现在的问题是怎么挂载到群晖，使之成为一个能被 <code>Airsonic</code> 等流媒体软件直接使用的音乐库？</p>
+<blockquote>
+<p>关于阿里云盘支持 <code>WebDAV</code>，可以看老苏之前写的</p>
+<ul>
+<li>『 <a href="https://laosu.ml/2021/08/04/%E8%83%BD%E5%B0%86%E9%98%BF%E9%87%8C%E4%BA%91%E7%9B%98%E6%8C%82%E8%BD%BD%E4%B8%BAwebdav%E7%9A%84webdav-aliyundriver/">能将阿里云盘挂载为webdav的webdav-aliyundriver</a> 』</li>
+<li>『 <a href="https://laosu.ml/2021/10/04/%E8%83%BD%E5%9C%A8%E8%B7%AF%E7%94%B1%E5%99%A8%E9%87%8C%E6%8C%82%E8%BD%BD%E9%98%BF%E9%87%8C%E4%BA%91%E7%9B%98%E7%9A%84aliyundrive-webdav/">能在路由器里挂载阿里云盘的aliyundrive-webdav</a> 』</li>
+</ul>
+</blockquote>
+<p>一开始老苏选择了 <code>远程连接</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110041733395.png"></p>
+<p>选择 <code>WebDAV</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110041734664.png"></p>
+<p>因为没设置 <code>WebDAV</code> 账号、密码，所以只需要填 <code>IP</code> 和端口</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110041736204.png"></p>
+<p>应用之后就可以像访问群晖的本地盘一样使用了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110041739661.png"></p>
+<p>但是老苏发现这种方式不能被 <code>docker</code> 识别，因为在 <code>添加文件夹</code> 中找不到我们刚才挂载成功的 <code>WebDAV</code> 目录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110082045516.png"></p>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p>老苏找到了 <code>davfs2</code>，这是一个 <code>Linux</code> 文件系统驱动程序，允许您把 <code>WebDAV</code> 资源挂载到您的 <code>Linux</code> 文件系统中，就像它们是本地磁盘一样。但是唯一的问题是需要下源代码自己编译，这对大部分人来说还是比较麻烦的。</p>
+<p>当然也有现成的 <code>WebDAV Client</code>，比如 <code>efrecon/webdav-client</code>。</p>
+<p>老苏抱着折（学习）腾（研究）的目的，还是想自己尝试基于 <code>davfs2</code> 构建一个 <code>docker</code> 版的 <code>WebDAV Client</code>。</p>
+<h1 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h1><blockquote>
+<p>如果你不想自己构建，可以跳过，直接阅读下一章节</p>
+</blockquote>
+<p>老苏参考了很多的案例，形成了最终的 <code>Dockerfile</code>，有两个特点记录一下</p>
+<ul>
+<li>采用了 <code>tini</code> 做进程管理</li>
+<li>采用了死循环来防止脚本退出</li>
+</ul>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> ubuntu:<span class="number">16.04</span></span><br><span class="line"><span class="keyword">MAINTAINER</span> laosu&lt;wbsu2003@gmail.com&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update \</span></span><br><span class="line"><span class="bash">  &amp;&amp; apt-get install -y davfs2 \</span></span><br><span class="line"><span class="bash">  &amp;&amp; mkdir -p /mnt/webdrive \</span></span><br><span class="line"><span class="bash">  &amp;&amp; apt-get clean \</span></span><br><span class="line"><span class="bash">  &amp;&amp; rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">VOLUME</span><span class="bash"> /mnt/webdrive</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> ./start.sh /usr/<span class="built_in">local</span>/bin</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> chmod +x /usr/<span class="built_in">local</span>/bin/start.sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Add Tini</span></span><br><span class="line"><span class="keyword">ENV</span> TINI_VERSION v0.<span class="number">19.0</span></span><br><span class="line"><span class="comment"># ADD https://github.com/krallin/tini/releases/download/$&#123;TINI_VERSION&#125;/tini /tini</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> https://hub.fastgit.org/krallin/tini/releases/download/<span class="variable">$&#123;TINI_VERSION&#125;</span>/tini /tini</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> chmod +x /tini</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">&quot;/tini&quot;</span>, <span class="string">&quot;--&quot;</span>]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Run your program under Tini</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [ <span class="string">&quot;/usr/local/bin/start.sh&quot;</span> ]</span></span><br></pre></td></tr></table></figure>
+
+<p>下面👇是 <code>start.sh</code> 文件，最后增加了一个死循环，目的是不要让这个脚本退出，否则拉起的进程也退出了</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line"># Set defaults</span><br><span class="line">USER=$&#123;WEBDRIVE_USER&#125;</span><br><span class="line">PASSWORD=$&#123;WEBDRIVE_PASSWORD&#125;</span><br><span class="line">URL=$&#123;WEBDRIVE_URL&#125;</span><br><span class="line">FOLDER_USER=$&#123;<span class="attr">PUID</span>:-<span class="number">0</span>&#125;</span><br><span class="line"></span><br><span class="line">echo <span class="string">&quot;$URL $USER $PASSWORD&quot;</span> &gt;&gt; <span class="regexp">/etc/</span>davfs2/secrets</span><br><span class="line"></span><br><span class="line"># Create user</span><br><span class="line"><span class="keyword">if</span> [ $FOLDER_USER -gt <span class="number">0</span> ]; then</span><br><span class="line">  useradd webdrive -u $FOLDER_USER -N -G users</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"># Mount the webdav drive </span><br><span class="line">echo <span class="string">&quot;--Mount begin--&quot;</span></span><br><span class="line">mount -t davfs $URL /mnt/webdrive -o uid=$FOLDER_USER,gid=users,dir_mode=<span class="number">755</span>,file_mode=<span class="number">755</span></span><br><span class="line">echo <span class="string">&quot;--Mount end--&quot;</span></span><br><span class="line"></span><br><span class="line"># Just keep this script running </span><br><span class="line"><span class="keyword">while</span> [[ <span class="literal">true</span> ]]; <span class="keyword">do</span> </span><br><span class="line">   sleep <span class="number">1</span> </span><br><span class="line">   echo <span class="string">&quot;--loop--&quot;</span></span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+<p>构建镜像和容器运行的基本命令如下👇</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 将 Dockerfile 和 start.sh 放在同一个目录</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建镜像</span></span><br><span class="line">docker build -t wbsu2003/webdav-client:v1 .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成容器</span></span><br><span class="line">docker run -d \</span><br><span class="line">--name webdav-client</span><br><span class="line">--privileged \</span><br><span class="line">--cap-add=SYS_ADMIN \</span><br><span class="line">--device /dev/fuse \</span><br><span class="line">-e WEBDRIVE_USER=&lt;username&gt; \</span><br><span class="line">-e WEBDRIVE_PASSWORD=&lt;password&gt; \</span><br><span class="line">-e WEBDRIVE_URL=http://url/webdav/ \</span><br><span class="line">-e PUID=1000 \</span><br><span class="line">-v &lt;host/path/to/folder&gt;:/mnt/webdrive:shared \</span><br><span class="line">wbsu2003/webdav-client:v1</span><br></pre></td></tr></table></figure>
+
+<p>举个栗子，下面是直接在编译 <code>Docker</code> 的 <code>CentOS</code> 上挂载 <code>webdav-aliyundriver</code> 映射的阿里云盘</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建共享挂载点</span></span><br><span class="line">mount --<span class="built_in">bind</span> /mnt /mnt</span><br><span class="line">mount --make-shared /mnt</span><br><span class="line"></span><br><span class="line">docker run -d \</span><br><span class="line">--name webdav-client \</span><br><span class="line">--privileged \</span><br><span class="line">--device /dev/fuse \</span><br><span class="line">-e WEBDRIVE_USER=admin \</span><br><span class="line">-e WEBDRIVE_PASSWORD=123456 \</span><br><span class="line">-e WEBDRIVE_URL=http://192.168.0.199:8123/ \</span><br><span class="line">-e PUID=1000 \</span><br><span class="line">-v /mnt/webdav:/mnt/webdrive:shared \</span><br><span class="line">wbsu2003/webdav-client</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110110003595.png"></p>
+<h1 id="群晖验证"><a href="#群晖验证" class="headerlink" title="群晖验证"></a>群晖验证</h1><p>安装方法和 <code>RcloneBrowser</code> 比较类似，如果你还不了解，可以看看老苏之前写的 『 <a href="https://laosu.ml/2021/06/21/%E7%BE%A4%E6%99%96%E4%B8%8A%E9%80%9A%E8%BF%87RcloneBrowser%E6%8C%82%E8%BD%BD%E4%BA%91%E7%9B%98/">群晖上通过RcloneBrowser挂载云盘</a> 』</p>
+<h2 id="第一步、建目录"><a href="#第一步、建目录" class="headerlink" title="第一步、建目录"></a>第一步、建目录</h2><p>在 <code>docker</code> 文件夹中，创建一个新文件夹，并将其命名为 <code>webdav</code></p>
+<h2 id="第二步、共享挂载"><a href="#第二步、共享挂载" class="headerlink" title="第二步、共享挂载"></a>第二步、共享挂载</h2><blockquote>
+<p>如果你已经安装过 <code>RcloneBrowser</code> ，这一步可以跳过</p>
+</blockquote>
+<p>因为老苏映射的目录在 <code>volume1</code> 上，如果你的目录是其他的卷上，记得修改</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 共享挂载</span></span><br><span class="line">mount --make-shared /volume1</span><br></pre></td></tr></table></figure>
+
+<p>不然后面 <code>mount</code> 的时候可能会遇到下面👇这样的错误</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker: Error response from daemon: linux mounts: path &#x2F;volume1&#x2F;docker&#x2F;webdav is mounted on &#x2F;volume1 but it is not a shared mount.</span><br></pre></td></tr></table></figure>
+
+<p>这条命令在群晖重启后需要重新执行，所以我们可以把这句命令，通过 <code>任务计划</code> 加到开机脚本中</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210617233810.png"></p>
+<p>这是一个触发任务，事件是开机</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210617233845.png"></p>
+<p>邮件发不发看个人需要，主要是运行脚本</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/06/20210617233951.png"></p>
+<h2 id="第三步、启动容器"><a href="#第三步、启动容器" class="headerlink" title="第三步、启动容器"></a>第三步、启动容器</h2><p>在 <code>ssh</code> 客户端中执行下面👇的命令即可</p>
+<blockquote>
+<p>除了挂载的卷，其他跟在 <code>CentOS</code> 上是一模一样的</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">--name webdav-client \</span><br><span class="line">--privileged \</span><br><span class="line">--device /dev/fuse \</span><br><span class="line">-e WEBDRIVE_USER=admin \</span><br><span class="line">-e WEBDRIVE_PASSWORD=123456 \</span><br><span class="line">-e WEBDRIVE_URL=http://192.168.0.199:8123/ \</span><br><span class="line">-e PUID=1000 \</span><br><span class="line">-v /volume1/docker/webdav:/mnt/webdrive:shared \</span><br><span class="line">wbsu2003/webdav-client</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110121452684.png"></p>
+<p>容器运行成功后，在 <code>FileStation</code> 中查看，已经获取到了云盘的目录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110121450349.png"></p>
+<p>可以像本地资源一样使用，现在来试试 <code>Airsonic</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110121514166.png"></p>
+<p>开始扫描，记得勾选 <code>快速模式</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110121516527.png"></p>
+<p>但是播放就不行了，就算是预览个图片感觉都很慢，可能跟 <code>WebDAV</code> 的机制有关系，反正对老苏来说没有什么实际意义</p>
+<h1 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h1><ol>
+<li>和 <code>RcloneBrowser</code> 、<code>CloudDrive</code> 一样，在复制的时候也会报错，看来基于容器的 <code>fuse</code> 映射在群晖的 <code>FileStation</code> 上是无解的</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110121525049.png"></p>
+<ol start="2">
+<li><p>不支持密码和账号为空的 <code>WebDAV</code> 挂载，返回错误 <code>/sbin/mount.davfs:/etc/davfs2/secrets:69: malformed line</code>，但是因为问题 <code>1</code> 的缘故，老苏已经不想再继续下去</p>
+</li>
+<li><p>虽然没测坚果云，但老苏知道肯定不行，因为坚果云的 <code>WebDAV</code> 服务器不支持 <code>Class 1</code>，需要在 <code>davfs2.conf</code> 中改为 <code>ignore_dav_header 1</code>，老苏压根没做处理</p>
+</li>
+</ol>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>如果你需要一个通用的 <code>WebDAV Client</code>，建议去试试 <code>efrecon/webdav-client</code>，比老苏写的严谨，在容器停止的时候，做了 <code>unmount</code> 处理，规避了很多问题，比如导致 <code>FileStation</code> 不能列出文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110122253777.png"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 生成容器</span></span><br><span class="line">docker run -it --rm \</span><br><span class="line">    --device /dev/fuse \</span><br><span class="line">    --cap-add SYS_ADMIN \</span><br><span class="line">    --security-opt <span class="string">&quot;apparmor=unconfined&quot;</span> \</span><br><span class="line">    --env <span class="string">&quot;WEBDRIVE_USERNAME=&lt;YourUserName&gt;&quot;</span> \</span><br><span class="line">    --env <span class="string">&quot;WEBDRIVE_PASSWORD=&lt;SuperSecretPassword&gt;&quot;</span> \</span><br><span class="line">    --env <span class="string">&quot;WEBDRIVE_URL=https://dav.box.com/dav&quot;</span> \</span><br><span class="line">    --env <span class="string">&quot;DAVFS2_ASK_AUTH=0&quot;</span> \</span><br><span class="line">    -v /mnt/tmp:/mnt/webdrive:rshared \</span><br><span class="line">    efrecon/webdav-client</span><br></pre></td></tr></table></figure>
+
+<p>不过都是基于同样的技术实现的，所以遗留 <code>问题 1</code> 也同样存在，速度各方面也没太大的差异</p>
+<p>虽然不算达成了目标，但是在折腾的过程中还是学到了很多东西</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>volga629/davfs2: davfs2 is a Linux tool for connecting to WebDAV shares as though they were local disks.<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3ZvbGdhNjI5L2RhdmZzMg==">https://github.com/volga629/davfs2<i class="fa fa-external-link-alt"></i></span></p>
+<p>davfs2.conf: Configuration file for mount.davfs - Linux Man Pages (5)<br>地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cuc3lzdHV0b3JpYWxzLmNvbS9kb2NzL2xpbnV4L21hbi81LWRhdmZzMi5jb25mLw==">https://www.systutorials.com/docs/linux/man/5-davfs2.conf/<i class="fa fa-external-link-alt"></i></span></p>
+<p>如何在一个Docker中同时运行多个程序进程?_dianfu2892的博客-程序员宅基地 - 程序员宅基地<br>地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cuY3h5empkLmNvbS9hcnRpY2xlL2RpYW5mdTI4OTIvMTAxNDY2NTk0">https://www.cxyzjd.com/article/dianfu2892/101466594<i class="fa fa-external-link-alt"></i></span></p>
+<p>richardregeer/docker-davfs-webdisk: Use docker to mount a davfs webdisk<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JpY2hhcmRyZWdlZXIvZG9ja2VyLWRhdmZzLXdlYmRpc2s=">https://github.com/richardregeer/docker-davfs-webdisk<i class="fa fa-external-link-alt"></i></span></p>
+<p>efrecon/docker-webdav-client: WebDAV client for Docker with easy access to all davfs2 options!<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2VmcmVjb24vZG9ja2VyLXdlYmRhdi1jbGllbnQ=">https://github.com/efrecon/docker-webdav-client<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>WebDAV</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>交互式在线辅导工具Nettu Meet</title>
     <url>/2021/11/08/%E4%BA%A4%E4%BA%92%E5%BC%8F%E5%9C%A8%E7%BA%BF%E8%BE%85%E5%AF%BC%E5%B7%A5%E5%85%B7Nettu%20Meet/</url>
     <content><![CDATA[<p><strong>什么是 Nettu Meet ？</strong></p>
@@ -16041,7 +16153,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjMTAwOyYjeDZkOyYjMTA1OyYjeDZlOyYjeDQwOyYjMTExOyYjeDcwOyYjeDY1OyYjeDZlOyYjeDczOyYjeDc1OyYjeDYyOyYjMTE2OyYjeDY5OyYjeDc0OyYjeDZjOyYjMTAxOyYjMTE1OyYjNDY7JiN4NmY7JiMxMTQ7JiMxMDM7">&#x61;&#100;&#x6d;&#105;&#x6e;&#x40;&#111;&#x70;&#x65;&#x6e;&#x73;&#x75;&#x62;&#116;&#x69;&#x74;&#x6c;&#101;&#115;&#46;&#x6f;&#114;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiMxMDA7JiMxMDk7JiMxMDU7JiMxMTA7JiM2NDsmIzExMTsmI3g3MDsmIzEwMTsmIzExMDsmIzExNTsmI3g3NTsmI3g2MjsmI3g3NDsmI3g2OTsmI3g3NDsmI3g2YzsmI3g2NTsmIzExNTsmIzQ2OyYjMTExOyYjMTE0OyYjeDY3Ow==">&#97;&#100;&#109;&#105;&#110;&#64;&#111;&#x70;&#101;&#110;&#115;&#x75;&#x62;&#x74;&#x69;&#x74;&#x6c;&#x65;&#115;&#46;&#111;&#114;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
@@ -16107,8 +16219,8 @@
       </categories>
       <tags>
         <tag>群晖</tag>
-        <tag>torrent</tag>
         <tag>多媒体</tag>
+        <tag>torrent</tag>
       </tags>
   </entry>
   <entry>
