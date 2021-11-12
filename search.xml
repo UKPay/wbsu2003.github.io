@@ -1,6 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>支持手绘风格的白板Excalidraw</title>
+    <url>/2021/11/12/%E6%89%8B%E7%BB%98%E9%A3%8E%E6%A0%BC%E7%9A%84%E7%99%BD%E6%9D%BFExcalidraw/</url>
+    <content><![CDATA[<p><strong>什么是 Excalidraw ?</strong></p>
+<blockquote>
+<p><code>Excalidraw</code> 是一款手绘风格流程图、示意图、架构图在线绘制工具，也可以作为会议画板使用，支持协同和端到端的加密。</p>
+</blockquote>
+<p>老苏之前写过类似应用：</p>
+<ul>
+<li><a href="https://laosu.ml/2020/05/10/%E5%85%8D%E8%B4%B9%E5%9C%A8%E7%BA%BF%E6%B5%81%E7%A8%8B%E5%9B%BEDraw.io/">免费在线流程图Draw.io</a></li>
+<li><a href="https://laosu.ml/2020/12/07/%E5%8D%8F%E5%90%8C%E5%B7%A5%E4%BD%9C%E4%B9%8B%E7%94%B5%E5%AD%90%E7%99%BD%E6%9D%BFwbo/?highlight=%E7%99%BD%E6%9D%BF">协同工作之电子白板wbo</a></li>
+</ul>
+<p>而 <code>Excalidraw</code> 有点像是两者的结合体，既像 <code>wbo</code> 一样具有常用的白板功能，又可以像 <code>Draw.io</code> 一样支持各种图库</p>
+<p>官方试用地址：<span class="exturl" data-url="aHR0cHM6Ly9leGNhbGlkcmF3LmNvbS8=">https://excalidraw.com<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>在群晖上以 Docker 方式安装。</p>
+<p>在注册表中搜索 <code>excalidraw</code> ，选择第一个 <code>excalidraw/excalidraw</code>，版本选择 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110011127853.png"></p>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>直接用了默认的端口 <code>2480</code> </p>
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>2480</code></td>
+<td align="center"><code>80</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110011242511.png"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>在浏览器中输入 <code>http://群晖IP:2480</code> 就能看到主界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110011247932.png"></p>
+<h2 id="基本功能"><a href="#基本功能" class="headerlink" title="基本功能"></a>基本功能</h2><p>界面简洁，上手简单，操作习惯和大部分制图软件相似，具备白板所需要的基本功能，提供了方形、圆形、自由画笔和箭头直线等常用图形工具</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110011303989.png"></p>
+<p>支持导出 <code>png</code>、<code>svg</code> 两种图像格式</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110011307356.png"></p>
+<p>支持保存到本地，需要时可以导入继续编辑</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110011321996.png"></p>
+<h2 id="公共图库"><a href="#公共图库" class="headerlink" title="公共图库"></a>公共图库</h2><p>除了基本的绘图功能外，<code>Excalidraw</code> 还提供了库功能</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110011327250.png"></p>
+<p>点 <code>浏览库</code>，会新开一个页面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110011329281.png"></p>
+<p>可以 <code>➡️ Add to Excalidraw</code> </p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110011330639.png"></p>
+<p>直接拖拽到编辑区</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110011335665.png"></p>
+<p>可以根据需要添加，都是手绘风格的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110011336152.png"></p>
+<p>如果经常做分析，可以试试 <code>Data Viz</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110011341973.png"></p>
+<p>支持从 <code>Excel</code> 中 <code>ctrl+c</code> 复制表格</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110011632363.png"></p>
+<p>然后在 <code>Excalidraw</code> 中 <code>ctrl+v</code> 粘贴，选择好图表类型</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110011633299.png"></p>
+<p>自动生成图表</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110011633401.png"></p>
+<h2 id="协作功能"><a href="#协作功能" class="headerlink" title="协作功能"></a>协作功能</h2><p>这个 <code>docker</code> 实际上只是 <code>Excalidraw</code> 客户端，所以你创建的实例不支持共享或协作功能</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110011253950.png"></p>
+<p>我们自己搭建的是启动不了会议的，而官网的则可以</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110011255162.png"></p>
+<h1 id="Obsidian-插件"><a href="#Obsidian-插件" class="headerlink" title="Obsidian 插件"></a>Obsidian 插件</h1><blockquote>
+<p>这个和 <code>docker</code> 本身已经没有关系，是 <code>Excalidraw</code> 的另一种应用场景</p>
+</blockquote>
+<p>在 <code>Obsidian</code> 的 <code>设置</code> –&gt; <code>第三方插件</code> –&gt; <code>社区插件</code> –&gt; <code>浏览</code> 中，找到 <code>Excalidraw</code>，点 <code>安装</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110011547988.png"></p>
+<p>安装完成后，默认并没有启用</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110011553341.png"></p>
+<p>启用后，左侧的图标会多出像回形针（领带？笔尖？）的 <code>Excalidraw</code> 图标</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110011556181.png"></p>
+<p>使用方法是完全一样的，除了库的加载方式不能再使用 <code>➡️ Add to Excalidraw</code> ，而是要先 <code>⬇️ Download</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110011603244.png"></p>
+<p>画的图默认在库根目录下的 <code>Excalidraw</code> 目录中</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>excalidraw/excalidraw: Virtual whiteboard for sketching hand-drawn like diagrams<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2V4Y2FsaWRyYXcvZXhjYWxpZHJhdw==">https://github.com/excalidraw/excalidraw<i class="fa fa-external-link-alt"></i></span></p>
+<p>Excalidraw<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9leGNhbGlkcmF3LmNvbS8=">https://excalidraw.com<i class="fa fa-external-link-alt"></i></span></p>
+<p>Excalidraw在线手绘图表工具，帮你摆脱一成不变 - 超级PDF<br>地址：<span class="exturl" data-url="aHR0cHM6Ly94cGRmLm5ldC93aWtpL2tub3dsZWRnZS8xMzg5OTcwMzQwNDEwNTYwNTEyLmh0bWw=">https://xpdf.net/wiki/knowledge/1389970340410560512.html<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>白板</tag>
+        <tag>流程图</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>将webdav挂载成为群晖的本地盘</title>
     <url>/2021/11/10/%E5%B0%86webdav%E6%8C%82%E8%BD%BD%E6%88%90%E4%B8%BA%E7%BE%A4%E6%99%96%E7%9A%84%E6%9C%AC%E5%9C%B0%E7%9B%98/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>本文记录的是国庆节期间在家做的一个研究和探索的过程，之所以没有提 <code>CloudDrive</code>，是老苏最终想实现的是一个通用的 <code>WebDAV</code> 客户端，而不仅仅是挂载阿里云盘。</p>
@@ -16153,7 +16242,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiMxMDA7JiMxMDk7JiMxMDU7JiMxMTA7JiM2NDsmIzExMTsmI3g3MDsmIzEwMTsmIzExMDsmIzExNTsmI3g3NTsmI3g2MjsmI3g3NDsmI3g2OTsmI3g3NDsmI3g2YzsmI3g2NTsmIzExNTsmIzQ2OyYjMTExOyYjMTE0OyYjeDY3Ow==">&#97;&#100;&#109;&#105;&#110;&#64;&#111;&#x70;&#101;&#110;&#115;&#x75;&#x62;&#x74;&#x69;&#x74;&#x6c;&#x65;&#115;&#46;&#111;&#114;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjMTAwOyYjeDZkOyYjeDY5OyYjeDZlOyYjNjQ7JiN4NmY7JiMxMTI7JiN4NjU7JiMxMTA7JiMxMTU7JiN4NzU7JiN4NjI7JiN4NzQ7JiMxMDU7JiN4NzQ7JiN4NmM7JiMxMDE7JiMxMTU7JiN4MmU7JiMxMTE7JiN4NzI7JiN4Njc7">&#x61;&#100;&#x6d;&#x69;&#x6e;&#64;&#x6f;&#112;&#x65;&#110;&#115;&#x75;&#x62;&#x74;&#105;&#x74;&#x6c;&#101;&#115;&#x2e;&#111;&#x72;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>

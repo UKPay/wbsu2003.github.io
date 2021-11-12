@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-11-10T10:56:09.235Z</updated>
+  <updated>2021-11-12T04:51:40.241Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>支持手绘风格的白板Excalidraw</title>
+    <link href="https://laosu.ml/2021/11/12/%E6%89%8B%E7%BB%98%E9%A3%8E%E6%A0%BC%E7%9A%84%E7%99%BD%E6%9D%BFExcalidraw/"/>
+    <id>https://laosu.ml/2021/11/12/%E6%89%8B%E7%BB%98%E9%A3%8E%E6%A0%BC%E7%9A%84%E7%99%BD%E6%9D%BFExcalidraw/</id>
+    <published>2021-11-12T04:50:00.000Z</published>
+    <updated>2021-11-12T04:51:40.241Z</updated>
+    
+    
+    <summary type="html">Excalidraw 是一款完全免费的手绘风格绘图白板应用，能快速画出漂亮的流程图、示意图甚至是图表。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="白板" scheme="https://laosu.ml/tags/%E7%99%BD%E6%9D%BF/"/>
+    
+    <category term="流程图" scheme="https://laosu.ml/tags/%E6%B5%81%E7%A8%8B%E5%9B%BE/"/>
+    
+  </entry>
   
   <entry>
     <title>将webdav挂载成为群晖的本地盘</title>
@@ -464,29 +489,6 @@
     <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
     
     <category term="网盘" scheme="https://laosu.ml/tags/%E7%BD%91%E7%9B%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>能在浏览器中运行桌面版linux的Webtop</title>
-    <link href="https://laosu.ml/2021/09/27/%E8%83%BD%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E8%BF%90%E8%A1%8C%E6%A1%8C%E9%9D%A2%E7%89%88linux%E7%9A%84Webtop/"/>
-    <id>https://laosu.ml/2021/09/27/%E8%83%BD%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E8%BF%90%E8%A1%8C%E6%A1%8C%E9%9D%A2%E7%89%88linux%E7%9A%84Webtop/</id>
-    <published>2021-09-27T11:00:00.000Z</published>
-    <updated>2021-09-27T11:18:44.167Z</updated>
-    
-    
-    <summary type="html">WebTop 是一个在浏览器中运行的完整 linux 桌面环境。</summary>
-    
-    
-    
-    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
-    
-    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
-    
-    <category term="Linux" scheme="https://laosu.ml/tags/Linux/"/>
     
   </entry>
   
