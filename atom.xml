@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-11-12T04:51:40.241Z</updated>
+  <updated>2021-11-15T04:50:24.819Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>日程安排工具Calendso</title>
+    <link href="https://laosu.ml/2021/11/15/%E6%97%A5%E7%A8%8B%E5%AE%89%E6%8E%92%E5%B7%A5%E5%85%B7Calendso/"/>
+    <id>https://laosu.ml/2021/11/15/%E6%97%A5%E7%A8%8B%E5%AE%89%E6%8E%92%E5%B7%A5%E5%85%B7Calendso/</id>
+    <published>2021-11-15T04:40:00.000Z</published>
+    <updated>2021-11-15T04:50:24.819Z</updated>
+    
+    
+    <summary type="html">Calendso 是一款日程安排工具，也是 Calendly 的开源替代方案。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="日程安排" scheme="https://laosu.ml/tags/%E6%97%A5%E7%A8%8B%E5%AE%89%E6%8E%92/"/>
+    
+  </entry>
   
   <entry>
     <title>支持手绘风格的白板Excalidraw</title>
@@ -466,29 +489,6 @@
     <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
     
     <category term="问卷" scheme="https://laosu.ml/tags/%E9%97%AE%E5%8D%B7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>开源生产力套件Nextcloud</title>
-    <link href="https://laosu.ml/2021/09/29/%E5%BC%80%E6%BA%90%E7%94%9F%E4%BA%A7%E5%8A%9B%E5%A5%97%E4%BB%B6Nextcloud/"/>
-    <id>https://laosu.ml/2021/09/29/%E5%BC%80%E6%BA%90%E7%94%9F%E4%BA%A7%E5%8A%9B%E5%A5%97%E4%BB%B6Nextcloud/</id>
-    <published>2021-09-29T05:00:00.000Z</published>
-    <updated>2021-09-29T09:26:05.297Z</updated>
-    
-    
-    <summary type="html">Nextcloud 不仅仅是支持同步服务的云盘，也是团队协作工具。</summary>
-    
-    
-    
-    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
-    
-    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
-    
-    <category term="网盘" scheme="https://laosu.ml/tags/%E7%BD%91%E7%9B%98/"/>
     
   </entry>
   
