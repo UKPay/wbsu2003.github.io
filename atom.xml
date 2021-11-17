@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-11-15T04:50:24.819Z</updated>
+  <updated>2021-11-17T04:22:47.633Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>点对点加密文件传输工具Filegogo</title>
+    <link href="https://laosu.ml/2021/11/17/%E7%82%B9%E5%AF%B9%E7%82%B9%E5%8A%A0%E5%AF%86%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E5%B7%A5%E5%85%B7Filegogo/"/>
+    <id>https://laosu.ml/2021/11/17/%E7%82%B9%E5%AF%B9%E7%82%B9%E5%8A%A0%E5%AF%86%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E5%B7%A5%E5%85%B7Filegogo/</id>
+    <published>2021-11-17T04:20:00.000Z</published>
+    <updated>2021-11-17T04:22:47.633Z</updated>
+    
+    
+    <summary type="html">Filegogo 是一款基于 WebRTC 开发的点对点加密文件传输工具。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="WebRTC" scheme="https://laosu.ml/tags/WebRTC/"/>
+    
+    <category term="网络" scheme="https://laosu.ml/tags/%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
   
   <entry>
     <title>日程安排工具Calendso</title>
@@ -466,29 +491,6 @@
     <category term="路由器" scheme="https://laosu.ml/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/"/>
     
     <category term="R6300V2" scheme="https://laosu.ml/tags/R6300V2/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>在线问卷工具LimeSurvey</title>
-    <link href="https://laosu.ml/2021/10/01/%E5%9C%A8%E7%BA%BF%E9%97%AE%E5%8D%B7%E5%B7%A5%E5%85%B7LimeSurvey/"/>
-    <id>https://laosu.ml/2021/10/01/%E5%9C%A8%E7%BA%BF%E9%97%AE%E5%8D%B7%E5%B7%A5%E5%85%B7LimeSurvey/</id>
-    <published>2021-10-01T11:00:00.000Z</published>
-    <updated>2021-10-01T02:11:02.596Z</updated>
-    
-    
-    <summary type="html">LimeSurvey 是一款开源免费的在线问卷管理系统，具有问卷的设计、修改、发布、回收和统计等多项功能。</summary>
-    
-    
-    
-    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
-    
-    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
-    
-    <category term="问卷" scheme="https://laosu.ml/tags/%E9%97%AE%E5%8D%B7/"/>
     
   </entry>
   
