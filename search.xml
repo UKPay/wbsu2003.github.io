@@ -1,6 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>ASCII-Generator.site生成ASCII艺术字符图</title>
+    <url>/2021/11/19/ASCII-Generator.site%E5%9C%A8%E7%BA%BF%E7%94%9F%E6%88%90ASCII%E8%89%BA%E6%9C%AF%E5%AD%97%E7%AC%A6%E5%9B%BE/</url>
+    <content><![CDATA[<p><strong>什么是 ASCII-Generator.site ?</strong></p>
+<blockquote>
+<p><code>ASCII-Generator.site</code> 是一个 <code>Django</code> 网站，用于从图像或文本中生成 <code>ASCII</code> 艺术字符图 🎨</p>
+</blockquote>
+<p><strong>什么是 Django ？</strong></p>
+<blockquote>
+<p><code>Django</code> 是用 <code>Python</code> 写的一个自由和开放源码的 <code>WEB</code> 程序框架，采用了<code>MTV</code> 的框架模式，即<code>模型 M</code> ，<code>视图 V</code> 和 <code>模版 T</code>。能帮助你更快、更容易地开发 <code>WEB</code> 站点。</p>
+</blockquote>
+<p>官方体验地址：<span class="exturl" data-url="aHR0cHM6Ly9hc2NpaS1nZW5lcmF0b3Iuc2l0ZS8=">https://ascii-generator.site/<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>在群晖上以 Docker 方式安装。</p>
+<p>在注册表中搜索 <code>asciigen</code> ，选择第一个 <code>wbsu2003/asciigen</code>，版本选择 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110261846125.png"></p>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>直接用了默认的端口 <code>1234</code> </p>
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>1234</code></td>
+<td align="center"><code>1234</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110261903466.png"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>在浏览器中输入 <code>http://群晖IP:1234</code> 就能看到主界面，下面是隐私策略，点 <code>I Agree</code> 即可 </p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202110261535010.png"></p>
+<h2 id="Image-to-ASCII"><a href="#Image-to-ASCII" class="headerlink" title="Image to ASCII"></a>Image to ASCII</h2><p>顶部可以选择 <code>Image to ASCII</code> 或者  <code>Text to ASCII</code>，默认是 <code>Image to ASCII</code>，选择一张黑白图片</p>
+<blockquote>
+<p>为了方便说明，老苏把官方的动图做了处理，分成了几段</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110261938096.gif"></p>
+<p>试试彩图</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110261939342.gif"></p>
+<p>老苏上传了一张明星的照片，能看出来是谁嘛？</p>
+<blockquote>
+<p>谜底在文末揭晓</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110261949442.png"></p>
+<h2 id="Text-to-ASCII"><a href="#Text-to-ASCII" class="headerlink" title="Text to ASCII"></a>Text to ASCII</h2><p><code>Text to ASCII</code> 只要输入转变的文字即可，但是并不支持中文</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110261944067.png"></p>
+<p>继续动图</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110261941596.gif"></p>
+<h1 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h1><blockquote>
+<p>考虑到大部分人对构建不感兴趣，老苏这次把构建部分放到了后面</p>
+</blockquote>
+<p> <code>Dockerfile</code> 是基于项目源代码构建的，做了比较多的优化，主要是都换成了国内源，解决了构建速度慢、构建不成功的问题，另外将镜像从 <code>2G</code> 减到了 <code>1G</code> ，后续将会成为老苏构建  <code>Python</code>、<code>Django</code> 项目的模板</p>
+<blockquote>
+<p>感觉还有进一步优化的空间，慢慢来</p>
+</blockquote>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> python:<span class="number">3.8</span>-slim</span><br><span class="line"><span class="keyword">LABEL</span><span class="bash"> maintainer=laosu&lt;wbsu2003@gmail.com&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># set work directory</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /ags</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> ./requirements.txt /ags</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># set environment variables</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 防止 Python 将 pyc 文件复制到容器中</span></span><br><span class="line"><span class="keyword">ENV</span> PYTHONDONTWRITEBYTECODE <span class="number">1</span></span><br><span class="line"><span class="comment"># 确保将 Python 输出记录到终端，从而可以实时监控 Django 日志。</span></span><br><span class="line"><span class="keyword">ENV</span> PYTHONUNBUFFERED <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Environment</span></span><br><span class="line"><span class="comment"># 可更换的源：</span></span><br><span class="line"><span class="comment"># 1.阿里源：mirrors.aliyun.com</span></span><br><span class="line"><span class="comment"># 2.清华源：mirrors.tuna.tsinghua.edu.cn</span></span><br><span class="line"><span class="comment"># 3.网易源：mirrors.163.com</span></span><br><span class="line"><span class="comment">#RUN sed -i s@/deb.debian.org/@/mirrors.aliyun.com/@g /etc/apt/sources.list \</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> sed -i s@/deb.debian.org/@/mirrors.163.com/@g /etc/apt/sources.list \</span></span><br><span class="line"><span class="bash">    &amp;&amp; rm -Rf /var/lib/apt/lists/* \</span></span><br><span class="line"><span class="bash">    &amp;&amp; apt-get clean \</span></span><br><span class="line"><span class="bash">    &amp;&amp; apt-get -y update --fix-missing -o Acquire::http::No-Cache=True \</span></span><br><span class="line"><span class="bash">    &amp;&amp; apt-get install -y python3-pip python3-opencv libpq-dev </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 可更换的源：</span></span><br><span class="line"><span class="comment"># 1.清华源：https://pypi.tuna.tsinghua.edu.cn/simple</span></span><br><span class="line"><span class="comment"># 2.豆瓣源：http://pypi.douban.com/simple</span></span><br><span class="line"><span class="comment"># 3.阿里源：https://mirrors.aliyun.com/pypi/simple</span></span><br><span class="line"><span class="comment"># 4.腾讯源：http://mirrors.cloud.tencent.com/pypi/simple</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> pip install --upgrade pip -i https://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com \</span></span><br><span class="line"><span class="bash">   &amp;&amp; pip install -r requirements.txt</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># copy project</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> . /ags</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> chmod +x manage.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Application</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">1234</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">&quot;python&quot;</span>, <span class="string">&quot;manage.py&quot;</span>, <span class="string">&quot;runserver&quot;</span>, <span class="string">&quot;0.0.0.0:1234&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p>构建镜像和容器运行的基本命令如下👇</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 下载代码</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/hermanTenuki/ASCII-Generator.site.git ags</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者镜像站点</span></span><br><span class="line">git <span class="built_in">clone</span> https://hub.fastgit.org/hermanTenuki/ASCII-Generator.site.git ags</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入目录</span></span><br><span class="line"><span class="built_in">cd</span> ags</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将 `Dockerfile` 文件放到代码根目录中</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改 project/settings.py 文件</span></span><br><span class="line"><span class="comment"># 1.将 EASY_RUN_MODE 从 False 设置为 True</span></span><br><span class="line"><span class="comment"># 2.将 TIME_ZONE=&#x27;UTC&#x27; 改为 `Asia/Shanghai`</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建镜像</span></span><br><span class="line">docker build -t wbsu2003/asciigen:v1 .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行容器</span></span><br><span class="line">docker run -d \</span><br><span class="line">--name=wbsu2003-asciigen1 \</span><br><span class="line">-p 1234:1234 \</span><br><span class="line">wbsu2003/asciigen:v1</span><br></pre></td></tr></table></figure>
+
+<p>谜底揭晓</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110261958152.png"></p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>hermanTenuki/ASCII-Generator.site: Django website for generating ASCII-arts out of images or text 🎨<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hlcm1hblRlbnVraS9BU0NJSS1HZW5lcmF0b3Iuc2l0ZQ==">https://github.com/hermanTenuki/ASCII-Generator.site<i class="fa fa-external-link-alt"></i></span></p>
+<p>在 docker 中运行 apt-get update 报错 returned a non-zero code: 100 - Rioka - 博客园<br>地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vcmlva2EvcC8xMzgyMTU5OC5odG1s">https://www.cnblogs.com/rioka/p/13821598.html<i class="fa fa-external-link-alt"></i></span></p>
+<p>How to Create Django Docker Images | Engineering Education (EngEd) Program | Section<br>地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cuc2VjdGlvbi5pby9lbmdpbmVlcmluZy1lZHVjYXRpb24vZGphbmdvLWRvY2tlci8=">https://www.section.io/engineering-education/django-docker/<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>工具</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>点对点加密文件传输工具Filegogo</title>
     <url>/2021/11/17/%E7%82%B9%E5%AF%B9%E7%82%B9%E5%8A%A0%E5%AF%86%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E5%B7%A5%E5%85%B7Filegogo/</url>
     <content><![CDATA[<p><strong>什么是 Filegogo ?</strong></p>
@@ -11005,8 +11081,8 @@
       <tags>
         <tag>群晖</tag>
         <tag>docker</tag>
-        <tag>音乐</tag>
         <tag>工具</tag>
+        <tag>音乐</tag>
       </tags>
   </entry>
   <entry>
@@ -15287,8 +15363,8 @@
       </categories>
       <tags>
         <tag>群晖</tag>
-        <tag>多媒体</tag>
         <tag>工具</tag>
+        <tag>多媒体</tag>
       </tags>
   </entry>
   <entry>
@@ -16578,7 +16654,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiMxMDA7JiMxMDk7JiMxMDU7JiN4NmU7JiM2NDsmI3g2ZjsmI3g3MDsmIzEwMTsmI3g2ZTsmI3g3MzsmIzExNzsmI3g2MjsmI3g3NDsmIzEwNTsmI3g3NDsmIzEwODsmIzEwMTsmIzExNTsmIzQ2OyYjMTExOyYjeDcyOyYjeDY3Ow==">&#97;&#100;&#109;&#105;&#x6e;&#64;&#x6f;&#x70;&#101;&#x6e;&#x73;&#117;&#x62;&#x74;&#105;&#x74;&#108;&#101;&#115;&#46;&#111;&#x72;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiMxMDA7JiN4NmQ7JiN4Njk7JiN4NmU7JiM2NDsmIzExMTsmIzExMjsmI3g2NTsmI3g2ZTsmI3g3MzsmI3g3NTsmIzk4OyYjeDc0OyYjMTA1OyYjMTE2OyYjMTA4OyYjeDY1OyYjeDczOyYjeDJlOyYjMTExOyYjMTE0OyYjMTAzOw==">&#97;&#100;&#x6d;&#x69;&#x6e;&#64;&#111;&#112;&#x65;&#x6e;&#x73;&#x75;&#98;&#x74;&#105;&#116;&#108;&#x65;&#x73;&#x2e;&#111;&#114;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
@@ -16644,8 +16720,8 @@
       </categories>
       <tags>
         <tag>群晖</tag>
-        <tag>torrent</tag>
         <tag>多媒体</tag>
+        <tag>torrent</tag>
       </tags>
   </entry>
   <entry>
