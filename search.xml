@@ -1,6 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>帮助管理个人交际关系的Monica</title>
+    <url>/2021/11/24/%E5%B8%AE%E5%8A%A9%E7%AE%A1%E7%90%86%E4%B8%AA%E4%BA%BA%E4%BA%A4%E9%99%85%E5%85%B3%E7%B3%BB%E7%9A%84Monica/</url>
+    <content><![CDATA[<p>你能记住你所有朋友的孩子的名字吗？你还记得你哥哥的结婚纪念日吗？你能说出你上次给你祖母打电话是什么时候，你谈了什么吗？</p>
+<p><code>Monica</code> 可让您快速轻松地记录所有这些信息，这样您就可以成为更好的朋友、家人或配偶。</p>
+<p><strong>什么是 Monica ？</strong></p>
+<blockquote>
+<p> <code>Monica</code> 是一款用于管理个人交际关系的开源 <code>Web</code> 应用系统。基于 <code>PHP</code> 和 <code>MySQL</code>，可做为个人的 <code>CRM</code> 系统，帮助您记住关于你的朋友、家人和商业关系的一切。</p>
+</blockquote>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="建数据库"><a href="#建数据库" class="headerlink" title="建数据库"></a>建数据库</h2><p>数据库直接用的群晖的 <code>MariaDB 10</code>，在 <code>phpMyAdmin</code> 中创建了表名为 <code>monica</code> 的空表</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110282159997.png"></p>
+<h2 id="安装-Monica"><a href="#安装-Monica" class="headerlink" title="安装 Monica"></a>安装 Monica</h2><p> <code>monica</code> 最新版本是 <code>3.3.1</code>，根据基础镜像又分为了 <code>3</code> 个版本，分别是 <code>3.3.1-apache</code>、<code>3.3.1-fpm</code>、<code>3.3.1-fpm-alpine</code></p>
+<p>不能用 <code>latest</code> 版本，因为 <code>latest</code> 版默认是基于 <code>apache</code> 的 ，在初始化时会出现下面的错误</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Function not implemented: AH00141: Could not initialize random number generator</span><br></pre></td></tr></table></figure>
+
+<p>关于这个错误的原因，老苏在 『 <a href="https://laosu.ml/2021/09/29/%E5%BC%80%E6%BA%90%E7%94%9F%E4%BA%A7%E5%8A%9B%E5%A5%97%E4%BB%B6Nextcloud">开源生产力套件Nextcloud</a> 』一文中已经讲过，有兴趣的可以去翻翻</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110282202616.png"></p>
+<p>如果使用 <code>fpm</code> 镜像，其镜像本身未内置 <code>web</code> 服务器，需要依赖于 <code>nginx</code> 或者其他 <code>web</code> 服务，我们按官方的教程用 <code>docker-compose</code> 来安装，因为用了群晖自带的数据库，所以要对 <code>docker-compose.yml</code> 进行精简和修改</p>
+<blockquote>
+<ul>
+<li><code>&lt;host IP:port&gt;</code> ：老苏群晖的 <code>IP</code> 为 <code>192.168.0.197</code>， <code>MariaDB 10</code> 的端口是 <code>3307</code> ，所以 <code>DB_HOST=192.168.0.197:3307</code></li>
+<li><code>&lt;your db passwor&gt;</code>：为新增数据库账号 <code>monica</code> 时设置的密码</li>
+<li><code>ports: 3780</code>  如果不冲突就直接默认，否则就要修改为一个不冲突的端口</li>
+</ul>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3.4&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">monica:fpm</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DB_HOST=&lt;host</span> <span class="string">IP:port&gt;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DB_USERNAME=monica</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DB_PASSWORD=&lt;your</span> <span class="string">db</span> <span class="string">passwor&gt;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">data:/var/www/html/storage</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">./web</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">3780</span><span class="string">:80</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">app</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">data:/var/www/html/storage:ro</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">data:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">data</span></span><br></pre></td></tr></table></figure>
+
+<p>在 <code>docker</code> 文件夹中，创建一个新文件夹，并将其命名为 <code>monica</code>，然后在 <code>SSH</code> 客户端中执行下面👇的命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 进入目录</span></span><br><span class="line"><span class="built_in">cd</span> /volume2/docker/monica</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将 docker-compose.yml 下载到 monica 目录</span></span><br><span class="line">curl -sSL https://raw.githubusercontent.com/wbsu2003/Dockerfile/main/monica/docker-compose.yml -o docker-compose.yml</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果上面那条 github 访问不了可以试试镜像站点，上条执行通过这条就略过</span></span><br><span class="line">curl -sSL https://raw.fastgit.org/wbsu2003/Dockerfile/main/monica/docker-compose.yml -o docker-compose.yml</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 web 子目录</span></span><br><span class="line">mkdir web</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载文件</span></span><br><span class="line">curl -sSL https://raw.githubusercontent.com/monicahq/docker/master/.examples/nginx-proxy/web/nginx.conf -o web/nginx.conf</span><br><span class="line">curl -sSL https://raw.githubusercontent.com/monicahq/docker/master/.examples/nginx-proxy/web/Dockerfile -o web/Dockerfile</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果上面那条 github 访问不了可以试试镜像站点，上条执行通过这条就略过</span></span><br><span class="line">curl -sSL https://raw.fastgit.org/monicahq/docker/master/.examples/supervisor/fpm/web/nginx.conf -o web/nginx.conf</span><br><span class="line">curl -sSL https://raw.fastgit.org/monicahq/docker/master/.examples/nginx-proxy/web/Dockerfile -o web/Dockerfile</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改 docker-compose.yml 权限</span></span><br><span class="line">chmod 777 docker-compose.yml</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据需要修改数据库地址、密码、端口等</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 一键启动</span></span><br><span class="line">docker-compose up -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一键停止</span></span><br><span class="line">docker-compose stop</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一键重启</span></span><br><span class="line">docker-compose restart</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一键删除</span></span><br><span class="line">docker-compose down</span><br></pre></td></tr></table></figure>
+
+<p><code>monica</code> 目录结构及文件如下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110282214839.png"></p>
+<p><code>web</code> 目录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110282213656.png"></p>
+<p>一键启动后，如果看到下图就表示成功了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110282150251.png"></p>
+<p>在 <code>docker</code> 管理器中能看到两个容器已经成功启动</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110282151710.png"></p>
+<p>其中 <code>monica:fpm</code> 为拉取的镜像，而 <code>monica_web:latest</code> 是刚刚构建的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110282152128.png"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>程序初始化的时间比较长，等几分钟之后，在浏览器中输入 <code>http://群晖IP:3780</code> 就能看到主界面</p>
+<blockquote>
+<p>默认支持中文，这一点有点出乎意料</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110282127743.png"></p>
+<p>注册完账号就会看到欢迎界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110282217895.png"></p>
+<p>接下来就可以开始添加联系人了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110282219202.png"></p>
+<p>当然更方便的还是导入</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110282222326.png"></p>
+<p>建了几个联系人</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110282237946.png"></p>
+<p>选中一个联系人，可以记录与其相关的各种信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110282236860.png"></p>
+<p>仪表板会显示一些提醒和最近的联系</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110282239301.png"></p>
+<p>功能逻辑还是非常清晰的，关系的积累贵在坚持记录，这一点不容易做到，尤其现在大家都习惯于手机，缺乏手机 <code>app</code> 的支持从而不能随时记录，对 <code>monica</code> 是个很大的限制</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>monicahq/monica: Personal CRM. Remember everything about your friends, family and business relationships.<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21vbmljYWhxL21vbmljYQ==">https://github.com/monicahq/monica<i class="fa fa-external-link-alt"></i></span></p>
+<p>Personal CRM done right - Monica<br>地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cubW9uaWNhaHEuY29tLw==">https://www.monicahq.com/<i class="fa fa-external-link-alt"></i></span></p>
+<p>monicahq/docker: docker image of Monica<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21vbmljYWhxL2RvY2tlciNmcG0tdmVyc2lvbg==">https://github.com/monicahq/docker#fpm-version<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用Trilium Notes建立个人知识库</title>
     <url>/2021/11/22/%E4%BD%BF%E7%94%A8Trilium%20Notes%E5%BB%BA%E7%AB%8B%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93/</url>
     <content><![CDATA[<p><strong>什么是 Trilium Notes ？</strong></p>
@@ -16792,7 +16864,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjMTAwOyYjMTA5OyYjeDY5OyYjMTEwOyYjNjQ7JiMxMTE7JiN4NzA7JiMxMDE7JiN4NmU7JiMxMTU7JiMxMTc7JiM5ODsmIzExNjsmIzEwNTsmI3g3NDsmIzEwODsmI3g2NTsmIzExNTsmI3gyZTsmIzExMTsmIzExNDsmIzEwMzs=">&#x61;&#100;&#109;&#x69;&#110;&#64;&#111;&#x70;&#101;&#x6e;&#115;&#117;&#98;&#116;&#105;&#x74;&#108;&#x65;&#115;&#x2e;&#111;&#114;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiMxMDA7JiN4NmQ7JiN4Njk7JiN4NmU7JiM2NDsmIzExMTsmIzExMjsmI3g2NTsmI3g2ZTsmIzExNTsmIzExNzsmIzk4OyYjeDc0OyYjMTA1OyYjMTE2OyYjeDZjOyYjMTAxOyYjMTE1OyYjeDJlOyYjeDZmOyYjMTE0OyYjMTAzOw==">&#97;&#100;&#x6d;&#x69;&#x6e;&#64;&#111;&#112;&#x65;&#x6e;&#115;&#117;&#98;&#x74;&#105;&#116;&#x6c;&#101;&#115;&#x2e;&#x6f;&#114;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
@@ -17113,8 +17185,8 @@
         <category>各种折腾</category>
       </categories>
       <tags>
-        <tag>Markdown</tag>
         <tag>图床</tag>
+        <tag>Markdown</tag>
         <tag>CDN</tag>
       </tags>
   </entry>
