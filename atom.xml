@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-11-24T04:34:31.588Z</updated>
+  <updated>2021-11-24T04:56:30.860Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://laosu.ml/2021/11/24/%E5%B8%AE%E5%8A%A9%E7%AE%A1%E7%90%86%E4%B8%AA%E4%BA%BA%E4%BA%A4%E9%99%85%E5%85%B3%E7%B3%BB%E7%9A%84Monica/"/>
     <id>https://laosu.ml/2021/11/24/%E5%B8%AE%E5%8A%A9%E7%AE%A1%E7%90%86%E4%B8%AA%E4%BA%BA%E4%BA%A4%E9%99%85%E5%85%B3%E7%B3%BB%E7%9A%84Monica/</id>
     <published>2021-11-24T04:30:00.000Z</published>
-    <updated>2021-11-24T04:34:31.588Z</updated>
+    <updated>2021-11-24T04:56:30.860Z</updated>
     
     
     <summary type="html">Monica 是开源的个人 CRM，帮助您组织与亲人的社交互动，组织、跟进、加强你们的关系。</summary>
@@ -34,6 +34,8 @@
     <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
     
     <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="CRM" scheme="https://laosu.ml/tags/CRM/"/>
     
   </entry>
   
