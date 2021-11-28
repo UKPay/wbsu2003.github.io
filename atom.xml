@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-11-26T04:34:35.925Z</updated>
+  <updated>2021-11-28T16:04:18.397Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>元宇宙中的虚拟办公室SkyOffice</title>
+    <link href="https://laosu.ml/2021/11/29/%E5%85%83%E5%AE%87%E5%AE%99%E4%B8%AD%E7%9A%84%E8%99%9A%E6%8B%9F%E5%8A%9E%E5%85%AC%E5%AE%A4SkyOffice/"/>
+    <id>https://laosu.ml/2021/11/29/%E5%85%83%E5%AE%87%E5%AE%99%E4%B8%AD%E7%9A%84%E8%99%9A%E6%8B%9F%E5%8A%9E%E5%85%AC%E5%AE%A4SkyOffice/</id>
+    <published>2021-11-28T16:10:00.000Z</published>
+    <updated>2021-11-28T16:04:18.397Z</updated>
+    
+    
+    <summary type="html">SkyOffice 是身临其境的远程工作平台，该项目获得了 2021 翡翠创新大赛冠军。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="WebRTC" scheme="https://laosu.ml/tags/WebRTC/"/>
+    
+    <category term="元宇宙" scheme="https://laosu.ml/tags/%E5%85%83%E5%AE%87%E5%AE%99/"/>
+    
+    <category term="Metaverse" scheme="https://laosu.ml/tags/Metaverse/"/>
+    
+  </entry>
   
   <entry>
     <title>在线钢琴应用AutoPiano</title>
@@ -462,29 +489,6 @@
     <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
     
     <category term="音乐" scheme="https://laosu.ml/tags/%E9%9F%B3%E4%B9%90/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>体验重构版的可道云Kodbox</title>
-    <link href="https://laosu.ml/2021/10/13/%E4%BD%93%E9%AA%8C%E9%87%8D%E6%9E%84%E7%89%88%E7%9A%84%E5%8F%AF%E9%81%93%E4%BA%91Kodbox/"/>
-    <id>https://laosu.ml/2021/10/13/%E4%BD%93%E9%AA%8C%E9%87%8D%E6%9E%84%E7%89%88%E7%9A%84%E5%8F%AF%E9%81%93%E4%BA%91Kodbox/</id>
-    <published>2021-10-13T04:30:00.000Z</published>
-    <updated>2021-10-13T05:57:31.690Z</updated>
-    
-    
-    <summary type="html">KodBox 是在 KodExplorer 基础上进行了系统重构的全新产品。</summary>
-    
-    
-    
-    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
-    
-    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
-    
-    <category term="网盘" scheme="https://laosu.ml/tags/%E7%BD%91%E7%9B%98/"/>
     
   </entry>
   

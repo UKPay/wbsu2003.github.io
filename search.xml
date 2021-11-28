@@ -1,6 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>元宇宙中的虚拟办公室SkyOffice</title>
+    <url>/2021/11/29/%E5%85%83%E5%AE%87%E5%AE%99%E4%B8%AD%E7%9A%84%E8%99%9A%E6%8B%9F%E5%8A%9E%E5%85%AC%E5%AE%A4SkyOffice/</url>
+    <content><![CDATA[<p>最近因为 <code>Facebook</code> 改名为 <code>Meta</code>，<code>元宇宙</code> 一下刷了屏，虽然还没有一个被广泛认可的确切定义，但是不耽误牛叉的人已经通过这个概念赚到了钱💰</p>
+<p>今天折腾的 <code>SkyOffice</code> 在老苏看来应该是 <code>元宇宙</code> 的一个场景，在一个沉浸式的虚拟办公室，通过 <code>WebRTC</code> 进行视频交流，这是老苏认为当下比较靠谱的一个应用场景，其他的还包括线上音乐会，线上时装秀等等</p>
+<p><strong>什么是 SkyOffice ？</strong></p>
+<blockquote>
+<p><code>SkyOffice</code> 使用 <code>Phaser</code>、<code>React</code>、<code>Redux</code>、<code>PeerJS</code> 和 <code>Colyseus</code> 构建的沉浸式虚拟办公室。用户通过虚拟形象出现在网络中，可以进行网络会议。</p>
+</blockquote>
+<ul>
+<li><code>Phaser3</code> - 游戏引擎</li>
+<li><code>React/Redux</code> - 前端框架</li>
+<li><code>PeerJS</code> - 用于视频/屏幕共享的 <code>WebRTC</code></li>
+<li><code>Colyseus</code> - 基于 <code>WebSocket</code> 的服务器框架</li>
+<li><code>TypeScript</code>和<code>ES6</code> - 适用于客户端和服务器端</li>
+</ul>
+<p>官方的体验地址：<span class="exturl" data-url="aHR0cHM6Ly9za3lvZmZpY2UubmV0bGlmeS5hcHAv">https://skyoffice.netlify.app<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h1><blockquote>
+<p>如果你不想自己构建，可以跳过，直接阅读下一章节</p>
+</blockquote>
+<p>老苏把前、后端整合在一个镜像中，容量有点大，大概有 <code>1.2G</code>，就当是虚拟机吧</p>
+<blockquote>
+<p>虽然没有采用分层构建，但是前端是用的编译好的静态文件。因为从 <code>Docker</code> 直接构建的存在有问题，所以只能先编译好 <code>build</code> 目录，再将 <code>build</code> 拷贝到镜像中，这也是没办法的办法吧，如果可能的话建议直接用源代码运行会比较好</p>
+</blockquote>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:<span class="number">16.5</span></span><br><span class="line"><span class="keyword">LABEL</span><span class="bash"> maintainer=laosu&lt;wbsu2003@gmail.com&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENV</span> BACKEND_URL=<span class="string">&quot;wss://sky-office.herokuapp.com&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /app</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> . .</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 前端</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /app/client</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> npm install -g serve --registry=https://registry.npm.taobao.org</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 后端</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /app</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> npm install --registry=https://registry.npm.taobao.org</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 Supervisor 和其他依赖 </span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> sed -i s@/deb.debian.org/@/mirrors.aliyun.com/@g /etc/apt/sources.list \</span></span><br><span class="line"><span class="bash">    &amp;&amp; apt-get clean \</span></span><br><span class="line"><span class="bash">    &amp;&amp; apt-get update \</span></span><br><span class="line"><span class="bash">    &amp;&amp; apt-get -y install supervisor</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># supervisor 配置</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> supervisord.conf /etc/supervisord.conf</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 脚本文件</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> replace_api_url.sh ./client/replace_api_url.sh</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> chmod +x /app/client/replace_api_url.sh</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">2567</span> <span class="number">3000</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">&quot;supervisord&quot;</span>,<span class="string">&quot;-c&quot;</span>,<span class="string">&quot;/etc/supervisord.conf&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p><code>supervisord.conf</code> 文件是新增用来控制进程的，<code>backend</code> 是服务端，<code>frontend</code> 是前端</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[include]</span>  </span><br><span class="line"><span class="attr">files</span> = /etc/supervisor/conf.d/*.conf</span><br><span class="line"></span><br><span class="line"><span class="section">[program:backend]</span></span><br><span class="line"><span class="attr">priority</span>=<span class="number">1</span></span><br><span class="line"><span class="attr">directory</span>=/app</span><br><span class="line"><span class="attr">command</span>=npm run start </span><br><span class="line"><span class="attr">autostart</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">autorestart</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">startretries</span>=<span class="number">3</span></span><br><span class="line"><span class="attr">startsecs</span>=<span class="number">1</span></span><br><span class="line"><span class="attr">user</span>=root</span><br><span class="line"></span><br><span class="line"><span class="section">[program:frontend]</span></span><br><span class="line"><span class="attr">priority</span>=<span class="number">3</span></span><br><span class="line"><span class="attr">directory</span>=/app/client</span><br><span class="line"><span class="comment">#command=serve -s build -n -l 3000</span></span><br><span class="line"><span class="attr">command</span>=/app/client/replace_api_url.sh</span><br><span class="line"><span class="attr">autostart</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">autorestart</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">startretries</span>=<span class="number">3</span></span><br><span class="line"><span class="attr">startsecs</span>=<span class="number">1</span></span><br><span class="line"><span class="attr">user</span>=root</span><br><span class="line">  </span><br><span class="line"><span class="section">[supervisord]</span></span><br><span class="line"><span class="attr">nodaemon</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">logfile</span>=/tmp/supervisord.log</span><br><span class="line"><span class="attr">pidfile</span>=/tmp/supervisord.pid</span><br><span class="line"><span class="attr">loglevel</span>=debug</span><br><span class="line"><span class="attr">logfile_maxbytes</span>=<span class="number">10</span>MB</span><br><span class="line">  </span><br><span class="line"><span class="section">[supervisorctl]</span></span><br></pre></td></tr></table></figure>
+
+<p><code>replace_api_url.sh</code> 文件用于替换 <code>ENV</code> 设置的 <code>BACKEND_URL</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env sh  </span></span><br><span class="line">  </span><br><span class="line">find <span class="string">&#x27;/app/client/build/static/js&#x27;</span> -name <span class="string">&#x27;*.js&#x27;</span> -<span class="built_in">exec</span> sed -i -e <span class="string">&#x27;s,&#x27;</span>wss://sky-office.herokuapp.com<span class="string">&#x27;,&#x27;</span><span class="string">&quot;<span class="variable">$BACKEND_URL</span>&quot;</span><span class="string">&#x27;,g&#x27;</span> &#123;&#125; \; </span><br><span class="line"></span><br><span class="line">serve -s build -n -l 3000</span><br></pre></td></tr></table></figure>
+
+<p>构建镜像和容器运行的基本命令如下👇</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 下载源代码</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/kevinshen56714/SkyOffice.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果 github 慢或者访问不了</span></span><br><span class="line">git <span class="built_in">clone</span> https://hub.fastgit.org/kevinshen56714/SkyOffice.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入目录</span></span><br><span class="line"><span class="built_in">cd</span> SkyOffice/client</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将前端编译生成静态文件</span></span><br><span class="line">npm install &amp;&amp; npm run build</span><br><span class="line"></span><br><span class="line"><span class="comment"># 记得删除 SkyOffice/client/node_modules 目录，不然镜像会更大</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 回到 SkyOffice 目录</span></span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将 Dockerfile、supervisord.conf、 replace_api_url.sh 放在 SkyOffice 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建镜像</span></span><br><span class="line">docker build -t wbsu2003/skyoffice:v1 .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成容器(局域网)</span></span><br><span class="line">docker run -d \</span><br><span class="line">--name=skyoffice \</span><br><span class="line">-p 2567:2567 \</span><br><span class="line">-p 2568:3000 \</span><br><span class="line">-e BACKEND_URL=ws://192.168.0.114:2567 \</span><br><span class="line">wbsu2003/skyoffice:v1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成容器(互联网)</span></span><br><span class="line">docker run -d \</span><br><span class="line">--name=skyoffice \</span><br><span class="line">-p 2567:2567 \</span><br><span class="line">-p 2568:3000 \</span><br><span class="line">-e BACKEND_URL=wss://map.laosu.ml \</span><br><span class="line">wbsu2003/skyoffice:v1</span><br></pre></td></tr></table></figure>
+
+<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>准备好两个域名，一个给 <code>前端</code> ，一个给 <code>后端</code>，选好两个不冲突的端口，不确定的话可以用命令查一下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看端口占用</span></span><br><span class="line">netstat -tunlp | grep 端口号</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>老苏没有公网 <code>IP</code>，采用 <code>frp</code> 做的内网穿透，并做了泛域名解析，不了解的可以翻翻老苏以前的文章</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">容器端口</th>
+<th align="center">域名</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>后端</code></td>
+<td align="center"><code>2567</code></td>
+<td align="center"><code>map.laosu.ml</code></td>
+</tr>
+<tr>
+<td align="center"><code>前端</code></td>
+<td align="center"><code>2568</code></td>
+<td align="center"><code>skyoffice.laosu.ml</code></td>
+</tr>
+</tbody></table>
+<h2 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h2><blockquote>
+<p>群晖的 <code>IP</code> 是 <code>192.168.0.197</code></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111271458554.png"></p>
+<p>进入 <code>自定义标题</code>，新增 <code>WebSocket</code></p>
+<blockquote>
+<p>这一步很重要，不然首页会卡在 <code>loading</code></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111271502439.png"></p>
+<h2 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h2><p>前端必须使用 <code>https</code> 协议，否则在浏览器上无法使用音视频设备</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111271504607.png"></p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>在群晖上以 Docker 方式安装。</p>
+<p>在注册表中搜索 <code>skyoffice</code> ，选择第一个 <code>wbsu2003/skyoffice</code>，版本选择 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111231359865.png"></p>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>2567</code></td>
+<td align="center"><code>2567</code></td>
+</tr>
+<tr>
+<td align="center"><code>2568</code></td>
+<td align="center"><code>3000</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111271234055.png"></p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><table>
+<thead>
+<tr>
+<th align="center">可变</th>
+<th align="center">值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>BACKEND_URL</code></td>
+<td align="center">默认值为 <code>wss://sky-office.herokuapp.com</code></td>
+</tr>
+</tbody></table>
+<p>如果你不改，你的容器将连接到官方服务器，但在国内 <code>heroku</code> 需要科学上网，否则你可能会一直卡在首页 <code>loading</code>，这个问题卡住了老苏一个礼拜，直到后来在  <code>/SkyOffice/client/src/services/Network.ts</code> 中发现红框中的代码 ，才知道 <code>production</code> 模式下并不是连的自己的服务器</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111261952412.png"></p>
+<p><code>BACKEND_URL</code> 只能使用 <code>ws</code>协议或者 <code>wss</code> 协议，不能用 <code>http</code> 或者 <code>https</code> 协议，这是需要<strong>特别注意</strong>的。</p>
+<p>根据我们在准备环节的设置，这里的 <code>BACKEND_URL</code> 应该为 <code>wss://map.laosu.ml</code></p>
+<blockquote>
+<p>如果你的域名带端口，这里也要带上</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111271510799.png"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>稍等一会儿，在浏览器中输入 <code>http://群晖IP:2568</code> 或者 <code>https://skyoffice.laosu.ml</code> 就能看到主界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111231450778.png"></p>
+<p>如果一直在显示 <code>loading</code>，<strong>请仔细检测前面的设置是否正确</strong>，如果地图已经出来，可以设置好 <code>Name</code> 后点 <code>JOIN</code> 进入</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111261638778.png"></p>
+<blockquote>
+<p>【注意事项】：<br>如果在同一台机器上开两个页面，或者两台测试机靠的比较近，建议关闭声音，否则比较容易产生啸叫</p>
+</blockquote>
+<h2 id="启用摄像头"><a href="#启用摄像头" class="headerlink" title="启用摄像头"></a>启用摄像头</h2><p>要想打开摄像头，需要启用 <code>https</code> 协议，这一点老苏在之前多次提到，可以直接用反代实现的 <code>http</code> 协议转 <code>https</code></p>
+<ul>
+<li><p>如果你是通过 <code>http://群晖IP:2568</code> 访问的，点 <code>CONNECT WEBCAM</code> 是没有反应的</p>
+</li>
+<li><p>如果你是用 <code>https://域名</code> ，就像老苏用 <code>https://skyoffice.laosu.ml</code> 打开的网址，点 <code>CONNECT WEBCAM</code>，授权之后右上角会出现你的视频</p>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111261642544.png"></p>
+<h2 id="屏幕共享"><a href="#屏幕共享" class="headerlink" title="屏幕共享"></a>屏幕共享</h2><p><code>JOIN</code> 之后，你可以通过方向键在地图上随意行走，当你来到电脑前面时，会显示 <code>Press R to use computer</code>，意思是按 <code>R</code> 键使用电脑</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111261648857.png"></p>
+<p>按 <code>R</code> 键之后会显示 <code>屏幕共享</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111261654810.png"></p>
+<p>点左上角的 <code>SHARE SCREEN</code> 开启屏幕共享，可以选择要共享的内容</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111261656866.png"></p>
+<h2 id="视频会议"><a href="#视频会议" class="headerlink" title="视频会议"></a>视频会议</h2><p>当在会议室时，会提示 <code>Press E to sit</code>，意思是按 <code>E</code> 键可以坐下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111261701402.png"></p>
+<p>坐下之后，老苏又登了一个账号 <code>xiaosu</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111261702386.png"></p>
+<p>只要进入会议室就开始显示对方的视频窗口</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111261716776.png"></p>
+<h2 id="视频聊天"><a href="#视频聊天" class="headerlink" title="视频聊天"></a>视频聊天</h2><p>这是基于距离的交互系统，只要两个人的距离接近，就会启动视频窗口</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111261718194.png"></p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>这应该还是个原型应用，理论上你可以构建自己的办公室环境，想象一下，平时在不同区域分、子公司上班的人在 <code>SkyOffice</code> 中通过 <code>WebRTC</code> 随时可以视频交流，是不是有种天涯若比邻的感觉？</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>kevinshen56714/SkyOffice: Immersive virtual office built with Phaser, React, Redux, PeerJS, and Colyseus.<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2tldmluc2hlbjU2NzE0L1NreU9mZmljZQ==">https://github.com/kevinshen56714/SkyOffice<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>WebRTC</tag>
+        <tag>元宇宙</tag>
+        <tag>Metaverse</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>在线钢琴应用AutoPiano</title>
     <url>/2021/11/26/%E5%9C%A8%E7%BA%BF%E9%92%A2%E7%90%B4%E5%BA%94%E7%94%A8AutoPiano/</url>
     <content><![CDATA[<p><strong>什么是 AutoPiano ？</strong></p>
@@ -16933,7 +17089,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjeDY0OyYjMTA5OyYjeDY5OyYjeDZlOyYjeDQwOyYjeDZmOyYjMTEyOyYjMTAxOyYjMTEwOyYjMTE1OyYjMTE3OyYjOTg7JiMxMTY7JiMxMDU7JiMxMTY7JiMxMDg7JiN4NjU7JiMxMTU7JiN4MmU7JiN4NmY7JiMxMTQ7JiN4Njc7">&#x61;&#x64;&#109;&#x69;&#x6e;&#x40;&#x6f;&#112;&#101;&#110;&#115;&#117;&#98;&#116;&#105;&#116;&#108;&#x65;&#115;&#x2e;&#x6f;&#114;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjMTAwOyYjMTA5OyYjeDY5OyYjeDZlOyYjeDQwOyYjeDZmOyYjeDcwOyYjMTAxOyYjMTEwOyYjMTE1OyYjMTE3OyYjeDYyOyYjMTE2OyYjeDY5OyYjMTE2OyYjMTA4OyYjMTAxOyYjeDczOyYjeDJlOyYjMTExOyYjeDcyOyYjeDY3Ow==">&#x61;&#100;&#109;&#x69;&#x6e;&#x40;&#x6f;&#x70;&#101;&#110;&#115;&#117;&#x62;&#116;&#x69;&#116;&#108;&#101;&#x73;&#x2e;&#111;&#x72;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
