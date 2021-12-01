@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-11-29T10:52:43.979Z</updated>
+  <updated>2021-12-01T04:44:38.575Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>4EVERLAND上部署Hexo</title>
+    <link href="https://laosu.ml/2021/12/01/4EVERLAND%E4%B8%8A%E9%83%A8%E7%BD%B2Hexo/"/>
+    <id>https://laosu.ml/2021/12/01/4EVERLAND%E4%B8%8A%E9%83%A8%E7%BD%B2Hexo/</id>
+    <published>2021-12-01T04:30:00.000Z</published>
+    <updated>2021-12-01T04:44:38.575Z</updated>
+    
+    
+    <summary type="html">将 Hexo 生成的静态 blog 托管在 4everland.org 上。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="Blog" scheme="https://laosu.ml/tags/Blog/"/>
+    
+    <category term="Hexo" scheme="https://laosu.ml/tags/Hexo/"/>
+    
+    <category term="GitHub" scheme="https://laosu.ml/tags/GitHub/"/>
+    
+  </entry>
   
   <entry>
     <title>元宇宙中的虚拟办公室SkyOffice</title>
@@ -466,29 +489,6 @@
     <category term="IM" scheme="https://laosu.ml/tags/IM/"/>
     
     <category term="即时通讯" scheme="https://laosu.ml/tags/%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>高颜值的第三方网易云播放器YesPlayMusic</title>
-    <link href="https://laosu.ml/2021/10/15/%E9%AB%98%E9%A2%9C%E5%80%BC%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BD%91%E6%98%93%E4%BA%91%E6%92%AD%E6%94%BE%E5%99%A8YesPlayMusic/"/>
-    <id>https://laosu.ml/2021/10/15/%E9%AB%98%E9%A2%9C%E5%80%BC%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BD%91%E6%98%93%E4%BA%91%E6%92%AD%E6%94%BE%E5%99%A8YesPlayMusic/</id>
-    <published>2021-10-15T04:30:00.000Z</published>
-    <updated>2021-10-15T04:59:28.408Z</updated>
-    
-    
-    <summary type="html">YesPlayMusic 是一款高颜值的第三方网易云播放器。</summary>
-    
-    
-    
-    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
-    
-    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
-    
-    <category term="音乐" scheme="https://laosu.ml/tags/%E9%9F%B3%E4%B9%90/"/>
     
   </entry>
   
