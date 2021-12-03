@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-12-01T04:44:38.575Z</updated>
+  <updated>2021-12-03T04:46:25.926Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>可能是github上最受欢迎的五子棋AI</title>
+    <link href="https://laosu.ml/2021/12/03/%E5%8F%AF%E8%83%BD%E6%98%AFgithub%E4%B8%8A%E6%9C%80%E5%8F%97%E6%AC%A2%E8%BF%8E%E7%9A%84%E4%BA%94%E5%AD%90%E6%A3%8BAI/"/>
+    <id>https://laosu.ml/2021/12/03/%E5%8F%AF%E8%83%BD%E6%98%AFgithub%E4%B8%8A%E6%9C%80%E5%8F%97%E6%AC%A2%E8%BF%8E%E7%9A%84%E4%BA%94%E5%AD%90%E6%A3%8BAI/</id>
+    <published>2021-12-03T04:30:00.000Z</published>
+    <updated>2021-12-03T04:46:25.926Z</updated>
+    
+    
+    <summary type="html">gobang 是一款基于 JavaScript 开发的在线五子棋游戏。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="音乐" scheme="https://laosu.ml/tags/%E9%9F%B3%E4%B9%90/"/>
+    
+  </entry>
   
   <entry>
     <title>4EVERLAND上部署Hexo</title>
@@ -464,31 +487,6 @@
     <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
     
     <category term="网盘" scheme="https://laosu.ml/tags/%E7%BD%91%E7%9B%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>开源即时通讯平台Tinode</title>
-    <link href="https://laosu.ml/2021/10/18/%E5%BC%80%E6%BA%90%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF%E5%B9%B3%E5%8F%B0Tinode/"/>
-    <id>https://laosu.ml/2021/10/18/%E5%BC%80%E6%BA%90%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF%E5%B9%B3%E5%8F%B0Tinode/</id>
-    <published>2021-10-18T11:00:00.000Z</published>
-    <updated>2021-10-18T10:54:26.339Z</updated>
-    
-    
-    <summary type="html">Tinode 是一个免费、无限制且灵活的开源消息传递平台，以移动端为主。</summary>
-    
-    
-    
-    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
-    
-    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
-    
-    <category term="IM" scheme="https://laosu.ml/tags/IM/"/>
-    
-    <category term="即时通讯" scheme="https://laosu.ml/tags/%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF/"/>
     
   </entry>
   
