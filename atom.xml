@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2021-12-03T04:46:25.926Z</updated>
+  <updated>2021-12-03T05:01:58.690Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://laosu.ml/2021/12/03/%E5%8F%AF%E8%83%BD%E6%98%AFgithub%E4%B8%8A%E6%9C%80%E5%8F%97%E6%AC%A2%E8%BF%8E%E7%9A%84%E4%BA%94%E5%AD%90%E6%A3%8BAI/"/>
     <id>https://laosu.ml/2021/12/03/%E5%8F%AF%E8%83%BD%E6%98%AFgithub%E4%B8%8A%E6%9C%80%E5%8F%97%E6%AC%A2%E8%BF%8E%E7%9A%84%E4%BA%94%E5%AD%90%E6%A3%8BAI/</id>
     <published>2021-12-03T04:30:00.000Z</published>
-    <updated>2021-12-03T04:46:25.926Z</updated>
+    <updated>2021-12-03T05:01:58.690Z</updated>
     
     
     <summary type="html">gobang 是一款基于 JavaScript 开发的在线五子棋游戏。</summary>
@@ -35,7 +35,7 @@
     
     <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
     
-    <category term="音乐" scheme="https://laosu.ml/tags/%E9%9F%B3%E4%B9%90/"/>
+    <category term="游戏" scheme="https://laosu.ml/tags/%E6%B8%B8%E6%88%8F/"/>
     
   </entry>
   
