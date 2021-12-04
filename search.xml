@@ -36,7 +36,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110310014204.png"></p>
 <h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>在浏览器中输入 <code>http://群晖IP:3390</code> 就能看到主界面</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202110310015936.png"></p>
-<p>至于棋力，老苏也不知道如何评估，因为水平太菜，目前为止几乎没赢过，应该是没掌握技巧吧，有空了一定要去研究下，要不也太丢人了😂😂</p>
+<p>至于棋力，老苏也不知道如何评估，因为水平太菜，目前为止几乎没赢过，应该是没掌握技巧吧，有空了一定要去研究下，要不也太丢人了😂😂😂</p>
 <h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
 <p>lihongxun945/gobang: javascript gobang AI，可能是github上最受欢迎的五子棋AI，源码+教程<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2xpaG9uZ3h1bjk0NS9nb2Jhbmc=">https://github.com/lihongxun945/gobang<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
@@ -17279,7 +17279,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiMxMDA7JiN4NmQ7JiMxMDU7JiN4NmU7JiN4NDA7JiN4NmY7JiN4NzA7JiMxMDE7JiN4NmU7JiMxMTU7JiN4NzU7JiN4NjI7JiN4NzQ7JiN4Njk7JiN4NzQ7JiN4NmM7JiMxMDE7JiN4NzM7JiM0NjsmIzExMTsmI3g3MjsmI3g2Nzs=">&#97;&#100;&#x6d;&#105;&#x6e;&#x40;&#x6f;&#x70;&#101;&#x6e;&#115;&#x75;&#x62;&#x74;&#x69;&#x74;&#x6c;&#101;&#x73;&#46;&#111;&#x72;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiMxMDA7JiN4NmQ7JiN4Njk7JiMxMTA7JiM2NDsmI3g2ZjsmIzExMjsmI3g2NTsmI3g2ZTsmIzExNTsmIzExNzsmIzk4OyYjMTE2OyYjMTA1OyYjeDc0OyYjeDZjOyYjeDY1OyYjMTE1OyYjNDY7JiN4NmY7JiN4NzI7JiMxMDM7">&#97;&#100;&#x6d;&#x69;&#110;&#64;&#x6f;&#112;&#x65;&#x6e;&#115;&#117;&#98;&#116;&#105;&#x74;&#x6c;&#x65;&#115;&#46;&#x6f;&#x72;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
@@ -21895,10 +21895,10 @@
         <tag>路由器</tag>
         <tag>千兆</tag>
         <tag>电力猫</tag>
-        <tag>WDS</tag>
         <tag>Mesh路由</tag>
         <tag>wifi6</tag>
         <tag>光猫</tag>
+        <tag>WDS</tag>
       </tags>
   </entry>
   <entry>
