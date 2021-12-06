@@ -1,6 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>德业DYD-T22A3除湿机接入HomeAssistant记录</title>
+    <url>/2021/12/06/%E5%BE%B7%E4%B8%9ADYD-T22A3%E9%99%A4%E6%B9%BF%E6%9C%BA%E6%8E%A5%E5%85%A5HomeAssistant%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>上个月小苏同学买了一台除湿机，第一次配对绑定比较麻烦，应该是 <code>WIFI</code> 模块的网络兼容性不大好，不过连上之后就没问题了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111072036731.jpg"></p>
+<p>老苏第一个想法就是把这玩意接入 <code>HomeAssistant</code>，搜了一下网上已经有大牛搞成功了，虽然型号不同，但是过程是一样的</p>
+<p>原文在这里：<span class="exturl" data-url="aHR0cHM6Ly94aWtpbmcud2luLzIwMjAvMTEvMTIvMy1kZXllLWRlaHVtaWRpZmVyLWFkZC10by1ob21lYXNzaXN0YW50Lw==">https://xiking.win/2020/11/12/3-deye-dehumidifer-add-to-homeassistant/<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>因为要用到 <code>API</code> 调试，所以需要下载相关的工具，例如 <code>Postman</code>、<code>ApiPost</code> 之类的，老苏建议用 <code>ApiPost</code>，因为界面是中文，看着比较习惯。</p>
+<p><code>ApiPost</code> 下载地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYXBpcG9zdC5jbi9kb3dubG9hZC5odG1s">https://www.apipost.cn/download.html<i class="fa fa-external-link-alt"></i></span></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111072334375.png"></p>
+<h1 id="获取除湿机信息"><a href="#获取除湿机信息" class="headerlink" title="获取除湿机信息"></a>获取除湿机信息</h1><h2 id="获取-token"><a href="#获取-token" class="headerlink" title="获取 token"></a>获取 token</h2><p>登录的地址：<span class="exturl" data-url="aHR0cHM6Ly9hcGkuZGV5ZS5jb20uY24vdjMvZW5kdXNlci9sb2dpbi8=">https://api.deye.com.cn/v3/enduser/login/<i class="fa fa-external-link-alt"></i></span></p>
+<p>直接 <code>POST</code> 这个地址会返回需要填写的参数</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">&quot;meta&quot;</span>: &#123;</span><br><span class="line">		<span class="attr">&quot;code&quot;</span>: <span class="number">10000</span>,</span><br><span class="line">		<span class="attr">&quot;message&quot;</span>: &#123;</span><br><span class="line">			<span class="attr">&quot;loginname&quot;</span>: <span class="string">&quot;This field is required.&quot;</span>,</span><br><span class="line">			<span class="attr">&quot;password&quot;</span>: <span class="string">&quot;This field is required.&quot;</span>,</span><br><span class="line">			<span class="attr">&quot;appid&quot;</span>: <span class="string">&quot;This field is required.&quot;</span>,</span><br><span class="line">			<span class="attr">&quot;extend&quot;</span>: <span class="string">&quot;This field is required.&quot;</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">&quot;data&quot;</span>: &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>loginname</code></td>
+<td align="center">德业智能 <code>APP</code> 的登陆账号</td>
+</tr>
+<tr>
+<td align="center"><code>password</code></td>
+<td align="center">德业智能 <code>APP</code> 的登陆密码</td>
+</tr>
+<tr>
+<td align="center"><code>appid</code></td>
+<td align="center">这个似乎可以随便填，老苏填了软件版本</td>
+</tr>
+<tr>
+<td align="center"><code>extend</code></td>
+<td align="center"><code>&#123;&quot;cid&quot;:&quot;111111122223333&quot;,&quot;type&quot;:&quot;0&quot;&#125;</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111072352398.png"></p>
+<p>返回的是认证 <code>token</code> 和 <code>clientid</code>，<code>token</code> 要保存好，后面会用到</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;meta&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;code&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">&quot;message&quot;</span>: <span class="string">&quot;signup ok.&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;data&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;token&quot;</span>: <span class="string">&quot;你的token&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;clientid&quot;</span>: <span class="string">&quot;你的clientid&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="获取设备列表"><a href="#获取设备列表" class="headerlink" title="获取设备列表"></a>获取设备列表</h2><p>获取设备列表的地址：<span class="exturl" data-url="aHR0cHM6Ly9hcGkuZGV5ZS5jb20uY24vdjMvZW5kdXNlci9kZXZpY2VMaXN0Lw==">https://api.deye.com.cn/v3/enduser/deviceList/<i class="fa fa-external-link-alt"></i></span></p>
+<p>直接 <code>GET</code> 这个地址会返回需要填写的参数</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">&quot;meta&quot;</span>: &#123;</span><br><span class="line">		<span class="attr">&quot;code&quot;</span>: <span class="number">10001</span>,</span><br><span class="line">		<span class="attr">&quot;message&quot;</span>: <span class="string">&quot;Miss jwt header.&quot;</span></span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">&quot;data&quot;</span>: &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111080024931.png"></p>
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>Authorization</code></td>
+<td align="center"><code>jwt</code> +空格+上前面获取的 <code>token</code> 拼接而成</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><code>jwt</code> 或者 <code>JWT</code> 都可以，应该不区分大小写；<code>JWT</code> 的全称是 <code>JSON Web Tokens</code></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111080037556.png"></p>
+<p>返回的 <code>product_id</code>、<code>device_id</code> 要记好 </p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">&quot;meta&quot;</span>: &#123;</span><br><span class="line">		<span class="attr">&quot;code&quot;</span>: <span class="number">0</span>,</span><br><span class="line">		<span class="attr">&quot;message&quot;</span>: <span class="string">&quot;device list by user.&quot;</span></span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">&quot;data&quot;</span>: [</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">&quot;online&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">			<span class="attr">&quot;product_icon&quot;</span>: <span class="string">&quot;https://deye-cloud.oss-cn-shanghai.aliyuncs.com/profile/1597889877269.png&quot;</span>,</span><br><span class="line">			<span class="attr">&quot;product_id&quot;</span>: <span class="string">&quot;你的设备的product_id&quot;</span>,</span><br><span class="line">			<span class="attr">&quot;product_name&quot;</span>: <span class="string">&quot;DYD-T22A3&quot;</span>,</span><br><span class="line">			<span class="attr">&quot;device_id&quot;</span>: <span class="string">&quot;你的设备的device_id&quot;</span>,</span><br><span class="line">			<span class="attr">&quot;mac&quot;</span>: <span class="string">&quot;设备的mac地址&quot;</span>,</span><br><span class="line">			<span class="attr">&quot;payload&quot;</span>: <span class="string">&quot;14110200203700000000000000002E3B452800000000&quot;</span>,</span><br><span class="line">			<span class="attr">&quot;role&quot;</span>: <span class="number">1</span>,</span><br><span class="line">			<span class="attr">&quot;gatewaytype&quot;</span>: <span class="number">0</span>,</span><br><span class="line">			<span class="attr">&quot;device_name&quot;</span>: <span class="string">&quot;DYD-T22A3&quot;</span>,</span><br><span class="line">			<span class="attr">&quot;product_type&quot;</span>: <span class="string">&quot;dehumidifier&quot;</span>,</span><br><span class="line">			<span class="attr">&quot;is_combo&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">			<span class="attr">&quot;protocol_version&quot;</span>: <span class="string">&quot;wifi_V2.4&quot;</span></span><br><span class="line">		&#125;</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="获取MQTT信息"><a href="#获取MQTT信息" class="headerlink" title="获取MQTT信息"></a>获取MQTT信息</h2><p>MQTT服务地址：<span class="exturl" data-url="aHR0cHM6Ly9hcGkuZGV5ZS5jb20uY24vdjMvZW5kdXNlci9tcXR0SW5mby8=">https://api.deye.com.cn/v3/enduser/mqttInfo/<i class="fa fa-external-link-alt"></i></span></p>
+<p>直接 <code>GET</code> 这个地址会返回需要填写的参数</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">&quot;meta&quot;</span>: &#123;</span><br><span class="line">		<span class="attr">&quot;code&quot;</span>: <span class="number">10001</span>,</span><br><span class="line">		<span class="attr">&quot;message&quot;</span>: <span class="string">&quot;Miss jwt header.&quot;</span></span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">&quot;data&quot;</span>: &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>Authorization</code></td>
+<td align="center"><code>jwt</code> 头假设前面获取的 <code>token</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111082039584.png"></p>
+<p>返回的 <code>loginname</code>、<code>password</code>、<code>mqtthost</code>、<code>mqttport</code> 等要记好</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">&quot;meta&quot;</span>: &#123;</span><br><span class="line">		<span class="attr">&quot;code&quot;</span>: <span class="number">0</span>,</span><br><span class="line">		<span class="attr">&quot;message&quot;</span>: <span class="string">&quot;mqtt info&quot;</span></span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">&quot;data&quot;</span>: &#123;</span><br><span class="line">		<span class="attr">&quot;loginname&quot;</span>: <span class="string">&quot;你的设备的mqtt登录账号&quot;</span>,</span><br><span class="line">		<span class="attr">&quot;clientid&quot;</span>: <span class="string">&quot;你的设备的的clientid&quot;</span>,</span><br><span class="line">		<span class="attr">&quot;endpoint&quot;</span>: <span class="string">&quot;ff7534ccae4711e7829100163e0f811e&quot;</span>,</span><br><span class="line">		<span class="attr">&quot;password&quot;</span>: <span class="string">&quot;你的设备的mqtt登录密码&quot;</span>,</span><br><span class="line">		<span class="attr">&quot;mqtthost&quot;</span>: <span class="string">&quot;xxxxxxxxx.mqtt.iot.gz.baidubce.com&quot;</span>,</span><br><span class="line">		<span class="attr">&quot;mqttport&quot;</span>: <span class="number">1883</span>,</span><br><span class="line">		<span class="attr">&quot;sslport&quot;</span>: <span class="number">1884</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="与HA集成"><a href="#与HA集成" class="headerlink" title="与HA集成"></a>与HA集成</h1><p>先说下 <code>HomeAssistant</code> 的版本，因为按照以往的经验，<code>HA</code> 版本的影响可能还是很大的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111082041976.png"></p>
+<p>实测这个版本可以不需要下载原文作者的修改版 <code>MQTT</code> 组件，至于多少版本的需要下载，我也不是太清楚，老苏主要研究了 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3lvbmdtYW4vaG9tZWFzc2lzdGFudC1jb21wb25lbnRzL2lzc3Vlcy8y">https://github.com/yongman/homeassistant-components/issues/2<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p>修改 <code>configuration.yaml</code> 文件</p>
+<h3 id="增加-mqtt-配置"><a href="#增加-mqtt-配置" class="headerlink" title="增加 mqtt 配置"></a>增加 mqtt 配置</h3><blockquote>
+<p>其中 <code>broker</code> 中填写前面获取的 <code>mqtthost</code>地址</p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">mqtt:</span></span><br><span class="line">  <span class="attr">broker:</span> <span class="string">xxxxxxxxx.mqtt.iot.gz.baidubce.com</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">1883</span></span><br><span class="line">  <span class="attr">client_id:</span> <span class="string">你的设备的的clientid</span></span><br><span class="line">  <span class="attr">username:</span> <span class="string">你的设备的mqtt登录账号</span></span><br><span class="line">  <span class="attr">password:</span> <span class="string">你的设备的mqtt登录密码</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="增加-switch-配置"><a href="#增加-switch-配置" class="headerlink" title="增加 switch 配置"></a>增加 switch 配置</h3><blockquote>
+<p>其中 <code>state_topic</code> 和 <code>command_topic</code> 由上面获取的返回值 <code>endpoint</code>、<code>product_id</code>、<code>device_id</code> 三个值拼接而成</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>state_topic</code></td>
+<td align="center"><code>endpoint/product_id/device_id/status/hex</code></td>
+</tr>
+<tr>
+<td align="center"><code>command_topic</code></td>
+<td align="center"><code>endpoint/product_id/device_id/command/hex</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">switch:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">platform:</span> <span class="string">mqtt</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">DYD-T22A3</span></span><br><span class="line">    <span class="attr">unique_id:</span> <span class="string">deye_switch</span></span><br><span class="line">    <span class="attr">state_topic:</span> <span class="string">xxxxxxxxx/xxxxxxxxxxxxx/xxxxxxxxxxxxxxxx/status/hex</span></span><br><span class="line">    <span class="attr">command_topic:</span> <span class="string">xxxxxxxxx/xxxxxxxxxxxxx/xxxxxxxxxxxxxxxx/command/hex</span></span><br><span class="line">    <span class="attr">state_on:</span> <span class="number">30</span></span><br><span class="line">    <span class="attr">state_off:</span> <span class="number">20</span></span><br><span class="line">    <span class="attr">value_template:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; value_json.data[5:7] &#125;&#125;</span>&quot;</span></span><br><span class="line">    <span class="attr">payload_on:</span> <span class="string">&quot;\x08\x02\x03\x20\x19\x00\x00\x00\x00\x00&quot;</span></span><br><span class="line">    <span class="attr">payload_off:</span> <span class="string">&quot;\x08\x02\x02\x20\x19\x00\x00\x00\x00\x00&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="集成设置"><a href="#集成设置" class="headerlink" title="集成设置"></a>集成设置</h2><p>从 <code>配置</code> 进入到 <code>集成</code> 界面，右下角 <code>添加集成</code> ，找到 <code>MQTT</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111082054360.png"></p>
+<p>通过 <code>选项</code> 进入 <code>MQTT</code> 的设置界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111082101381.png"></p>
+<p>点 <code>RE-CONFIGURE MQTT</code> 进行设置</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111082102349.png"></p>
+<p>依次填入 <code>MQTT</code> 服务地址 <code>mqtthost</code>、端口 <code>mqttport</code>、用户名 <code>loginname</code>、密码 <code>password</code>，然后点 <code>NEXT</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111082104322.png"></p>
+<p>默认就可以了，不要去修改</p>
+<blockquote>
+<p>反正按网友的说法这两个红框是绝对不能勾选的，否则会报错</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111082107635.png"></p>
+<p><code>提交</code> 就完成了 <code>MQTT</code> 的设置</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111082112867.png"></p>
+<h2 id="实体卡片"><a href="#实体卡片" class="headerlink" title="实体卡片"></a>实体卡片</h2><p>只有开关状态</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111082116175.png"></p>
+<h2 id="自动化"><a href="#自动化" class="headerlink" title="自动化"></a>自动化</h2><p>老苏没有湿度计，也没弄明白怎么获取 <code>DYD-T22A3</code> 中的 <code>湿度</code> 信息，所以只能根据室外的 <code>湿度</code> 来决定开启和关闭，感觉意义也不是特别大</p>
+<p>老苏是在界面上新建的描述</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111281138755.png"></p>
+<p>触发条件设置</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111281140778.png"></p>
+<p>环境条件没设</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111281139894.png"></p>
+<p>动作设置</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111281140089.png"></p>
+<p>最后生成在 <code>automations.yaml</code> 中的代码片段</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">id:</span> <span class="string">&#x27;1636371731858&#x27;</span></span><br><span class="line">  <span class="attr">alias:</span> <span class="string">自动除湿（室外湿度大于60）</span></span><br><span class="line">  <span class="attr">description:</span> <span class="string">根据室外的湿度自动开机除湿</span></span><br><span class="line">  <span class="attr">trigger:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">platform:</span> <span class="string">numeric_state</span></span><br><span class="line">    <span class="attr">entity_id:</span> <span class="string">sensor.heweather_hum</span></span><br><span class="line">    <span class="attr">above:</span> <span class="string">&#x27;60&#x27;</span></span><br><span class="line">    <span class="attr">below:</span> <span class="string">&#x27;90&#x27;</span></span><br><span class="line">    <span class="attr">for:</span> <span class="string">&#x27;30&#x27;</span></span><br><span class="line">  <span class="attr">condition:</span> []</span><br><span class="line">  <span class="attr">action:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">service:</span> <span class="string">switch.turn_on</span></span><br><span class="line">    <span class="attr">target:</span></span><br><span class="line">      <span class="attr">area_id:</span> <span class="string">ke_ting</span></span><br><span class="line">      <span class="attr">entity_id:</span> <span class="string">switch.dyd_t22a3</span></span><br><span class="line">  <span class="attr">mode:</span> <span class="string">single</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>德业除湿机接入HomeAssistant - 人生如逆旅，我亦是行人。<br>地址：<span class="exturl" data-url="aHR0cHM6Ly94aWtpbmcud2luLzIwMjAvMTEvMTIvMy1kZXllLWRlaHVtaWRpZmVyLWFkZC10by1ob21lYXNzaXN0YW50Lw==">https://xiking.win/2020/11/12/3-deye-dehumidifer-add-to-homeassistant/<i class="fa fa-external-link-alt"></i></span></p>
+<p>Homeassistant mqtt 报错 - 德业型号 T22A3 · Issue #2 · yongman/homeassistant-components<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3lvbmdtYW4vaG9tZWFzc2lzdGFudC1jb21wb25lbnRzL2lzc3Vlcy8y">https://github.com/yongman/homeassistant-components/issues/2<i class="fa fa-external-link-alt"></i></span></p>
+<p>德业除湿机接入HomeAssistant记录_除湿器_什么值得买<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9wb3N0LnNtemRtLmNvbS9wL2EzZDJyOHg1Lw==">https://post.smzdm.com/p/a3d2r8x5/<i class="fa fa-external-link-alt"></i></span></p>
+<p>如何控制德业 DYD E12A3 土豆不好吃<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9kbWVzZy5hcHAvZHlkLWUxMmEzLmh0bWw=">https://dmesg.app/dyd-e12a3.html<i class="fa fa-external-link-alt"></i></span></p>
+<p>【本文基于 <code>GitHub Actions</code> 自动部署】</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>智能家居</tag>
+        <tag>homeassistant</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>可能是github上最受欢迎的五子棋AI</title>
     <url>/2021/12/03/%E5%8F%AF%E8%83%BD%E6%98%AFgithub%E4%B8%8A%E6%9C%80%E5%8F%97%E6%AC%A2%E8%BF%8E%E7%9A%84%E4%BA%94%E5%AD%90%E6%A3%8BAI/</url>
     <content><![CDATA[<p>老苏突然很想玩五子棋，然后就在 <code>github</code> 上找到了这个项目，看起来有将近一年没更新了，凑合玩吧</p>
@@ -17279,7 +17441,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiMxMDA7JiN4NmQ7JiN4Njk7JiMxMTA7JiM2NDsmIzExMTsmI3g3MDsmIzEwMTsmI3g2ZTsmIzExNTsmIzExNzsmI3g2MjsmI3g3NDsmIzEwNTsmIzExNjsmI3g2YzsmIzEwMTsmIzExNTsmIzQ2OyYjeDZmOyYjeDcyOyYjeDY3Ow==">&#97;&#100;&#x6d;&#x69;&#110;&#64;&#111;&#x70;&#101;&#x6e;&#115;&#117;&#x62;&#x74;&#105;&#116;&#x6c;&#101;&#115;&#46;&#x6f;&#x72;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiMxMDA7JiN4NmQ7JiMxMDU7JiN4NmU7JiM2NDsmI3g2ZjsmI3g3MDsmIzEwMTsmIzExMDsmI3g3MzsmIzExNzsmIzk4OyYjeDc0OyYjMTA1OyYjeDc0OyYjMTA4OyYjMTAxOyYjMTE1OyYjeDJlOyYjMTExOyYjeDcyOyYjMTAzOw==">&#97;&#100;&#x6d;&#105;&#x6e;&#64;&#x6f;&#x70;&#101;&#110;&#x73;&#117;&#98;&#x74;&#105;&#x74;&#108;&#101;&#115;&#x2e;&#111;&#x72;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
