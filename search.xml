@@ -1,6 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>简单的家庭网络服务面板Astro</title>
+    <url>/2021/12/08/%E7%AE%80%E5%8D%95%E7%9A%84%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1%E9%9D%A2%E6%9D%BFAstro/</url>
+    <content><![CDATA[<p><strong>什么是 Astro ？</strong></p>
+<blockquote>
+<p><code>Astro</code> 是适用于所有家庭网络服务的开放式、可扩展的仪表板。</p>
+</blockquote>
+<p>简单的说就是一个门户或者书签，这类软件老苏已写过不少，当你安装的服务越来越多之后，想记住不同的服务及其使用的端口，不是一件轻松的事情</p>
+<ul>
+<li><a href="https://laosu.ml/2021/02/01/%E7%BB%9F%E4%B8%80%E7%9A%84%E5%AE%B6%E5%BA%AD%E6%9C%8D%E5%8A%A1%E5%99%A8Web%E9%97%A8%E6%88%B7Organizr/">统一的家庭服务器Web门户Organiz</a></li>
+<li> <a href="https://laosu.ml/2020/12/11/Heimdall%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E5%AF%BC%E8%88%AA%E9%A1%B5/">Heimdall打造个人导航页</a></li>
+<li><a href="https://laosu.ml/2020/08/14/%E7%BB%99%E7%BE%A4%E6%99%96%E5%BC%84%E4%B8%AA%E6%BC%82%E4%BA%AE%E7%9A%84%E5%AF%BC%E8%88%AA%E9%A1%B5%EF%BC%88%E4%B8%8A%EF%BC%89/">给群晖弄个漂亮的导航页（上）</a></li>
+<li><a href="https://laosu.ml/2020/08/16/%E7%BB%99%E7%BE%A4%E6%99%96%E5%BC%84%E4%B8%AA%E6%BC%82%E4%BA%AE%E7%9A%84%E5%AF%BC%E8%88%AA%E9%A1%B5%EF%BC%88%E4%B8%8B%EF%BC%89/">给群晖弄个漂亮的导航页（下）</a></li>
+<li> <a href="https://laosu.ml/2021/07/26/%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E5%BC%BA%E5%A4%A7%E7%9A%84%E9%9D%99%E6%80%81%E5%AF%BC%E8%88%AA%E7%BD%91%E7%AB%99nav/?highlight=nav">一个非常强大的静态导航网站nav</a></li>
+<li> <a href="https://laosu.ml/2021/07/12/%E7%AE%80%E5%8D%95%E5%A5%BD%E7%94%A8%E7%9A%84%E4%B9%A6%E7%AD%BE%E7%AE%A1%E7%90%86%E5%99%A8OneNav/?highlight=nav">简单好用的书签管理器OneNav</a></li>
+</ul>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>在群晖上以 Docker 方式安装。</p>
+<p>在注册表中搜索 <code>igorsheg</code> ，选择第一个 <code>igorsheg/astro</code>，双击直接下载。</p>
+<blockquote>
+<p>如果你搜 <code>astro</code> 会有太多结果，不容易找到</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111031224556.png"></p>
+<h2 id="卷"><a href="#卷" class="headerlink" title="卷"></a>卷</h2><p>在 <code>docker</code> 文件夹中，创建一个新文件夹，并将其命名为 <code>astro</code></p>
+<table>
+<thead>
+<tr>
+<th align="center">文件夹</th>
+<th align="center">装载路径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>docker/astro</code></td>
+<td align="center"><code>/data</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111031231381.png"></p>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>直接用了默认的端口 <code>2368</code> </p>
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>3130</code></td>
+<td align="center"><code>3000</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111031232757.png"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>在浏览器中输入 <code>http://群晖IP:3130</code> 就能看到主界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111031234308.png"></p>
+<p>和老苏之前介绍的门户类有所不同，<code>astro</code> 自带了正常运行的统计</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111031244065.png"></p>
+<h2 id="进入编辑"><a href="#进入编辑" class="headerlink" title="进入编辑"></a>进入编辑</h2><p>点击右上角的 <code>Manage</code> </p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111031722305.png"></p>
+<p><code>Manage</code> 会变成 <code>I&#39;m Done</code>，同时站点右侧会出现 <code>...</code></p>
+<p>你可以点 <code>Edit</code> 进行编辑，也可以点 <code>Uptime Status</code>  查看运行统计，还可以点 <code>Remove</code> 进行删除</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111031726514.png"></p>
+<p>红色多半是网站已经挂掉了，绿色表示还能正常访问</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111031728497.png"></p>
+<p>时间轴上的数值老苏估计应该 <code>ping</code> 的延时</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111031746512.png"></p>
+<p>点 <code>I&#39;m Done</code> 退出编辑状态，按钮上的文字又会变回 <code>Manage</code></p>
+<h2 id="新增分类"><a href="#新增分类" class="headerlink" title="新增分类"></a>新增分类</h2><p>点右上角的 <code>...</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111031750781.png"></p>
+<p>在弹出的二级菜单中选择 <code>New Category</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111031757195.png"></p>
+<p><code>Category Name</code> 中填写准备新建的分类的名称，<code>Category Icon</code> 中可以选择图标，图标支持英文搜索</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111031757104.png"></p>
+<h2 id="新增站点"><a href="#新增站点" class="headerlink" title="新增站点"></a>新增站点</h2><p>点右上角的 <code>...</code>，在弹出的二级菜单中选择 <code>New Service</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111031801444.png"></p>
+<p>提交之后就可以在 <code>多媒体</code> 分类中找到，因为没有上传 <code>logo</code> 看起来有点丑😅</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111031802691.png"></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>支持切换 <code>Apperance</code> ，默认是 <code>Dark</code> 模式</p>
+<blockquote>
+<p>很可能是跟随系统主题的，就像老苏的博客 <code>https://laosu.ml</code> 一样</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111031808798.png"></p>
+<p>切到 <code>light</code> 模式</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111031809305.png"></p>
+<p>老苏还是比较喜欢 <code>Dark</code> 模式，没那么刺眼，至于 <code>New Note</code> 点了一点反应都没有，是还在开发么？</p>
+<p>用了一圈下来感觉似乎完成度还是不太够，但是值得继续关注！</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>igorsheg/astro: An open, extensible, dashboard for all of your homelab services.<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2lnb3JzaGVnL2FzdHJv">https://github.com/igorsheg/astro<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>导航</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>德业DYD-T22A3除湿机接入HomeAssistant记录</title>
     <url>/2021/12/06/%E5%BE%B7%E4%B8%9ADYD-T22A3%E9%99%A4%E6%B9%BF%E6%9C%BA%E6%8E%A5%E5%85%A5HomeAssistant%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>上个月小苏同学买了一台除湿机，第一次配对绑定比较麻烦，应该是 <code>WIFI</code> 模块的网络兼容性不大好，不过连上之后就没问题了</p>
@@ -17441,7 +17537,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiMxMDA7JiN4NmQ7JiMxMDU7JiN4NmU7JiN4NDA7JiN4NmY7JiN4NzA7JiMxMDE7JiN4NmU7JiMxMTU7JiMxMTc7JiM5ODsmI3g3NDsmI3g2OTsmI3g3NDsmIzEwODsmI3g2NTsmIzExNTsmIzQ2OyYjeDZmOyYjMTE0OyYjeDY3Ow==">&#97;&#100;&#x6d;&#105;&#x6e;&#x40;&#x6f;&#x70;&#101;&#x6e;&#115;&#117;&#98;&#x74;&#x69;&#x74;&#108;&#x65;&#115;&#46;&#x6f;&#114;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiN4NjQ7JiMxMDk7JiMxMDU7JiMxMTA7JiM2NDsmIzExMTsmI3g3MDsmIzEwMTsmI3g2ZTsmIzExNTsmIzExNzsmIzk4OyYjeDc0OyYjeDY5OyYjeDc0OyYjMTA4OyYjMTAxOyYjMTE1OyYjeDJlOyYjMTExOyYjMTE0OyYjMTAzOw==">&#97;&#x64;&#109;&#105;&#110;&#64;&#111;&#x70;&#101;&#x6e;&#115;&#117;&#98;&#x74;&#x69;&#x74;&#108;&#101;&#115;&#x2e;&#111;&#114;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
