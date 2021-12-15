@@ -1,6 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>强大的网页数据库管理工具Adminer</title>
+    <url>/2021/12/15/%E5%BC%BA%E5%A4%A7%E7%9A%84%E7%BD%91%E9%A1%B5%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7Adminer/</url>
+    <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111160001415.png"></p>
+<p>老苏折腾过的项目，数据库主要是 <code>MySQL</code>，其次是 <code>MongoDB</code> 、<code>PostgreSQL</code> 和 <code>SQLite</code>，最近还用到了 <code>Elasticsearch</code> ，但是数据库管理软件 <code>phpMyAdmin</code> 只能管理 <code>MySQL</code> ，老苏一直在找一个全能的数据库管理器，似乎 <code>Adminer</code> 可以满足要求。</p>
+<p><strong>什么是 Adminer ?</strong></p>
+<blockquote>
+<p><code>Adminer</code>（原 <code>phpMinAdmin</code>）是一个用 <code>PHP</code> 编写的全功能数据库管理工具。与 <code>phpMyAdmin</code> 相反，它由一个准备部署到目标服务器的文件组成。<code>Adminer</code> 可用于 <code>MySQL</code>、<code>PostgreSQL</code>、<code>SQLite</code>、<code>MS SQL</code>、<code>Oracle</code>、<code>Firebird</code>、<code>SimpleDB</code>、<code>Elasticsearch</code> 和 <code>MongoDB</code>。</p>
+</blockquote>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>在群晖上以 Docker 方式安装。</p>
+<p>在注册表中搜索 <code>adminer</code> ，选择第一个 <code>adminer</code>，版本选择 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111141406194.png"></p>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>本地端口不冲突就行，不确定的话可以查一下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看端口占用</span></span><br><span class="line">netstat -tunlp | grep 端口号</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>8989</code></td>
+<td align="center"><code>8080</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111141454850.png"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>在浏览器中输入 <code>http://群晖IP:8989</code> 就能看到主界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111141456126.png"></p>
+<h2 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h2><p>先试的是群晖自带的 <code>MariaDB 5</code>，数据库用的是 <code>librenms</code> </p>
+<blockquote>
+<p>因为我们都是按账号创建的，所以用户名和数据库名是相同的</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111141506378.png"></p>
+<p>登录成功之后进入管理界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111141507558.png"></p>
+<p>接着试了下 <code>MariaDB 10</code>，数据库用的是 <code>nocodb</code> </p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111141516435.png"></p>
+<p>登录很顺利</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111141516914.png"></p>
+<h2 id="PostgreSQL"><a href="#PostgreSQL" class="headerlink" title="PostgreSQL"></a>PostgreSQL</h2><p>老苏安装 <code>adminer</code> 的主要原因就是为了管理 <code>PostgreSQL</code>，之前有两个项目安装了 <code>docker</code> 版的 <code>PostgreSQL</code></p>
+<blockquote>
+<p><a href="">日程安排工具Calendso</a><br><a href="">多合一的家庭助理Homechart</a></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111141532581.png"></p>
+<p>进入管理界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111141535020.png"></p>
+<p>默认是 <code>显示结构</code>，改为 <code>选择数据</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111141538438.png"></p>
+<h2 id="MongoDB"><a href="#MongoDB" class="headerlink" title="MongoDB"></a>MongoDB</h2><p>接下来尝试了 <code>MongoDB</code>，之前好几个项目都用到了，最近的是下面👇这个：</p>
+<blockquote>
+<p><a href="https://laosu.ml/2021/11/08/%E4%BA%A4%E4%BA%92%E5%BC%8F%E5%9C%A8%E7%BA%BF%E8%BE%85%E5%AF%BC%E5%B7%A5%E5%85%B7Nettu%20Meet/">交互式在线辅导工具Nettu Meet</a></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111142018677.png"></p>
+<p>但是这次没有成功，显示 <code>没有扩展</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111141637720.png"></p>
+<p>老苏研究了半天，才发现这样一段描述</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111141832288.png"></p>
+<p>原来开箱即用的只有下面👇这些，其他的都得自己安装 <code>PHP</code> 扩展</p>
+<ul>
+<li>  <code>MySQL</code></li>
+<li>  <code>PostgreSQL</code></li>
+<li>  <code>SQLite</code></li>
+<li>  <code>SimpleDB</code></li>
+<li>  <code>Elasticsearch</code></li>
+</ul>
+<h3 id="安装扩展"><a href="#安装扩展" class="headerlink" title="安装扩展"></a>安装扩展</h3><p>通过 <code>SSH</code> 客户端以 <code>root</code> 身份进入容器</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 以 root 身份进入容器</span></span><br><span class="line">docker <span class="built_in">exec</span> -it --user root adminer1 /bin/sh</span><br></pre></td></tr></table></figure>
+
+<p>依次执行下面的命令</p>
+<blockquote>
+<p>安装比较花时间，需要耐心</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装编译环境</span></span><br><span class="line">apk add autoconf gcc g++ make libffi-dev openssl-dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 mongo 驱动 </span></span><br><span class="line">pecl install mongodb</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加 mongo 配置</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;extension=mongodb.so&quot;</span> &gt; /usr/<span class="built_in">local</span>/etc/php/conf.d/docker-php-ext-mongodb.ini</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111141852705.png"></p>
+<p>如果中间出现错误</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111141924699.png"></p>
+<p>就再执行一次</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111142007818.png"></p>
+<p>编译成功之后还需要修改配置，再重启一次容器就可以了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111142014865.png"></p>
+<p>这次很顺利的进入到了管理界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111142020896.png"></p>
+<h2 id="Elasticsearch"><a href="#Elasticsearch" class="headerlink" title="Elasticsearch"></a>Elasticsearch</h2><p> <code>Nettu Meet</code> 还用到了 <code>Elasticsearch</code> ，正好又是开箱即用的，所以也一并看看，但是 <code>Adminer默认不支持访问没有密码的数据库</code></p>
+<p> <img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111142058098.png"></p>
+<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><p> 停止容器，添加环境变量</p>
+<table>
+<thead>
+<tr>
+<th align="center">可变</th>
+<th align="center">值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>ADMINER_PLUGINS</code></td>
+<td align="center">插件名称</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>在这里 <code>值</code> 我们输入 <code>login-password-less</code></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111151945725.png"></p>
+<p>如果直接启动，日志中会有报错</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111152116157.png"></p>
+<p>这是因为 <code>login-password-less</code> 插件需要参数才能正常工作，所以不适用上面的方法，将 <code>ADMINER_PLUGINS</code> 值设为空，然后启动</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111152128442.png"></p>
+<p>通过 <code>SSH</code> 客户端以 <code>root</code> 身份进入容器</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 以 root 身份进入容器</span></span><br><span class="line">docker <span class="built_in">exec</span> -it --user root adminer1 /bin/sh</span><br></pre></td></tr></table></figure>
+
+<p>依次执行下面的命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 进入目录</span></span><br><span class="line"><span class="built_in">cd</span> plugins-enabled/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建文件</span></span><br><span class="line">vi login-password-less.php</span><br></pre></td></tr></table></figure>
+
+<p><code>login-password-less.php</code> 文件内容如下</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">require_once</span>(<span class="string">&#x27;plugins/login-password-less.php&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Set allowed password</span></span><br><span class="line"><span class="comment">	* <span class="doctag">@param</span> string result of password_hash</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> AdminerLoginPasswordLess(</span><br><span class="line">	<span class="variable">$password_hash</span> = password_hash(<span class="string">&#x27;nopassword&#x27;</span>, PASSWORD_DEFAULT)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>在密码中输入 <code>nopassword</code> </p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111152236479.png"></p>
+<p><code>登录</code> 成功之后的管理界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111152238506.png"></p>
+<h1 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h1><p>前面的截图看起来比较丑陋，但实际上 <code>Adminer</code> 是支持主题的</p>
+<p>通过 <code>SSH</code> 客户端以 <code>root</code> 身份进入容器</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 以 root 身份进入容器</span></span><br><span class="line">docker <span class="built_in">exec</span> -it --user root adminer1 /bin/sh</span><br></pre></td></tr></table></figure>
+
+<p>依次执行下面的命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 下载 css 文件</span></span><br><span class="line">curl -O https://raw.githubusercontent.com/Niyko/Hydra-Dark-Theme-for-Adminer/master/adminer.css</span><br><span class="line"></span><br><span class="line"><span class="comment"># 镜像站点</span></span><br><span class="line">curl -O https://raw.fastgit.org/Niyko/Hydra-Dark-Theme-for-Adminer/master/adminer.css</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111152309450.png"></p>
+<p>刷新一下页面，有没有觉得档次立马提升了几个层次？</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111152311690.png"></p>
+<p>进管理界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/10/202111152312536.png"></p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p><code>Adminer</code> 是 <code>phpMyAdmin</code> 的最佳替代品之一。它不仅体积更小，而且使用起来也更加快捷。</p>
+<p>功能虽然老苏没涉及，但是跨过了登录的难关，又是中文界面，用起来还是很容易的，有问题可以提出来一起研究。</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>vrana/adminer: Database management in a single PHP file<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3ZyYW5hL2FkbWluZXI=">https://github.com/vrana/adminer<i class="fa fa-external-link-alt"></i></span></p>
+<p>Adminer - Database management in a single PHP file<br>地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYWRtaW5lci5vcmcv">https://www.adminer.org/<i class="fa fa-external-link-alt"></i></span></p>
+<p>finwo/docker-adminer: Dockerized adminer db manager - docker-adminer - Codeberg.org<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9jb2RlYmVyZy5vcmcvZmlud28vZG9ja2VyLWFkbWluZXI=">https://codeberg.org/finwo/docker-adminer<i class="fa fa-external-link-alt"></i></span></p>
+<p>How to Use Adminer to Manage Databases Easily with a Single PHP File<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9raW5zdGEuY29tL2Jsb2cvYWRtaW5lci8=">https://kinsta.com/blog/adminer/<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>RuoYi-flowable工作流管理</title>
     <url>/2021/12/13/RuoYi-flowable%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%AE%A1%E7%90%86/</url>
     <content><![CDATA[<p>上周有网友留言需要工作流相关的系统，今天介绍的这个就支持自定义的表单，可能未必是他想要的，但也许有其他人需要呢？反正都已经折腾完了😊</p>
@@ -15067,8 +15218,8 @@
       </categories>
       <tags>
         <tag>群晖</tag>
-        <tag>Bitwarden</tag>
         <tag>数据库</tag>
+        <tag>Bitwarden</tag>
         <tag>SQLite</tag>
       </tags>
   </entry>
@@ -17821,7 +17972,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiN4NjQ7JiMxMDk7JiN4Njk7JiN4NmU7JiN4NDA7JiN4NmY7JiN4NzA7JiMxMDE7JiN4NmU7JiN4NzM7JiN4NzU7JiN4NjI7JiN4NzQ7JiMxMDU7JiMxMTY7JiMxMDg7JiN4NjU7JiMxMTU7JiM0NjsmI3g2ZjsmIzExNDsmI3g2Nzs=">&#97;&#x64;&#109;&#x69;&#x6e;&#x40;&#x6f;&#x70;&#101;&#x6e;&#x73;&#x75;&#x62;&#x74;&#105;&#116;&#108;&#x65;&#115;&#46;&#x6f;&#114;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjMTAwOyYjeDZkOyYjeDY5OyYjeDZlOyYjNjQ7JiMxMTE7JiN4NzA7JiMxMDE7JiMxMTA7JiMxMTU7JiMxMTc7JiM5ODsmI3g3NDsmI3g2OTsmIzExNjsmIzEwODsmI3g2NTsmIzExNTsmIzQ2OyYjMTExOyYjMTE0OyYjMTAzOw==">&#x61;&#100;&#x6d;&#x69;&#x6e;&#64;&#111;&#x70;&#101;&#110;&#115;&#117;&#98;&#x74;&#x69;&#116;&#108;&#x65;&#115;&#46;&#111;&#114;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
