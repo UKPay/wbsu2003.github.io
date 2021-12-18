@@ -1,6 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>拥有自己的MinIO对象存储服务器</title>
+    <url>/2021/12/18/%E6%8B%A5%E6%9C%89%E8%87%AA%E5%B7%B1%E7%9A%84MinIO%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
+    <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/12/202112181333599.png"></p>
+<p><strong>什么是 MinIO ？</strong></p>
+<blockquote>
+<p><code>MinIO</code> 是一种流行的开源对象存储服务器，与 <code>Amazon S3</code> 云存储服务兼容。<code>MinIO</code> 可以成为 <code>S3</code> 的可行替代方案。该服务存储非结构化数据，例如照片、视频、日志文件、备份和容器映像，甚至可以提供单个对象存储服务器，将分布在许多服务器上的多个驱动器集中在一起。</p>
+</blockquote>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>在群晖上以 Docker 方式安装。</p>
+<p>在注册表中搜索 <code>minio</code> ，选择第一个 <code>minio/minio</code>，版本选择 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/12/202112181233744.png"></p>
+<h2 id="卷"><a href="#卷" class="headerlink" title="卷"></a>卷</h2><p>在 <code>docker</code> 文件夹中，创建一个新文件夹，并将其命名为 <code>minio</code></p>
+<table>
+<thead>
+<tr>
+<th align="center">文件夹</th>
+<th align="center">装载路径</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>docker/minio</code></td>
+<td align="center"><code>/data</code></td>
+<td align="center">存放数据</td>
+</tr>
+<tr>
+<td align="center"><code>docker/minio/config</code></td>
+<td align="center"><code>/root/.minio</code></td>
+<td align="center">存放设置</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/12/202112181249868.png" alt="两个文件夹"></p>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>端口不冲突就行，不确定的话可以用命令查一下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看端口占用</span></span><br><span class="line">netstat -tunlp | grep 端口号</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>9900</code></td>
+<td align="center"><code>9000</code></td>
+</tr>
+<tr>
+<td align="center"><code>9901</code></td>
+<td align="center"><code>9001</code></td>
+</tr>
+</tbody></table>
+<p>默认只显示了 <code>API</code> 端口</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/12/202112181241518.png" alt="1个端口"></p>
+<p><code>Console</code> 的端口需要我们点 <code>+</code> 号手动添加</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/12/202112181246420.png" alt="2个端口"></p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><table>
+<thead>
+<tr>
+<th align="center">可变</th>
+<th align="center">值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>MINIO_ROOT_USER</code></td>
+<td align="center">用户名</td>
+</tr>
+<tr>
+<td align="center"><code>MINIO_ROOT_PASSWORD</code></td>
+<td align="center">密码</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>没找到关于密码长度及字符的要求，老苏用 <code>Bitwarden</code> 生成的 <code>12</code> 位密码，没有使用特殊字符<br>用户：<code>laosu</code>，密码：<code>N8L53ddpZjCt</code>；这是老苏随便设的，请设置你自己的。</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/12/202112181252615.png"></p>
+<blockquote>
+<p>【重要】：命令只有第一次会执行，所以如果你忘记了这一步，需要重来一次</p>
+</blockquote>
+<p>命令中输入：<code>minio server /data --console-address &quot;:9001&quot;</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/12/202112181256877.png"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>先看日志，我们会知道<code>API</code> 的内部端口：<code>9000</code>，对应的外部端口是 <code>9900</code>，<code>Console</code> 的内部端口：<code>9001</code>，对应的外部端口是 <code>9901</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/12/202112181302670.png"></p>
+<p>所以在浏览器中输入 <code>http://群晖IP:9901</code> 就能看到主界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/12/202112181303161.png"></p>
+<p>用 <code>环境变量</code> 中设置的账号密码登录，登录成功后</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/12/202112181304048.png"></p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>minio/minio: High Performance, Kubernetes Native Object Storage<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pbmlvL21pbmlv">https://github.com/minio/minio<i class="fa fa-external-link-alt"></i></span></p>
+<p>MinIO | Learn more about MinIO’s Docker Implementation<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLm1pbi5pby9kb2NzL21pbmlvLWRvY2tlci1xdWlja3N0YXJ0LWd1aWRlLmh0bWw=">https://docs.min.io/docs/minio-docker-quickstart-guide.html<i class="fa fa-external-link-alt"></i></span></p>
+<p>Installing Minio on Synology DiskStation | by Jonah Aragon | Medium<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9qb25haGFyYWdvbi5tZS9pbnN0YWxsaW5nLW1pbmlvLW9uLXN5bm9sb2d5LWRpc2tzdGF0aW9uLTQ4MjNjYWY2MDBjMw==">https://jonaharagon.me/installing-minio-on-synology-diskstation-4823caf600c3<i class="fa fa-external-link-alt"></i></span></p>
+<p>minio/minio: High Performance, Kubernetes Native Object Storage<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pbmlvL21pbmlv">https://github.com/minio/minio<i class="fa fa-external-link-alt"></i></span></p>
+<p>MinIO | High Performance, Kubernetes Native Object Storage<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9taW4uaW8v">https://min.io/<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+        <category>hide</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>存储</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>开源设计和原型制作平台Penpot</title>
     <url>/2021/12/17/%E5%BC%80%E6%BA%90%E8%AE%BE%E8%AE%A1%E5%92%8C%E5%8E%9F%E5%9E%8B%E5%88%B6%E4%BD%9C%E5%B9%B3%E5%8F%B0Penpot/</url>
     <content><![CDATA[<p><strong>什么是 Penpot ？</strong></p>
@@ -18063,7 +18167,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjeDY0OyYjeDZkOyYjMTA1OyYjeDZlOyYjNjQ7JiN4NmY7JiN4NzA7JiMxMDE7JiN4NmU7JiMxMTU7JiMxMTc7JiN4NjI7JiMxMTY7JiMxMDU7JiN4NzQ7JiMxMDg7JiMxMDE7JiMxMTU7JiN4MmU7JiN4NmY7JiN4NzI7JiN4Njc7">&#x61;&#x64;&#x6d;&#105;&#x6e;&#64;&#x6f;&#x70;&#101;&#x6e;&#115;&#117;&#x62;&#116;&#105;&#x74;&#108;&#101;&#115;&#x2e;&#x6f;&#x72;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjMTAwOyYjeDZkOyYjeDY5OyYjMTEwOyYjeDQwOyYjeDZmOyYjeDcwOyYjMTAxOyYjeDZlOyYjMTE1OyYjeDc1OyYjeDYyOyYjMTE2OyYjMTA1OyYjeDc0OyYjeDZjOyYjMTAxOyYjeDczOyYjNDY7JiN4NmY7JiMxMTQ7JiN4Njc7">&#x61;&#100;&#x6d;&#x69;&#110;&#x40;&#x6f;&#x70;&#101;&#x6e;&#115;&#x75;&#x62;&#116;&#105;&#x74;&#x6c;&#101;&#x73;&#46;&#x6f;&#114;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
