@@ -1,6 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>个人仪表板软件Flame</title>
+    <url>/2021/12/24/%E4%B8%AA%E4%BA%BA%E4%BB%AA%E8%A1%A8%E6%9D%BF%E8%BD%AF%E4%BB%B6Flame/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是在网友后台推荐之前就完成的😁</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202112211137890.png"></p>
+<p><strong>什么是 Flame ？</strong></p>
+<blockquote>
+<p><code>Flame</code> 可以作为自托管服务器的起始页，非常易于设置和使用。借助内置编辑器可以轻松管理您的应用程序和书签。</p>
+</blockquote>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>在群晖上以 Docker 方式安装。</p>
+<p>在注册表中搜索 <code>flame</code> ，选择第一个 <code>pawelmalak/flame</code>，版本选择 <code>latest</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111241041681.png"></p>
+<h2 id="卷"><a href="#卷" class="headerlink" title="卷"></a>卷</h2><p>在 <code>docker</code> 文件夹中，创建一个新文件夹，将其命名为 <code>flame</code>，并建一个子目录 <code>data</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111241048784.png"></p>
+<table>
+<thead>
+<tr>
+<th align="center">文件夹</th>
+<th align="center">装载路径</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>docker/flame/data</code></td>
+<td align="center"><code>/app/data</code></td>
+<td align="center">存放数据</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111241049121.png"></p>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>端口不冲突就行，不确定的话可以用命令查一下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看端口占用</span></span><br><span class="line">netstat -tunlp | grep 端口号</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111241057649.png"></p>
+<blockquote>
+<p>因为老苏启用了群晖的 <code>WebDAV Server</code>，默认的端口就是 <code>5005</code> </p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111241054124.png"></p>
+<table>
+<thead>
+<tr>
+<th align="center">本地端口</th>
+<th align="center">容器端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>5007</code></td>
+<td align="center"><code>5005</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111241057576.png"></p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><table>
+<thead>
+<tr>
+<th align="center">可变</th>
+<th align="center">值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>PASSWORD</code></td>
+<td align="center">默认为 <code>flame_password</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>密码修改为你想要的即可</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111241059545.png"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>在浏览器中输入 <code>http://群晖IP:5007</code> 就能看到主界面，不过刚开始什么都没有</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111241116033.png"></p>
+<p>只有最上方的搜索可以使用，默认使用的是 <code>duckduckgo</code> 引擎</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111250953610.png"></p>
+<p>点左下角的设置图标 </p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111241137598.png"></p>
+<p>这个按钮不大显眼，移上去才会高亮显示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111241138250.png"></p>
+<p>可以选择主题的颜色</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111241139309.png"></p>
+<p>进入 <code>App</code> 要登录验证，需填入我们在前面 <code>环境变量</code> 中设置的密码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111241140453.png"></p>
+<p>登录成功之后</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111241142168.png"></p>
+<h2 id="Weather"><a href="#Weather" class="headerlink" title="Weather"></a>Weather</h2><p><code>Flame</code> 用的是 <span class="exturl" data-url="aHR0cHM6Ly93d3cud2VhdGhlcmFwaS5jb20v">https://www.weatherapi.com/<i class="fa fa-external-link-alt"></i></span> 的数据，免费账户可以显示3天的实时数据，7天的历史数据，每个月 <code>100w</code> 次查询请求，在线率 <code>95.5%</code>，自己用足够了。</p>
+<blockquote>
+<p>今天 <code>review</code> 文章的时候发现网站的证书似乎有问题，证书在有效期内，上个月写文章的时候还是好的</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/12/202112240946479.png"></p>
+<p>首先要注册一个账号，只要设置邮箱和密码即可</p>
+<blockquote>
+<p>人机身份验证可能需要科学上网😳</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111241155159.png"></p>
+<p>登录邮箱，会有两封邮件，其中一封有验证地址，点击后验证账号</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111241159044.png"></p>
+<p>登录后即能看到 <code>API Key</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111241202655.png"></p>
+<p>在 <span class="exturl" data-url="aHR0cHM6Ly9hcGkubWFwLmJhaWR1LmNvbS9sYnNhcGkvZ2V0cG9pbnQvaW5kZXguaHRtbA==">https://api.map.baidu.com/lbsapi/getpoint/index.html<i class="fa fa-external-link-alt"></i></span> 查询要显示的城市的纬度 <code>Latitude</code> 和经度 <code>Longitude</code>，比如 <code>上海 杨浦</code>，点选位置后可以获得坐标</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111241340031.png"></p>
+<p>将获取到的 <code>API Key</code> 和 经纬度填入</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111241345713.png"></p>
+<p>返回首页就能看到天气的图标了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/09/202111241347954.png"></p>
+<h2 id="Applications"><a href="#Applications" class="headerlink" title="Applications"></a>Applications</h2><p>点红框中的链接，进入 <code>Applications</code> 设置界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111241418401.png"></p>
+<p>如果你没登录什么都没有</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111241421393.png"></p>
+<p>登录之后才有 <code>Add</code> 和 <code>Edit</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111241420731.png"></p>
+<p>新建一个试试</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111250855141.png"></p>
+<p>关于 <code>App Icon</code> 可以直接去 <span class="exturl" data-url="aHR0cHM6Ly9tYXRlcmlhbGRlc2lnbmljb25zLmNvbS8=">https://materialdesignicons.com<i class="fa fa-external-link-alt"></i></span> 搜索，老苏用的都是 <code>MDI(Material Design Icons)</code> 上的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111250946710.png"></p>
+<p>也可以自己上传</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111250943051.png"></p>
+<p>随便加了几个</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111250913516.png"></p>
+<h2 id="Bookmarks"><a href="#Bookmarks" class="headerlink" title="Bookmarks"></a>Bookmarks</h2><p>点红框中的链接，进入 <code>Bookmarks</code> 设置界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111250920601.png"></p>
+<p>相比 <code>Applications</code> 多了分类 <code>Category</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111250925441.png"></p>
+<p>新建一个分类</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111250935419.png"></p>
+<p>新增书签</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111250930658.png"></p>
+<p>随便加了两个</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111250934354.png"></p>
+<p>整体效果</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111250937030.png"></p>
+<h2 id="换背景"><a href="#换背景" class="headerlink" title="换背景"></a>换背景</h2><p>在网上搜了张图片，尺寸是 <code>1280x1024</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111251005005.jpg"></p>
+<p>进后台找到 <code>CSS</code> 在 <code>Custom CSS</code> 中输入</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123; <span class="attribute">background</span>: <span class="built_in">url</span>(<span class="string">&#x27;图片URL&#x27;</span>) no-repeat; <span class="attribute">background-size</span>: <span class="number">1920px</span>; &#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111251009707.png"></p>
+<p>保存后刷新界面</p>
+<blockquote>
+<p>自动裁掉了下面的一部分，虽然没有了对称的效果，但是总体还看得过去；估计要按显示器分辨率用 <code>16：9</code> 的图片应该就不会被裁减</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202111251013653.png"></p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<p>pawelmalak/flame: Flame is self-hosted startpage for your server. Easily manage your apps and bookmarks with built-in editors.<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3Bhd2VsbWFsYWsvZmxhbWU=">https://github.com/pawelmalak/flame<i class="fa fa-external-link-alt"></i></span></p>
+<p>Synology: How To Change Flame Dashboard Background – Marius Hosting<br>地址：<span class="exturl" data-url="aHR0cHM6Ly9tYXJpdXNob3N0aW5nLmNvbS9zeW5vbG9neS1ob3ctdG8tY2hhbmdlLWZsYW1lLWRhc2hib2FyZC1iYWNrZ3JvdW5kLw==">https://mariushosting.com/synology-how-to-change-flame-dashboard-background/<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>各种折腾</category>
+      </categories>
+      <tags>
+        <tag>群晖</tag>
+        <tag>docker</tag>
+        <tag>导航</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>拥有自己的MinIO对象存储服务器</title>
     <url>/2021/12/22/%E6%8B%A5%E6%9C%89%E8%87%AA%E5%B7%B1%E7%9A%84MinIO%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
     <content><![CDATA[<p><strong>什么是 MinIO ？</strong></p>
@@ -18412,7 +18565,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjeDY0OyYjeDZkOyYjeDY5OyYjMTEwOyYjNjQ7JiN4NmY7JiMxMTI7JiMxMDE7JiN4NmU7JiN4NzM7JiMxMTc7JiN4NjI7JiMxMTY7JiMxMDU7JiN4NzQ7JiN4NmM7JiMxMDE7JiN4NzM7JiN4MmU7JiMxMTE7JiMxMTQ7JiMxMDM7">&#x61;&#x64;&#x6d;&#x69;&#110;&#64;&#x6f;&#112;&#101;&#x6e;&#x73;&#117;&#x62;&#116;&#105;&#x74;&#x6c;&#101;&#x73;&#x2e;&#111;&#114;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiMxMDA7JiN4NmQ7JiN4Njk7JiN4NmU7JiM2NDsmI3g2ZjsmI3g3MDsmI3g2NTsmIzExMDsmIzExNTsmI3g3NTsmI3g2MjsmI3g3NDsmIzEwNTsmI3g3NDsmI3g2YzsmIzEwMTsmIzExNTsmI3gyZTsmI3g2ZjsmI3g3MjsmI3g2Nzs=">&#97;&#100;&#x6d;&#x69;&#x6e;&#64;&#x6f;&#x70;&#x65;&#110;&#115;&#x75;&#x62;&#x74;&#105;&#x74;&#x6c;&#101;&#115;&#x2e;&#x6f;&#x72;&#x67;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
