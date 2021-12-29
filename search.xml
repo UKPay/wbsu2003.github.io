@@ -110,7 +110,7 @@
 <p>如果一次不够的话，可以再增加几次，但是一天不要超过 <code>4</code> 次。不管是 <code>weather.api</code> 还是 <code>WxPusher</code> ，虽然使用是免费的，但是维护者还是有成本的，别薅羊毛把羊🐑给薅没了</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202112201143896.png"></p>
 <h2 id="数据获取"><a href="#数据获取" class="headerlink" title="数据获取"></a>数据获取</h2><blockquote>
-<p>关于天气数据，可以参考 <a href="https://laosu.ml/2021/09/03/%E7%94%A8Changedetection%E7%9B%91%E6%8E%A7%E7%BD%91%E9%A1%B5%E7%9A%84%E5%8F%98%E5%8C%96#JSON-API-%E7%9B%91%E6%8E%A7">用Changedetection监控网页的变化</a> 一文中的 <code>JSON-API-监控</code> 部分</p>
+<p>关于天气数据，可以参考『  <a href="https://laosu.ml/2021/09/03/%E7%94%A8Changedetection%E7%9B%91%E6%8E%A7%E7%BD%91%E9%A1%B5%E7%9A%84%E5%8F%98%E5%8C%96#JSON-API-%E7%9B%91%E6%8E%A7">用Changedetection监控网页的变化</a> 』一文中的 <code>JSON-API-监控</code> 部分</p>
 </blockquote>
 <p>老苏用了 <code>HTTP Request</code> 节点来获取数据</p>
 <table>
@@ -154,7 +154,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images@master/picgo/2021/11/202112210902172.png"></p>
 <h2 id="执行动作"><a href="#执行动作" class="headerlink" title="执行动作"></a>执行动作</h2><p>老苏用了 <code>HTTP Request</code> 节点来触发相应的动作，也就是通过<code>WxPusher</code> 实现微信发送天气预报</p>
 <blockquote>
-<p>关于 <code>WxPusher</code> 的申请请参考 <a href="https://laosu.ml/2021/06/18/%E9%80%9A%E8%BF%87WxPusher%E5%9C%A8%E7%BE%A4%E6%99%96%E4%B8%8A%E5%AE%9E%E7%8E%B0%E5%BE%AE%E4%BF%A1%E6%8E%A8%E9%80%81/">通过WxPusher在群晖上实现微信推送</a> 的相关部分</p>
+<p>关于 <code>WxPusher</code> 的申请请参考『  <a href="https://laosu.ml/2021/06/18/%E9%80%9A%E8%BF%87WxPusher%E5%9C%A8%E7%BE%A4%E6%99%96%E4%B8%8A%E5%AE%9E%E7%8E%B0%E5%BE%AE%E4%BF%A1%E6%8E%A8%E9%80%81/">通过WxPusher在群晖上实现微信推送</a> 』的相关部分</p>
 </blockquote>
 <table>
 <thead>
@@ -19049,7 +19049,7 @@
 <h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>找一个空闲的端口，别冲突就行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/wbsu2003/gitnote-images/mynote/2020/10/01/1601543529497-1601543529500.png" alt="title"></p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>如果你需要字幕，需要申请 <code>OpenSubtitles</code> 的 <code>UserAgent 字符串</code> ，目前官网是在手动添加 <code>UA</code> ，因此可能需要几天的时间。</p>
-<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjeDYxOyYjMTAwOyYjMTA5OyYjeDY5OyYjMTEwOyYjeDQwOyYjMTExOyYjMTEyOyYjMTAxOyYjMTEwOyYjMTE1OyYjeDc1OyYjOTg7JiN4NzQ7JiN4Njk7JiMxMTY7JiMxMDg7JiN4NjU7JiMxMTU7JiN4MmU7JiMxMTE7JiMxMTQ7JiMxMDM7">&#x61;&#100;&#109;&#x69;&#110;&#x40;&#111;&#112;&#101;&#110;&#115;&#x75;&#98;&#x74;&#x69;&#116;&#108;&#x65;&#115;&#x2e;&#111;&#114;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
+<p>收件人:<span class="exturl" data-url="bWFpbHRvOiYjOTc7JiN4NjQ7JiN4NmQ7JiN4Njk7JiMxMTA7JiM2NDsmI3g2ZjsmI3g3MDsmI3g2NTsmIzExMDsmI3g3MzsmI3g3NTsmIzk4OyYjeDc0OyYjeDY5OyYjMTE2OyYjMTA4OyYjeDY1OyYjeDczOyYjNDY7JiN4NmY7JiN4NzI7JiMxMDM7">&#97;&#x64;&#x6d;&#x69;&#110;&#64;&#x6f;&#x70;&#x65;&#110;&#x73;&#x75;&#98;&#x74;&#x69;&#116;&#108;&#x65;&#x73;&#46;&#x6f;&#x72;&#103;<i class="fa fa-external-link-alt"></i></span><br>主题：Register User Agent Request<br>邮件内容：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Required info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Your name: your real name </span><br><span class="line">Your registered OS username: your username on opensubtitles.org</span><br><span class="line">Contact mail: your mail</span><br><span class="line">Title of useragent: your name of useragent</span><br><span class="line">Version of useragent: for example: v1</span><br><span class="line">Programming language: C++&#x2F;Java&#x2F;PHP&#x2F;Python...</span><br><span class="line">Approximate users of program: how many approx. users are using your program?</span><br><span class="line">Opensource: yes&#x2F;no</span><br><span class="line">Upload feature: yes&#x2F;no&#x2F;maybe in future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Optional info</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Application URL: where is possible find homepage of application</span><br><span class="line">Developer URL: developers homepage</span><br></pre></td></tr></table></figure>
 
 <p>如果你懒得申请也可以用默认的，只是每天对 <code>IP/用户</code> 下载有次数限制</p>
