@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2022-01-03T08:01:15.751Z</updated>
+  <updated>2022-01-05T04:25:40.044Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -17,11 +17,34 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>开源的低代码平台Budibase</title>
+    <link href="https://laosu.ml/2022/01/05/%E5%BC%80%E6%BA%90%E7%9A%84%E4%BD%8E%E4%BB%A3%E7%A0%81%E5%B9%B3%E5%8F%B0Budibase/"/>
+    <id>https://laosu.ml/2022/01/05/%E5%BC%80%E6%BA%90%E7%9A%84%E4%BD%8E%E4%BB%A3%E7%A0%81%E5%B9%B3%E5%8F%B0Budibase/</id>
+    <published>2022-01-05T04:00:00.000Z</published>
+    <updated>2022-01-05T04:25:40.044Z</updated>
+    
+    
+    <summary type="html">Budibase 是一个开源的低代码平台，是构建提高生产力的内部工具的最简单方法。</summary>
+    
+    
+    
+    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
+    
+    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
+    
+    <category term="低代码" scheme="https://laosu.ml/tags/%E4%BD%8E%E4%BB%A3%E7%A0%81/"/>
+    
+  </entry>
+  
+  <entry>
     <title>轻量但功能强大的Wiki.js</title>
     <link href="https://laosu.ml/2022/01/03/%E8%BD%BB%E9%87%8F%E4%BD%86%E5%8A%9F%E8%83%BD%E5%BC%BA%E5%A4%A7%E7%9A%84Wiki.js/"/>
     <id>https://laosu.ml/2022/01/03/%E8%BD%BB%E9%87%8F%E4%BD%86%E5%8A%9F%E8%83%BD%E5%BC%BA%E5%A4%A7%E7%9A%84Wiki.js/</id>
     <published>2022-01-03T07:30:00.000Z</published>
-    <updated>2022-01-03T08:01:15.751Z</updated>
+    <updated>2022-01-05T04:25:40.048Z</updated>
     
     
     <summary type="html">一个基于 Node.js 的现代、轻量级和强大的 wiki 应用程序。</summary>
@@ -44,7 +67,7 @@
     <link href="https://laosu.ml/2021/12/31/%E4%B8%AA%E4%BA%BA%E9%9F%B3%E4%B9%90%E6%B5%81%E5%AA%92%E4%BD%93%E6%9C%8D%E5%8A%A1%E5%99%A8mStream/"/>
     <id>https://laosu.ml/2021/12/31/%E4%B8%AA%E4%BA%BA%E9%9F%B3%E4%B9%90%E6%B5%81%E5%AA%92%E4%BD%93%E6%9C%8D%E5%8A%A1%E5%99%A8mStream/</id>
     <published>2021-12-31T11:00:00.000Z</published>
-    <updated>2022-01-03T08:01:15.743Z</updated>
+    <updated>2022-01-05T04:25:40.036Z</updated>
     
     
     <summary type="html">mstream 是个人音乐流媒体服务器，支持 Android 和 iOS 移动客户端和网页播放。</summary>
@@ -67,7 +90,7 @@
     <link href="https://laosu.ml/2021/12/29/%E5%BC%80%E6%BA%90%E5%B7%A5%E4%BD%9C%E6%B5%81%E8%87%AA%E5%8A%A8%E5%8C%96%E5%B7%A5%E5%85%B7n8n/"/>
     <id>https://laosu.ml/2021/12/29/%E5%BC%80%E6%BA%90%E5%B7%A5%E4%BD%9C%E6%B5%81%E8%87%AA%E5%8A%A8%E5%8C%96%E5%B7%A5%E5%85%B7n8n/</id>
     <published>2021-12-29T05:30:00.000Z</published>
-    <updated>2022-01-03T08:01:15.747Z</updated>
+    <updated>2022-01-05T04:25:40.040Z</updated>
     
     
     <summary type="html">n8n 是免费的基于节点的工作流自动化工具，可以轻松实现跨不同服务的任务自动化。</summary>
@@ -92,7 +115,7 @@
     <link href="https://laosu.ml/2021/12/27/%E4%BC%81%E4%B8%9A%E7%BA%A7%E8%BF%9C%E7%A8%8B%E5%8A%9E%E5%85%ACvpn%E8%BD%AF%E4%BB%B6AnyLink/"/>
     <id>https://laosu.ml/2021/12/27/%E4%BC%81%E4%B8%9A%E7%BA%A7%E8%BF%9C%E7%A8%8B%E5%8A%9E%E5%85%ACvpn%E8%BD%AF%E4%BB%B6AnyLink/</id>
     <published>2021-12-27T04:00:00.000Z</published>
-    <updated>2022-01-03T08:01:15.743Z</updated>
+    <updated>2022-01-05T04:25:40.036Z</updated>
     
     
     <summary type="html">AnyLink 是一个企业级远程办公 ssl vpn 软件，可以支持多人同时在线使用。</summary>
@@ -121,7 +144,7 @@
     <link href="https://laosu.ml/2021/12/24/%E4%B8%AA%E4%BA%BA%E4%BB%AA%E8%A1%A8%E6%9D%BF%E8%BD%AF%E4%BB%B6Flame/"/>
     <id>https://laosu.ml/2021/12/24/%E4%B8%AA%E4%BA%BA%E4%BB%AA%E8%A1%A8%E6%9D%BF%E8%BD%AF%E4%BB%B6Flame/</id>
     <published>2021-12-24T02:00:00.000Z</published>
-    <updated>2022-01-03T08:01:15.743Z</updated>
+    <updated>2022-01-05T04:25:40.036Z</updated>
     
     
     <summary type="html">Flame 可以作为自托管服务器的起始页，非常易于设置和使用。</summary>
@@ -144,7 +167,7 @@
     <link href="https://laosu.ml/2021/12/22/%E6%8B%A5%E6%9C%89%E8%87%AA%E5%B7%B1%E7%9A%84MinIO%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
     <id>https://laosu.ml/2021/12/22/%E6%8B%A5%E6%9C%89%E8%87%AA%E5%B7%B1%E7%9A%84MinIO%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/</id>
     <published>2021-12-22T02:00:00.000Z</published>
-    <updated>2022-01-03T08:01:15.747Z</updated>
+    <updated>2022-01-05T04:25:40.044Z</updated>
     
     
     <summary type="html">MinIO 是一种流行的开源对象存储服务器，与 Amazon S3 云存储服务兼容。</summary>
@@ -167,7 +190,7 @@
     <link href="https://laosu.ml/2021/12/20/%E9%80%82%E7%94%A8%E4%BA%8E%E4%B8%AD%E5%B0%8F%E4%BC%81%E4%B8%9A%E5%91%BC%E5%8F%AB%E5%9C%BA%E6%99%AF%E7%9A%84ARCall/"/>
     <id>https://laosu.ml/2021/12/20/%E9%80%82%E7%94%A8%E4%BA%8E%E4%B8%AD%E5%B0%8F%E4%BC%81%E4%B8%9A%E5%91%BC%E5%8F%AB%E5%9C%BA%E6%99%AF%E7%9A%84ARCall/</id>
     <published>2021-12-20T04:00:00.000Z</published>
-    <updated>2022-01-03T08:01:15.751Z</updated>
+    <updated>2022-01-05T04:25:40.048Z</updated>
     
     
     <summary type="html">ARCall 是 anyRTC 仿微信呼叫的示例项目，可实现一对一及多人音视频通话。</summary>
@@ -192,7 +215,7 @@
     <link href="https://laosu.ml/2021/12/17/%E5%BC%80%E6%BA%90%E8%AE%BE%E8%AE%A1%E5%92%8C%E5%8E%9F%E5%9E%8B%E5%88%B6%E4%BD%9C%E5%B9%B3%E5%8F%B0Penpot/"/>
     <id>https://laosu.ml/2021/12/17/%E5%BC%80%E6%BA%90%E8%AE%BE%E8%AE%A1%E5%92%8C%E5%8E%9F%E5%9E%8B%E5%88%B6%E4%BD%9C%E5%B9%B3%E5%8F%B0Penpot/</id>
     <published>2021-12-17T11:00:00.000Z</published>
-    <updated>2022-01-03T08:01:15.747Z</updated>
+    <updated>2022-01-05T04:25:40.044Z</updated>
     
     
     <summary type="html">Penpot 是第一个面向跨域团队的开源设计和原型制作平台。</summary>
@@ -215,7 +238,7 @@
     <link href="https://laosu.ml/2021/12/15/%E5%BC%BA%E5%A4%A7%E7%9A%84%E7%BD%91%E9%A1%B5%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7Adminer/"/>
     <id>https://laosu.ml/2021/12/15/%E5%BC%BA%E5%A4%A7%E7%9A%84%E7%BD%91%E9%A1%B5%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7Adminer/</id>
     <published>2021-12-15T11:00:00.000Z</published>
-    <updated>2022-01-03T08:01:15.747Z</updated>
+    <updated>2022-01-05T04:25:40.044Z</updated>
     
     
     <summary type="html">Adminer（以前称为 phpMinAdmin）是一个基于 PHP 的免费开源的数据库管理工具。</summary>
@@ -238,7 +261,7 @@
     <link href="https://laosu.ml/2021/12/13/RuoYi-flowable%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%AE%A1%E7%90%86/"/>
     <id>https://laosu.ml/2021/12/13/RuoYi-flowable%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%AE%A1%E7%90%86/</id>
     <published>2021-12-13T04:00:00.000Z</published>
-    <updated>2022-01-03T08:01:15.739Z</updated>
+    <updated>2022-01-05T04:25:40.036Z</updated>
     
     
     <summary type="html">RuoYi-flowable 是基 RuoYi-vue + flowable 6.5 的工作流管理。</summary>
@@ -261,7 +284,7 @@
     <link href="https://laosu.ml/2021/12/10/%E5%A4%9A%E5%90%88%E4%B8%80%E7%9A%84%E5%AE%B6%E5%BA%AD%E5%8A%A9%E7%90%86Homechart/"/>
     <id>https://laosu.ml/2021/12/10/%E5%A4%9A%E5%90%88%E4%B8%80%E7%9A%84%E5%AE%B6%E5%BA%AD%E5%8A%A9%E7%90%86Homechart/</id>
     <published>2021-12-10T04:30:00.000Z</published>
-    <updated>2022-01-03T08:01:15.743Z</updated>
+    <updated>2022-01-05T04:25:40.040Z</updated>
     
     
     <summary type="html">Homechart 中包含了您需要的预算、日历、膳食、库存、任务等等功能。</summary>
@@ -284,7 +307,7 @@
     <link href="https://laosu.ml/2021/12/08/%E7%AE%80%E5%8D%95%E7%9A%84%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1%E9%9D%A2%E6%9D%BFAstro/"/>
     <id>https://laosu.ml/2021/12/08/%E7%AE%80%E5%8D%95%E7%9A%84%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1%E9%9D%A2%E6%9D%BFAstro/</id>
     <published>2021-12-08T04:30:00.000Z</published>
-    <updated>2022-01-03T08:01:15.751Z</updated>
+    <updated>2022-01-05T04:25:40.044Z</updated>
     
     
     <summary type="html">Astro 是适用于所有家庭网络服务的开放式、可扩展的仪表板。</summary>
@@ -307,7 +330,7 @@
     <link href="https://laosu.ml/2021/12/06/%E5%BE%B7%E4%B8%9ADYD-T22A3%E9%99%A4%E6%B9%BF%E6%9C%BA%E6%8E%A5%E5%85%A5HomeAssistant%E8%AE%B0%E5%BD%95/"/>
     <id>https://laosu.ml/2021/12/06/%E5%BE%B7%E4%B8%9ADYD-T22A3%E9%99%A4%E6%B9%BF%E6%9C%BA%E6%8E%A5%E5%85%A5HomeAssistant%E8%AE%B0%E5%BD%95/</id>
     <published>2021-12-06T04:00:00.000Z</published>
-    <updated>2022-01-03T08:01:15.747Z</updated>
+    <updated>2022-01-05T04:25:40.044Z</updated>
     
     
     <summary type="html">记录了将 DYD-T22A3 除湿机接入到 HomeAssistant 的过程。</summary>
@@ -330,7 +353,7 @@
     <link href="https://laosu.ml/2021/12/03/%E5%8F%AF%E8%83%BD%E6%98%AFgithub%E4%B8%8A%E6%9C%80%E5%8F%97%E6%AC%A2%E8%BF%8E%E7%9A%84%E4%BA%94%E5%AD%90%E6%A3%8BAI/"/>
     <id>https://laosu.ml/2021/12/03/%E5%8F%AF%E8%83%BD%E6%98%AFgithub%E4%B8%8A%E6%9C%80%E5%8F%97%E6%AC%A2%E8%BF%8E%E7%9A%84%E4%BA%94%E5%AD%90%E6%A3%8BAI/</id>
     <published>2021-12-03T04:30:00.000Z</published>
-    <updated>2022-01-03T08:01:15.743Z</updated>
+    <updated>2022-01-05T04:25:40.040Z</updated>
     
     
     <summary type="html">gobang 是一款基于 JavaScript 开发的在线五子棋游戏。</summary>
@@ -353,7 +376,7 @@
     <link href="https://laosu.ml/2021/12/01/4EVERLAND%E4%B8%8A%E9%83%A8%E7%BD%B2Hexo/"/>
     <id>https://laosu.ml/2021/12/01/4EVERLAND%E4%B8%8A%E9%83%A8%E7%BD%B2Hexo/</id>
     <published>2021-12-01T04:30:00.000Z</published>
-    <updated>2022-01-03T08:01:15.739Z</updated>
+    <updated>2022-01-05T04:25:40.036Z</updated>
     
     
     <summary type="html">将 Hexo 生成的静态 blog 托管在 4everland.org 上。</summary>
@@ -376,7 +399,7 @@
     <link href="https://laosu.ml/2021/11/29/%E5%85%83%E5%AE%87%E5%AE%99%E4%B8%AD%E7%9A%84%E8%99%9A%E6%8B%9F%E5%8A%9E%E5%85%AC%E5%AE%A4SkyOffice/"/>
     <id>https://laosu.ml/2021/11/29/%E5%85%83%E5%AE%87%E5%AE%99%E4%B8%AD%E7%9A%84%E8%99%9A%E6%8B%9F%E5%8A%9E%E5%85%AC%E5%AE%A4SkyOffice/</id>
     <published>2021-11-29T10:50:00.000Z</published>
-    <updated>2022-01-03T08:01:15.743Z</updated>
+    <updated>2022-01-05T04:25:40.040Z</updated>
     
     
     <summary type="html">SkyOffice 是身临其境的远程工作平台，该项目获得了 2021 翡翠创新大赛冠军。</summary>
@@ -403,7 +426,7 @@
     <link href="https://laosu.ml/2021/11/26/%E5%9C%A8%E7%BA%BF%E9%92%A2%E7%90%B4%E5%BA%94%E7%94%A8AutoPiano/"/>
     <id>https://laosu.ml/2021/11/26/%E5%9C%A8%E7%BA%BF%E9%92%A2%E7%90%B4%E5%BA%94%E7%94%A8AutoPiano/</id>
     <published>2021-11-26T04:30:00.000Z</published>
-    <updated>2022-01-03T08:01:15.743Z</updated>
+    <updated>2022-01-05T04:25:40.040Z</updated>
     
     
     <summary type="html">AutoPiano 是一款基于 Vue + Tone.js 开发的在线钢琴应用。</summary>
@@ -426,7 +449,7 @@
     <link href="https://laosu.ml/2021/11/24/%E5%B8%AE%E5%8A%A9%E7%AE%A1%E7%90%86%E4%B8%AA%E4%BA%BA%E4%BA%A4%E9%99%85%E5%85%B3%E7%B3%BB%E7%9A%84Monica/"/>
     <id>https://laosu.ml/2021/11/24/%E5%B8%AE%E5%8A%A9%E7%AE%A1%E7%90%86%E4%B8%AA%E4%BA%BA%E4%BA%A4%E9%99%85%E5%85%B3%E7%B3%BB%E7%9A%84Monica/</id>
     <published>2021-11-24T04:30:00.000Z</published>
-    <updated>2022-01-03T08:01:15.747Z</updated>
+    <updated>2022-01-05T04:25:40.040Z</updated>
     
     
     <summary type="html">Monica 是开源的个人 CRM，帮助您组织与亲人的社交互动，组织、跟进、加强你们的关系。</summary>
@@ -449,7 +472,7 @@
     <link href="https://laosu.ml/2021/11/22/%E4%BD%BF%E7%94%A8Trilium%20Notes%E5%BB%BA%E7%AB%8B%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
     <id>https://laosu.ml/2021/11/22/%E4%BD%BF%E7%94%A8Trilium%20Notes%E5%BB%BA%E7%AB%8B%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93/</id>
     <published>2021-11-22T11:20:00.000Z</published>
-    <updated>2022-01-03T08:01:15.743Z</updated>
+    <updated>2022-01-05T04:25:40.040Z</updated>
     
     
     <summary type="html">Trilium Notes 是一个分层笔记应用程序，专注于构建大型个人知识库。</summary>
@@ -464,29 +487,6 @@
     <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
     
     <category term="笔记" scheme="https://laosu.ml/tags/%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ASCII-Generator.site生成ASCII艺术字符图</title>
-    <link href="https://laosu.ml/2021/11/19/ASCII-Generator.site%E5%9C%A8%E7%BA%BF%E7%94%9F%E6%88%90ASCII%E8%89%BA%E6%9C%AF%E5%AD%97%E7%AC%A6%E5%9B%BE/"/>
-    <id>https://laosu.ml/2021/11/19/ASCII-Generator.site%E5%9C%A8%E7%BA%BF%E7%94%9F%E6%88%90ASCII%E8%89%BA%E6%9C%AF%E5%AD%97%E7%AC%A6%E5%9B%BE/</id>
-    <published>2021-11-19T04:30:00.000Z</published>
-    <updated>2022-01-03T08:01:15.739Z</updated>
-    
-    
-    <summary type="html">ASCII-Generator.site 允许你通过图像或文本快速生成 ASCII 艺术字符图。</summary>
-    
-    
-    
-    <category term="各种折腾" scheme="https://laosu.ml/categories/%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-    <category term="群晖" scheme="https://laosu.ml/tags/%E7%BE%A4%E6%99%96/"/>
-    
-    <category term="docker" scheme="https://laosu.ml/tags/docker/"/>
-    
-    <category term="工具" scheme="https://laosu.ml/tags/%E5%B7%A5%E5%85%B7/"/>
     
   </entry>
   
