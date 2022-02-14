@@ -6,7 +6,7 @@
   <link href="https://laosu.ml/atom.xml" rel="self"/>
   
   <link href="https://laosu.ml/"/>
-  <updated>2022-02-14T02:27:25.843Z</updated>
+  <updated>2022-02-14T02:55:41.156Z</updated>
   <id>https://laosu.ml/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://laosu.ml/2022/02/14/%E5%A4%9A%E5%8A%9F%E8%83%BDWeb%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8Filestash/"/>
     <id>https://laosu.ml/2022/02/14/%E5%A4%9A%E5%8A%9F%E8%83%BDWeb%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8Filestash/</id>
     <published>2022-02-14T11:00:00.000Z</published>
-    <updated>2022-02-14T02:27:25.843Z</updated>
+    <updated>2022-02-14T02:55:41.156Z</updated>
     
     
     <summary type="html">一个类似 Dropbox 的文件管理器，让您可以在任何位置管理  WebDAV、FTP、S3、Dropbox、Google Drive 等数据。</summary>
@@ -44,7 +44,7 @@
     <link href="https://laosu.ml/2022/02/11/%E7%94%A8Dim%E6%90%AD%E5%BB%BA%E8%BD%BB%E9%87%8F%E7%BA%A7%E5%AA%92%E4%BD%93%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
     <id>https://laosu.ml/2022/02/11/%E7%94%A8Dim%E6%90%AD%E5%BB%BA%E8%BD%BB%E9%87%8F%E7%BA%A7%E5%AA%92%E4%BD%93%E6%9C%8D%E5%8A%A1%E5%99%A8/</id>
     <published>2022-02-11T03:30:00.000Z</published>
-    <updated>2022-02-14T02:27:25.847Z</updated>
+    <updated>2022-02-14T02:55:41.160Z</updated>
     
     
     <summary type="html">Dim 是一个简介、漂亮的自托管媒体管理器。</summary>
@@ -67,7 +67,7 @@
     <link href="https://laosu.ml/2022/02/09/%E5%BC%80%E6%BA%90%E5%85%A8%E6%96%87%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8EMeiliSearch/"/>
     <id>https://laosu.ml/2022/02/09/%E5%BC%80%E6%BA%90%E5%85%A8%E6%96%87%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8EMeiliSearch/</id>
     <published>2022-02-09T11:00:00.000Z</published>
-    <updated>2022-02-14T02:27:25.847Z</updated>
+    <updated>2022-02-14T02:55:41.156Z</updated>
     
     
     <summary type="html">MeiliSearch 是用 Rust 写的强大、快速、开源、易于使用和部署的搜索引擎。</summary>
@@ -90,7 +90,7 @@
     <link href="https://laosu.ml/2022/02/07/%E8%B7%A8%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8Oasis/"/>
     <id>https://laosu.ml/2022/02/07/%E8%B7%A8%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8Oasis/</id>
     <published>2022-02-07T04:40:00.000Z</published>
-    <updated>2022-02-14T02:27:25.851Z</updated>
+    <updated>2022-02-14T02:55:41.164Z</updated>
     
     
     <summary type="html">Oasis 是文件服务器，支持多平台，包括 Linux, MacOS, Windows 和 Docker。</summary>
@@ -113,7 +113,7 @@
     <link href="https://laosu.ml/2022/02/04/%E9%9F%B3%E4%B9%90%E6%B5%81%E5%AA%92%E4%BD%93%E5%BA%94%E7%94%A8Polaris/"/>
     <id>https://laosu.ml/2022/02/04/%E9%9F%B3%E4%B9%90%E6%B5%81%E5%AA%92%E4%BD%93%E5%BA%94%E7%94%A8Polaris/</id>
     <published>2022-02-04T01:30:00.000Z</published>
-    <updated>2022-02-14T02:27:25.851Z</updated>
+    <updated>2022-02-14T02:55:41.164Z</updated>
     
     
     <summary type="html">Polaris 是一款音乐流媒体应用程序，旨在让您从任何计算机或移动设备欣赏您的音乐收藏。</summary>
@@ -136,7 +136,7 @@
     <link href="https://laosu.ml/2022/02/02/LazyDocker%EF%BC%9A%E5%9F%BA%E4%BA%8E%E7%BB%88%E7%AB%AFUI%E7%AE%A1%E7%90%86Docker/"/>
     <id>https://laosu.ml/2022/02/02/LazyDocker%EF%BC%9A%E5%9F%BA%E4%BA%8E%E7%BB%88%E7%AB%AFUI%E7%AE%A1%E7%90%86Docker/</id>
     <published>2022-02-02T04:00:00.000Z</published>
-    <updated>2022-02-14T02:27:25.839Z</updated>
+    <updated>2022-02-14T02:55:41.152Z</updated>
     
     
     <summary type="html">一个简单的 docker 和 docker -compose 终端 UI。</summary>
@@ -159,7 +159,7 @@
     <link href="https://laosu.ml/2022/01/31/%E6%94%AF%E6%8C%81%E5%8A%A0%E5%AF%86%E7%9A%84%E5%BC%80%E6%BA%90%E7%AC%94%E8%AE%B0Joplin/"/>
     <id>https://laosu.ml/2022/01/31/%E6%94%AF%E6%8C%81%E5%8A%A0%E5%AF%86%E7%9A%84%E5%BC%80%E6%BA%90%E7%AC%94%E8%AE%B0Joplin/</id>
     <published>2022-01-31T11:00:00.000Z</published>
-    <updated>2022-02-14T02:27:25.847Z</updated>
+    <updated>2022-02-14T02:55:41.160Z</updated>
     
     
     <summary type="html">Joplin 是一个开源笔记和待办事项应用程序，支持 Windows、macOS、Linux、Android 和 iOS 客户端。</summary>
@@ -182,7 +182,7 @@
     <link href="https://laosu.ml/2022/01/28/%E5%AE%B6%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E7%BB%88%E6%9E%81%E4%B8%BB%E9%A1%B5Dashy/"/>
     <id>https://laosu.ml/2022/01/28/%E5%AE%B6%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E7%BB%88%E6%9E%81%E4%B8%BB%E9%A1%B5Dashy/</id>
     <published>2022-01-28T02:00:00.000Z</published>
-    <updated>2022-02-14T02:27:25.847Z</updated>
+    <updated>2022-02-14T02:55:41.156Z</updated>
     
     
     <summary type="html">Dashy 是一个开源、高度可定制、易于使用、尊重隐私的仪表板应用程序。</summary>
@@ -205,7 +205,7 @@
     <link href="https://laosu.ml/2022/01/27/%E6%94%BE%E5%81%87%E4%BA%86/"/>
     <id>https://laosu.ml/2022/01/27/%E6%94%BE%E5%81%87%E4%BA%86/</id>
     <published>2022-01-27T01:00:00.000Z</published>
-    <updated>2022-02-14T02:27:25.847Z</updated>
+    <updated>2022-02-14T02:55:41.160Z</updated>
     
     
     <summary type="html">放假了</summary>
@@ -224,7 +224,7 @@
     <link href="https://laosu.ml/2022/01/26/%E9%97%AE%E9%A2%98%E9%9C%80%E6%B1%82%E8%B7%9F%E8%B8%AA%E5%B7%A5%E5%85%B7ActionView/"/>
     <id>https://laosu.ml/2022/01/26/%E9%97%AE%E9%A2%98%E9%9C%80%E6%B1%82%E8%B7%9F%E8%B8%AA%E5%B7%A5%E5%85%B7ActionView/</id>
     <published>2022-01-26T01:20:00.000Z</published>
-    <updated>2022-02-14T02:27:25.851Z</updated>
+    <updated>2022-02-14T02:55:41.164Z</updated>
     
     
     <summary type="html">ActionView 是一个面向中小企业的、开源免费的、简单易用的、类 Jira 的问题需求跟踪工具。</summary>
@@ -249,7 +249,7 @@
     <link href="https://laosu.ml/2022/01/24/%E7%94%A8GitHub%20Actions%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2Hexo/"/>
     <id>https://laosu.ml/2022/01/24/%E7%94%A8GitHub%20Actions%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2Hexo/</id>
     <published>2022-01-24T01:00:00.000Z</published>
-    <updated>2022-02-14T02:27:25.847Z</updated>
+    <updated>2022-02-14T02:55:41.160Z</updated>
     
     
     <summary type="html">通过 GitHub Actions 实现自动化部署 Hexo 。</summary>
@@ -272,7 +272,7 @@
     <link href="https://laosu.ml/2022/01/21/%E9%9F%B3%E4%B9%90%E6%B5%81%E5%AA%92%E4%BD%93%E6%9C%8D%E5%8A%A1%E5%99%A8Gonic/"/>
     <id>https://laosu.ml/2022/01/21/%E9%9F%B3%E4%B9%90%E6%B5%81%E5%AA%92%E4%BD%93%E6%9C%8D%E5%8A%A1%E5%99%A8Gonic/</id>
     <published>2022-01-21T09:30:00.000Z</published>
-    <updated>2022-02-14T02:27:25.851Z</updated>
+    <updated>2022-02-14T02:55:41.164Z</updated>
     
     
     <summary type="html">Gonic 是一款音乐流媒体服务器，兼容 subsonic server API。</summary>
@@ -295,7 +295,7 @@
     <link href="https://laosu.ml/2022/01/19/Firefly%20III%20%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E8%B4%A2%E5%8A%A1%E8%AE%B0%E8%B4%A6%E5%B9%B3%E5%8F%B0/"/>
     <id>https://laosu.ml/2022/01/19/Firefly%20III%20%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E8%B4%A2%E5%8A%A1%E8%AE%B0%E8%B4%A6%E5%B9%B3%E5%8F%B0/</id>
     <published>2022-01-19T02:30:00.000Z</published>
-    <updated>2022-02-14T02:27:25.839Z</updated>
+    <updated>2022-02-14T02:55:41.152Z</updated>
     
     
     <summary type="html">Firefly III 是一个免费开源的个人理财助手。</summary>
@@ -320,7 +320,7 @@
     <link href="https://laosu.ml/2022/01/17/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8nginx-proxy-manager/"/>
     <id>https://laosu.ml/2022/01/17/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8nginx-proxy-manager/</id>
     <published>2022-01-17T01:30:00.000Z</published>
-    <updated>2022-02-14T02:27:25.843Z</updated>
+    <updated>2022-02-14T02:55:41.156Z</updated>
     
     
     <summary type="html">Nginx Proxy Manager 实际上就是一个带前端管理界面的 Nginx 服务器。</summary>
@@ -345,7 +345,7 @@
     <link href="https://laosu.ml/2022/01/14/%E4%B9%A6%E7%AD%BE%E4%BB%AA%E8%A1%A8%E6%9D%BF%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6DashMachine/"/>
     <id>https://laosu.ml/2022/01/14/%E4%B9%A6%E7%AD%BE%E4%BB%AA%E8%A1%A8%E6%9D%BF%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6DashMachine/</id>
     <published>2022-01-14T11:00:00.000Z</published>
-    <updated>2022-02-14T02:27:25.843Z</updated>
+    <updated>2022-02-14T02:55:41.152Z</updated>
     
     
     <summary type="html">DashMachine 是另一个具有有趣功能的 Web 书签仪表板应用程序。</summary>
@@ -368,7 +368,7 @@
     <link href="https://laosu.ml/2022/01/12/%E7%94%A8CMS%E5%B9%B3%E5%8F%B0Grav%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/"/>
     <id>https://laosu.ml/2022/01/12/%E7%94%A8CMS%E5%B9%B3%E5%8F%B0Grav%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</id>
     <published>2022-01-12T04:30:00.000Z</published>
-    <updated>2022-02-14T02:27:25.847Z</updated>
+    <updated>2022-02-14T02:55:41.160Z</updated>
     
     
     <summary type="html">Grav 是一个快速简单灵活的基于文件的 Web 平台，可用来写书、博客、图床、说明书等等。</summary>
@@ -393,7 +393,7 @@
     <link href="https://laosu.ml/2022/01/10/%E7%B1%BBTrello%E7%9A%84%E7%9C%8B%E6%9D%BF%E8%BD%AF%E4%BB%B6Planka/"/>
     <id>https://laosu.ml/2022/01/10/%E7%B1%BBTrello%E7%9A%84%E7%9C%8B%E6%9D%BF%E8%BD%AF%E4%BB%B6Planka/</id>
     <published>2022-01-10T11:00:00.000Z</published>
-    <updated>2022-02-14T02:27:25.851Z</updated>
+    <updated>2022-02-14T02:55:41.160Z</updated>
     
     
     <summary type="html">Planka 是用于工作组的免费开源看板。</summary>
@@ -416,7 +416,7 @@
     <link href="https://laosu.ml/2022/01/07/%E5%8D%A1%E9%80%9A%E5%A4%B4%E5%83%8F%E7%94%9F%E6%88%90%E5%99%A8Avataaars%20generator/"/>
     <id>https://laosu.ml/2022/01/07/%E5%8D%A1%E9%80%9A%E5%A4%B4%E5%83%8F%E7%94%9F%E6%88%90%E5%99%A8Avataaars%20generator/</id>
     <published>2022-01-07T04:00:00.000Z</published>
-    <updated>2022-02-14T02:27:25.843Z</updated>
+    <updated>2022-02-14T02:55:41.156Z</updated>
     
     
     <summary type="html">Avataars generator 是一个简单的基于 Web 的卡通头像生成器。</summary>
@@ -441,7 +441,7 @@
     <link href="https://laosu.ml/2022/01/05/%E5%BC%80%E6%BA%90%E7%9A%84%E4%BD%8E%E4%BB%A3%E7%A0%81%E5%B9%B3%E5%8F%B0Budibase/"/>
     <id>https://laosu.ml/2022/01/05/%E5%BC%80%E6%BA%90%E7%9A%84%E4%BD%8E%E4%BB%A3%E7%A0%81%E5%B9%B3%E5%8F%B0Budibase/</id>
     <published>2022-01-05T04:00:00.000Z</published>
-    <updated>2022-02-14T02:27:25.847Z</updated>
+    <updated>2022-02-14T02:55:41.156Z</updated>
     
     
     <summary type="html">Budibase 是一个开源的低代码平台，是构建提高生产力的内部工具的最简单方法。</summary>
@@ -464,7 +464,7 @@
     <link href="https://laosu.ml/2022/01/03/%E8%BD%BB%E9%87%8F%E4%BD%86%E5%8A%9F%E8%83%BD%E5%BC%BA%E5%A4%A7%E7%9A%84Wiki.js/"/>
     <id>https://laosu.ml/2022/01/03/%E8%BD%BB%E9%87%8F%E4%BD%86%E5%8A%9F%E8%83%BD%E5%BC%BA%E5%A4%A7%E7%9A%84Wiki.js/</id>
     <published>2022-01-03T07:30:00.000Z</published>
-    <updated>2022-02-14T02:27:25.851Z</updated>
+    <updated>2022-02-14T02:55:41.164Z</updated>
     
     
     <summary type="html">一个基于 Node.js 的现代、轻量级和强大的 wiki 应用程序。</summary>
